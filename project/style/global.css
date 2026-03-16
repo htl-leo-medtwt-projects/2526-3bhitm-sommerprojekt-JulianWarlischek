@@ -16,11 +16,16 @@
     padding: 1em;
     gap: 1em;
     max-height: 100vh;
+    width: 100%;
     height: 100vh;
-    position: relative;
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 1.5s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
 }
 
-#navigation>a {
+#navigation>#navigation-header>a {
     font-family: "komet", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -88,4 +93,44 @@
 
 #navigation-links>div:hover:nth-child(3) {
     background-color: rgb(255, 214, 64);
+}
+
+#navigation-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 0.5em;
+}
+
+#navigation-inner-toggle-button{
+    color: rgb(59, 202, 249);
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0.25em 0.5em;
+    transition: transform 0.3s ease;
+}
+
+#open-navigation-background{
+    background-color: rgb(59, 202, 249);
+    position: fixed;
+    top: -23%;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    transform: rotate(-45deg) translateX(-50%);
+}
+
+#open-navigation-icon{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 1.5em;
+    z-index: 1;
+    cursor: pointer;
 }

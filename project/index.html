@@ -7,13 +7,19 @@
     <title>AfterMemory</title>
     <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./style/global.css">
+    <script src="script/global.js" defer></script>
 </head>
 
 <body>
 
     <!-- Navigation start -->
     <div id="navigation">
-        <a href="./index.html">AfterMemory</a>
+        <div id="navigation-header">
+            <a href="./index.html">AfterMemory</a>
+            <div id="navigation-inner-toggle-button" onclick="toggleNavigation()">
+                <i class="fa-solid fa-caret-right"></i>
+            </div>
+        </div>
         <div id="navigation-links">
             <div>
                 <i class="fa-solid fa-house-chimney"></i>
@@ -27,6 +33,14 @@
                 <i class="fa-solid fa-user-group"></i>
                 <p class="link-name">Friends</p>
             </div>
+        </div>
+    </div>
+
+    <div id="open-navigation">
+        <div id="open-navigation-background" onclick="toggleNavigation()">
+        </div>
+        <div id="open-navigation-icon" onclick="toggleNavigation()">
+            <i class="fa-solid fa-bars"></i>
         </div>
     </div>
     <!-- Navigation end -->
