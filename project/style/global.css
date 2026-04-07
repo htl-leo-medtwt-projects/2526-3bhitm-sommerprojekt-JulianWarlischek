@@ -7,6 +7,57 @@
     box-sizing: border-box;
 }
 
+.opacity-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+/* Liquid glass effect from ChatGPT */
+.liquidGlass-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* GLASS LAYERS */
+.liquidGlass-effect {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.liquidGlass-tint {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.liquidGlass-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 0.4),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.2);
+}
+
+/* CONTENT IMMER OBEN */
+.liquidGlass-wrapper > *:not(.liquidGlass-effect):not(.liquidGlass-tint):not(.liquidGlass-shine) {
+    position: relative;
+    z-index: 3;
+}
 
 /* Navigation Bar */
 #navigation {
@@ -22,7 +73,8 @@
     transform: translateX(-100%);
     transition: transform 1.5s ease;
     z-index: 1000;
-    backdrop-filter: blur(10px);
+    background-color: rgb(222, 222, 222);
+    background-image: url('../assets/images/demo-party.jpg');
 }
 
 #navigation>#navigation-header>a {
@@ -37,62 +89,12 @@
 #navigation-links {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     align-self: center;
     gap: 1em;
     width: 90%;
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
-    transform: translateY(-50%);
-    position: absolute;
-    top: 50%;
-}
-
-#navigation-links>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    width: 100%;
-    height: 20vh;
-    border: 2px solid rgb(213, 213, 213);
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
-    transition: box-shadow 0.3s ease, border 0.3s ease, background-color 0.3s ease;
-    cursor: pointer;
-    position: relative;
-}
-
-#navigation-links>div>i {
-    position: absolute;
-    left: 15px;
-    top: 15px;
-    color: gray;
-    transition: color 0.3s ease;
-}
-
-#navigation-links>div:hover {
-    box-shadow: none;
-    border: 2px solid rgb(0, 0, 0);
-}
-
-#navigation-links>div:hover>i {
-    color: black;
-}
-
-#navigation-links>div:hover:nth-child(1) {
-    background-color: rgb(179, 255, 147);
-}
-
-#navigation-links>div:hover:nth-child(2) {
-    background-color: rgb(207, 117, 255);
-}
-
-#navigation-links>div:hover:nth-child(3) {
-    background-color: rgb(255, 214, 64);
 }
 
 #navigation-header{
@@ -133,4 +135,73 @@
     font-size: 1.5em;
     z-index: 1;
     cursor: pointer;
+}
+
+#prev-event{
+    width: 100%;
+    height: 150px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    background-image: url('../assets/images/demo-party.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1em;
+}
+
+#prev-event-desc{
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    color: white;
+    position: relative;
+    z-index: 3;
+}
+
+#prev-event-headline{
+    font-family: "komet", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+}
+
+#prev-event-details{
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+}
+
+#pages-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    align-self: center;
+}
+
+.link-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.link-icon .liquidGlass-effect {
+    backdrop-filter: blur(6px);
+}
+
+.link-icon{
+    background-color: white;
+    width: 75px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
 }
