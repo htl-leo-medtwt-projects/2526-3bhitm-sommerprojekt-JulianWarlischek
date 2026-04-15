@@ -12,16 +12,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1em;
-    margin-top: 16vh;
+    gap: 5em;
 }
 
 #friends-main-section-header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     width: 70%;
+    height: 25vh;
 }
 
 #friends-main-section-add{
@@ -35,6 +35,40 @@
     color: white;
 }
 
+#friends-main-section-navigation{
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 5;
+    height: 75px;
+}
+
+.friends-main-section-nav-item{
+    border-bottom: 3px solid transparent;
+    color: grey;
+    padding: 0.5em;
+    transition: all 0.3s ease;
+}
+
+#friends-main-section-main-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-friends-nav-item{
+    border-bottom: 3px solid dodgerblue;
+    color: black;
+}
+
 #friends-main-section-summary>h2 {
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
@@ -46,4 +80,64 @@
     font-weight: 400;
     font-style: normal;
     color: grey;
+}
+
+#friends-main-section-content{
+    width: 100vw;
+    background-color: rgb(240, 240, 240);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1em;
+    align-items: start;
+    justify-items: stretch;
+    padding: 1em;
+}
+
+.friend-img{
+    width: 40px;
+    height: 40px;
+}
+
+.friend-name{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.friend{
+    display: flex;
+    gap: 1em;
+    padding: 1.7em;
+    width: 100%;
+    background-color: rgb(237, 237, 237);
+    border-radius: 30px;
+}
+
+.friend-badge-flex{
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    justify-self: center; 
+}
+
+.friend-badge{
+    display: flex;
+    flex-direction: row;
+    gap: 0.3em;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-img{
+    width: 15px;
+    height: 15px;
+}
+
+.badge-name{
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.8em;
 }

@@ -57,3 +57,12 @@ function navigationTo(page) {
     // Supports values like "index.html", "pages/friends.html", or absolute URLs.
     window.location.href = new URL(page, projectRootUrl).href;
 }
+
+function setActiveClass(element,className, activeClassName) {
+    const navItems = document.querySelectorAll(`.${className}`);
+    navItems.forEach(item => {
+        item.classList.remove(activeClassName);
+    });
+
+    element.classList.add(activeClassName);
+}
