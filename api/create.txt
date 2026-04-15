@@ -1,0 +1,47 @@
+CREATE TABLE user (
+    userid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    dob DATE NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    created_at DATE NOT NULL
+);
+
+CREATE TABLE location (
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    beschreibung VARCHAR(100)
+);
+
+CREATE TABLE event (
+    event_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    date DATE NOT NULL,
+    describtion VARCHAR(200),
+    location_id INT,
+    FOREIGN KEY (location_id) REFERENCES location(location_id)
+);
+
+CREATE TABLE drink (
+    drink_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    describtion VARCHAR(100)
+);
+
+CREATE TABLE snack (
+    snack_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    description VARCHAR(100)
+);
+
+CREATE TABLE game (
+    game_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    description VARCHAR(100)
+);
+
+CREATE TABLE badge (
+    badge_id INT AUTO_INCREMENT PRIMARY KEY,
+    badgename VARCHAR(30),
+    badgepath VARCHAR(50)
+);
