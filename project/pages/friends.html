@@ -4,8 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
+    <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/friends.css">
+    <script src="../script/global.js" defer></script>
+
 </head>
 <body>
-    
+    <!-- Navigation start -->
+    <div id="navigation">
+        <div id="navigation-header">
+            <a href="../index.html">AfterMemory</a>
+            <div id="navigation-inner-toggle-button" onclick="toggleNavigation()">
+                <i class="fa-solid fa-caret-right"></i>
+            </div>
+        </div>
+        <div id="navigation-links">
+            <div id="prev-event" class="liquidGlass-wrapper">
+                <div class="liquidGlass-effect-less-blur"></div>
+                <div class="liquidGlass-tint-less-blur"></div>
+                <div class="liquidGlass-shine-less-blur"></div>
+                <div class="opacity-overlay"></div>
+
+                <div id="prev-event-desc">
+                    <div id="prev-event-headline">
+                        <p>Last Event</p>
+                    </div>
+                    <div id="prev-event-details">
+                        <p id="prev-event-name">Demo Party</p>
+                        <p>-</p>
+                        <p id="prev-event-date">01.01.2024</p>
+                    </div>
+                </div>
+                <div id="prev-event-edit" class="liquidGlass-wrapper">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <i class="fa-solid fa-pen"></i>
+                </div>
+            </div>
+            <div id="pages-links">
+                <div class="link-container" onclick="navigationTo('index.html')">
+                    <div class="link-icon liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <p>Home</p>
+                </div>
+                <div class="link-container" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+                        <i class="fa-solid fa-martini-glass-citrus"></i>
+                    </div>
+                    <p>Events</p>
+                </div>
+                <div class="link-container" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                    <p>Friends</p>
+                </div>
+            </div>
+            <div id="img-memories" class="liquidGlass-wrapper">
+                <h2>Memories</h2>
+                <div class="liquidGlass-effect-less-blur"></div>
+                <div class="liquidGlass-tint-less-blur"></div>
+                <div class="liquidGlass-shine-less-blur"></div>
+                <div class="opacity-overlay"></div>
+            </div>
+        </div>
+        <div id="navigation-profile-view" class="liquidGlass-wrapper">
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+
+            <div id="navigation-profile-view-name-img">
+                <div id="navigation-profile-view-img">
+                    <img src="../assets/images/demo-user.png" alt="demo user">
+                </div>
+                <h2>Luca Ebner</h2>
+            </div>
+            <div id="navigation-profile-edit">
+                <i class="fa-solid fa-pen"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="open-navigation">
+        <div id="open-navigation-icon" onclick="toggleNavigation()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <!-- Navigation end -->
+
+    <div id="friends-profile" onclick="navigationTo('pages/profile.html')">
+        <img src="../assets/images/demo-user.png" alt="demo user">
+    </div>
+
+    <div id="friends-main-section">
+        <div id="friends-main-section-header">
+            <div id="friends-main-section-summary">
+                <h2>Your friends</h2>
+                <h3>11 Friends</h3>
+            </div>
+            <div id="friends-main-section-add">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </div>
+        <div id="friends-main-section-main-content">
+            <div id="friends-main-section-navigation">
+                <div class="friends-main-section-nav-item">
+                    <p>Friend list</p>
+                </div>
+                <div class="friends-main-section-nav-item">
+                    <p>Friend requests</p>
+                </div>
+                <div class="friends-main-section-nav-item">
+                    <p>Groups</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

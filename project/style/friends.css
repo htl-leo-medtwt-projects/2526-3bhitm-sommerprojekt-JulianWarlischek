@@ -1,0 +1,49 @@
+#friends-profile {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 35px;
+    top: 25px;
+}
+
+#friends-main-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin-top: 16vh;
+}
+
+#friends-main-section-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+}
+
+#friends-main-section-add{
+    width: 43px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+}
+
+#friends-main-section-summary>h2 {
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#friends-main-section-summary>h3 {
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: grey;
+}
