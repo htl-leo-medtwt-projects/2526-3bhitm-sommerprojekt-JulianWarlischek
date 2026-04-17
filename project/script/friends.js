@@ -7,10 +7,46 @@
  */
 
 function loadAllFriends(){
-    fetch('../api/user-api.php?friends=true')
+    fetch('../../api/user-api.php?friends=true')
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+
+        let friends = data.data;
+        let temp_string = "";
+
+        friends.forEach(friend => {
+            temp_string += `
+                <div class="friend liquidGlass-wrapper">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div class="friend-img">
+                        <img src="../assets/images/demo-user.png" alt="demo user">
+                    </div>
+
+                    <div class="friend-name">
+                        <h3>${friend.name}</h3>
+                    </div>
+
+                    <div class="friend-badge-flex">
+                        <div class="friend-badge">
+                            <div class="badge-img">
+                                <img src="../assets/images/music-badge.png" alt="music badge">
+                            </div>
+                            <p class="badge-name">Music</p>
+                        </div>
+                        <div class="friend-badge">
+                            <div class="badge-img">
+                                <img src="../assets/images/shot-badge.png" alt="shot badge">
+                            </div>
+                            <p class="badge-name">Shotter</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('friends-main-section-content').innerHTML = temp_string;
     })
     .catch(error => {
         console.error('Error fetching friends:', error);
