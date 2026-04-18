@@ -58,7 +58,13 @@ loadAllFriends();
 
 
 
-
+/**
+ * function: setFriendsMainSection
+ * description: This function sets the display of the friends main section based on the given display parameter.
+ * It takes a display parameter which can be 'grid', 'flex1' or 'flex2'. Based on the value of the display parameter, it sets the CSS properties of the friends main section accordingly.
+ * If the display parameter is 'grid', it sets the display to grid and defines the grid template columns and alignment. It then calls the loadAllFriends function to load and display all friends in a grid layout.
+ * @param {*} display 
+ */
 function setFriendsMainSection(display) {
     const friendsMainSection = document.getElementById('friends-main-section-content');
 
@@ -81,6 +87,10 @@ function setFriendsMainSection(display) {
 
 }
 
+/**
+ * function: loadAllRequests
+ * description: This function loads all friend requests from the backend and displays them in the friends main section. It uses the Fetch API to send a GET request to the user-api.php endpoint with the parameter 'requests=true'. The response is expected to be in JSON format, containing an array of friend requests. The function then iterates over the array of friend requests and creates HTML elements for each request, displaying the name of the requester and buttons to accept or decline the request. Finally, it sets the innerHTML of the friends main section to the generated HTML string.
+ */
 function loadAllRequests() {
     fetch('../../api/user-api.php?requests=true')
         .then(response => response.json())
@@ -97,16 +107,18 @@ function loadAllRequests() {
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
-                    <div class="friend-img">
-                        <img src="../assets/images/demo-user.png" alt="demo user">
-                    </div>
+                    <div class="friend-request-info">
+                        <div class="friend-img">
+                            <img src="../assets/images/demo-user.png" alt="demo user">
+                        </div>
 
-                    <div class="friend-name">
-                        <h3>${request.Name}</h3>
+                        <div class="friend-name">
+                            <h3>${request.Name}</h3>
+                        </div>
                     </div>
                     <div class="friend-request-buttons">
-                        <button class="accept-button">Accept</button>
-                        <button class="decline-button">Decline</button>
+                        <div class="accept-button" onclick="acceptFriendRequest('${request.ID}')">+ Add</div>
+                        <div class="decline-button" onclick="declineFriendRequest('${request.ID}')"><i class="fa-solid fa-xmark"></i></div>
                     </div>
                 </div>
             `;
@@ -115,5 +127,33 @@ function loadAllRequests() {
         })
         .catch(error => {
             console.error('Error fetching friend requests:', error);
+        });
+}
+
+function acceptFriendRequest(requestId) {
+    fetch(`../../api/user-api.php?acceptRequest=${requestId}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            loadAllRequests();
+        })
+        .catch(error => {
+            console.error('Error accepting friend request:', error);
+        });
+}
+
+function declineFriendRequest(requestId) {
+    fetch(`../../api/user-api.php?declineRequest=${requestId}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            loadAllRequests();
+        })
+        .catch(error => {
+            console.error('Error declining friend request:', error);
         });
 }

@@ -142,3 +142,47 @@
     font-style: normal;
     font-size: 0.8em;
 }
+
+.friend-request-info{
+    display: flex;
+    gap: 0.5em;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend-request{
+    display: flex;
+    gap: 0.5em;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.8em;
+    border-radius: 20px;
+}
+
+.friend-request-buttons{
+    display: flex;
+    gap: 0.5em;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.accept-button{
+    background-color: black;
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.decline-button{
+    background-color: transparent;
+    color: red;
+    padding: 0.5em 0.7em;
+    border-radius: 50%;
+    border: 1px solid red;
+    cursor: pointer;
+}
