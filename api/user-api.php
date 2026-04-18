@@ -48,6 +48,21 @@ if(isset($_GET['requests'])){
     $answer["message"] = "OK";
 }
 
+if(isset($_POST['acceptRequest'])){
+    $request_id = $_POST['request_id'];
+
+    $stmt = $conn->prepare("UPDATE Friend_Request SET status = 'Accepted' WHERE Friend_Request_ID = ?");
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+
+    $stmt = $conn->prepare("INSERT INTO Friend_Ship (Created_At, UserID, UserID1) VALUES (NOW(), (SELECT UserID FROM Friend_Request WHERE Friend_Request_ID = ?), (SELECT UserID1 FROM Friend_Request WHERE Friend_Request_ID = ?))");
+    $stmt->bind_param("ii", $request_id, $request_id);  
+    $stmt->execute();
+
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 
 echo json_encode($answer);
 
