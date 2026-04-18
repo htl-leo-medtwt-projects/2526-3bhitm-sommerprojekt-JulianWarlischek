@@ -92,6 +92,7 @@
     align-items: start;
     justify-items: stretch;
     padding: 1em;
+    min-height: 75vh;
 }
 
 .friend-img{
