@@ -17,8 +17,7 @@ function loadAllFriends() {
             friends.forEach(friend => {
                 console.log(friend);
 
-                temp_string += `
-                <div class="friend liquidGlass-wrapper">
+                temp_string += `<div class="friend liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
@@ -45,16 +44,16 @@ function loadAllFriends() {
                             <p class="badge-name">Shotter</p>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
+            loadFriendCount();
         })
         .catch(error => {
             console.error('Error fetching friends:', error);
         });
 }
-loadAllFriends();
+setFriendsMainSection('grid');
 
 
 
@@ -91,18 +90,21 @@ function setFriendsMainSection(display) {
  * function: loadAllRequests
  * description: This function loads all friend requests from the backend and displays them in the friends main section. It uses the Fetch API to send a GET request to the user-api.php endpoint with the parameter 'requests=true'. The response is expected to be in JSON format, containing an array of friend requests. The function then iterates over the array of friend requests and creates HTML elements for each request, displaying the name of the requester and buttons to accept or decline the request. Finally, it sets the innerHTML of the friends main section to the generated HTML string.
  */
-function loadAllRequests() {
+async function loadAllRequests() {
     fetch('../../api/user-api.php?requests=true')
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             let requests = data.data;
             let temp_string = "";
 
-            requests.forEach(request => {
+            for (const request of requests) {
                 console.log(request);
 
-                temp_string += `
-                <div class="friend-request liquidGlass-wrapper">
+                const request_id = await getRequestId(1, request.UserID);
+
+                console.log(request_id);
+
+                temp_string += `<div class="friend-request liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
@@ -117,17 +119,30 @@ function loadAllRequests() {
                         </div>
                     </div>
                     <div class="friend-request-buttons">
-                        <div class="accept-button" onclick="acceptFriendRequest('${request.ID}')">+ Add</div>
-                        <div class="decline-button" onclick="declineFriendRequest('${request.ID}')"><i class="fa-solid fa-xmark"></i></div>
+                        <div class="accept-button" onclick="acceptFriendRequest('${request_id}')">+ Add</div>
+                        <div class="decline-button" onclick="declineFriendRequest('${request_id}')"><i class="fa-solid fa-xmark"></i></div>
                     </div>
-                </div>
-            `;
-            });
+                </div>`;
+            }
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
+            loadFriendCount();
         })
         .catch(error => {
             console.error('Error fetching friend requests:', error);
         });
+}
+
+async function getRequestId(userId, requesterId) {
+    try {
+        const response = await fetch(`../../api/user-api.php?getRequestId=true&userId=${userId}&requesterId=${requesterId}`);
+        const data = await response.json();
+        console.log(data);
+
+        return data?.data ?? null;
+    } catch (error) {
+        console.error('Error fetching request ID:', error);
+        return null;
+    }
 }
 
 function acceptFriendRequest(requestId) {
@@ -155,5 +170,17 @@ function declineFriendRequest(requestId) {
         })
         .catch(error => {
             console.error('Error declining friend request:', error);
+        });
+}
+
+function loadFriendCount() {
+    fetch(`../../api/user-api.php?friends=true`)
+        .then(response => response.json())
+        .then(data => {
+            let friends = data.data;
+            document.getElementById('friend-count').innerText = friends.length + " Friends";
+        })
+        .catch(error => {
+            console.error('Error fetching friends:', error);
         });
 }
