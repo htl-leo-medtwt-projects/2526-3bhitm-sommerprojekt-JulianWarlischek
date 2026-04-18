@@ -6,16 +6,18 @@
  * The backend is implemented in PHP and uses a MySQL database to store the friends data.
  */
 
-function loadAllFriends(){
+function loadAllFriends() {
     fetch('../../api/user-api.php?friends=true')
-    .then(response => response.json())
-    .then(data => {
+        .then(response => response.json())
+        .then(data => {
 
-        let friends = data.data;
-        let temp_string = "";
+            let friends = data.data;
+            let temp_string = "";
 
-        friends.forEach(friend => {
-            temp_string += `
+            friends.forEach(friend => {
+                console.log(friend);
+
+                temp_string += `
                 <div class="friend liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
@@ -26,7 +28,7 @@ function loadAllFriends(){
                     </div>
 
                     <div class="friend-name">
-                        <h3>${friend.name}</h3>
+                        <h3>${friend.Name}</h3>
                     </div>
 
                     <div class="friend-badge-flex">
@@ -45,36 +47,73 @@ function loadAllFriends(){
                     </div>
                 </div>
             `;
+            });
+            document.getElementById('friends-main-section-content').innerHTML = temp_string;
+        })
+        .catch(error => {
+            console.error('Error fetching friends:', error);
         });
-        document.getElementById('friends-main-section-content').innerHTML = temp_string;
-    })
-    .catch(error => {
-        console.error('Error fetching friends:', error);
-    }); 
 }
 loadAllFriends();
 
 
 
 
-function setFriendsMainSection(display){
+function setFriendsMainSection(display) {
     const friendsMainSection = document.getElementById('friends-main-section-content');
 
-    if(display === 'grid'){
+    if (display === 'grid') {
         friendsMainSection.style.display = 'grid';
         friendsMainSection.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
         friendsMainSection.style.alignItems = 'start';
         loadAllFriends();
-    }else if(display === 'flex1'){
+    } else if (display === 'flex1') {
         friendsMainSection.style.display = 'flex';
         friendsMainSection.style.flexDirection = 'column';
         friendsMainSection.style.alignItems = 'center';
         loadAllRequests();
-    } else if(display === 'flex2'){
+    } else if (display === 'flex2') {
         friendsMainSection.style.display = 'flex';
         friendsMainSection.style.flexDirection = 'column';
         friendsMainSection.style.alignItems = 'center';
         loadAllSentRequests();
     }
 
+}
+
+function loadAllRequests() {
+    fetch('../../api/user-api.php?requests=true')
+        .then(response => response.json())
+        .then(data => {
+            let requests = data.data;
+            let temp_string = "";
+
+            requests.forEach(request => {
+                console.log(request);
+
+                temp_string += `
+                <div class="friend-request liquidGlass-wrapper">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div class="friend-img">
+                        <img src="../assets/images/demo-user.png" alt="demo user">
+                    </div>
+
+                    <div class="friend-name">
+                        <h3>${request.Name}</h3>
+                    </div>
+                    <div class="friend-request-buttons">
+                        <button class="accept-button">Accept</button>
+                        <button class="decline-button">Decline</button>
+                    </div>
+                </div>
+            `;
+            });
+            document.getElementById('friends-main-section-content').innerHTML = temp_string;
+        })
+        .catch(error => {
+            console.error('Error fetching friend requests:', error);
+        });
 }
