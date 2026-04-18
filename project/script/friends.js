@@ -10,11 +10,13 @@ function loadAllFriends(){
     fetch('../../api/user-api.php?friends=true')
     .then(response => response.json())
     .then(data => {
-
+        
         let friends = data.data;
         let temp_string = "";
 
         friends.forEach(friend => {
+            console.log(friend);
+            
             temp_string += `
                 <div class="friend liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
@@ -26,7 +28,7 @@ function loadAllFriends(){
                     </div>
 
                     <div class="friend-name">
-                        <h3>${friend.name}</h3>
+                        <h3>${friend.Name}</h3>
                     </div>
 
                     <div class="friend-badge-flex">
