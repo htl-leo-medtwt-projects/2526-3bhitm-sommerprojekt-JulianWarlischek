@@ -53,3 +53,28 @@ function loadAllFriends(){
     }); 
 }
 loadAllFriends();
+
+
+
+
+function setFriendsMainSection(display){
+    const friendsMainSection = document.getElementById('friends-main-section-content');
+
+    if(display === 'grid'){
+        friendsMainSection.style.display = 'grid';
+        friendsMainSection.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+        friendsMainSection.style.alignItems = 'start';
+        loadAllFriends();
+    }else if(display === 'flex1'){
+        friendsMainSection.style.display = 'flex';
+        friendsMainSection.style.flexDirection = 'column';
+        friendsMainSection.style.alignItems = 'center';
+        loadAllRequests();
+    } else if(display === 'flex2'){
+        friendsMainSection.style.display = 'flex';
+        friendsMainSection.style.flexDirection = 'column';
+        friendsMainSection.style.alignItems = 'center';
+        loadAllSentRequests();
+    }
+
+}
