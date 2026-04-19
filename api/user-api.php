@@ -91,6 +91,23 @@ if (isset($_GET['getRequestId'])) {
     $answer["code"] = 200;
     $answer["message"] = "OK";
 }
+
+if(isset($_GET['searchUsers'])){
+    $query = $_GET['searchUsers'];
+    $id = 1;
+
+    $stmt = $conn->prepare("SELECT * FROM User WHERE Name LIKE ? and UserId != ?");
+    $likeQuery = "%".$query."%";
+    $stmt->bind_param("si", $likeQuery, $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $answer["data"] = $result->fetch_all(MYSQLI_ASSOC);
+    
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 echo json_encode($answer);
 
 $conn->close();

@@ -183,3 +183,63 @@ function declineFriendRequest(requestId) {
             console.error('Error declining friend request:', error);
         });
 }
+
+function openAddFriends() {
+    const addFriendsSection = document.getElementById('add-friends-section');
+
+    addFriendsSection.style.display = 'flex';
+    setTimeout(() => {
+        addFriendsSection.style.opacity = '1';
+    }, 100);
+
+}
+
+function searchUsers() {
+    const searchInput = document.getElementById('add-friends-search-input');
+    const query = searchInput.value.trim();
+
+    if (query.length === 0) {
+        return;
+    }
+
+    fetch(`../../api/user-api.php?searchUsers=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            const users = data.data;
+
+            console.log(users);
+
+            let temp_string = "";
+
+            users.forEach(user => {
+                temp_string += `
+                    <hr class="seperator-long">
+                    <div class="friend-found">
+                        <div class="friend-found-img-name">
+                            <div class="friend-found-img">
+                                <img src="../assets/images/demo-user.png" alt="demo user">
+                            </div>
+                            <p>${user.Name}</p>
+                        </div>
+                        <p class="request-button" onchange="sendFriendRequest(${user.UserID})">send request</p>
+                    </div>
+                `
+            });
+
+            document.getElementById('add-friends-friends-found').innerHTML = temp_string;
+            
+        })
+        .catch(error => {
+            console.error('Error searching users:', error);
+        });
+}
+
+function closeAddFriends() {
+    const addFriendsSection = document.getElementById('add-friends-section');
+
+    addFriendsSection.style.opacity = '0';
+    setTimeout(() => {
+        addFriendsSection.style.display = 'none';
+    }, 300);
+    
+}

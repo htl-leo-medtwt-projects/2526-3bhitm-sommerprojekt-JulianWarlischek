@@ -115,9 +115,9 @@
         <div id="friends-main-section-header">
             <div id="friends-main-section-summary">
                 <h2>Your friends</h2>
-                <h3 id="friend-count">11 Friends</h3>
+                <h3 id="friend-count"></h3>
             </div>
-            <div id="friends-main-section-add">
+            <div id="friends-main-section-add" onclick="openAddFriends()">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
@@ -137,7 +137,51 @@
                 </div>
             </div>
             <div id="friends-main-section-content">
-                
+
+            </div>
+        </div>
+    </div>
+
+    <div id="add-friends-section">
+        <div id="add-friends-flex-container" class="liquidGlass-wrapper">
+
+            <div id="close-friends-flex-container" onclick="closeAddFriends()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <div class="liquidGlass-effect-less-blur"></div>
+            <div class="liquidGlass-tint-less-blur"></div>
+            <div class="liquidGlass-shine-less-blur"></div>
+            <h3>Add Friends</h3>
+
+            <div id="add-friends-search-bar">
+                <div id="add-friends-search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="text" placeholder="Search ..." id="add-friends-search-input" oninput="searchUsers()">
+            </div>
+
+            <div id="add-friends-friends-found">
+                <hr class="seperator-long">
+                <div class="friend-found">
+                    <div class="friend-found-img-name">
+                        <div class="friend-found-img">
+                            <img src="../assets/images/demo-user.png" alt="demo user">
+                        </div>
+                        <p>Luca Ebner</p>
+                    </div>
+                    <p class="request-button">send request</p>
+                </div>
+                <hr class="seperator-long">
+                <div class="friend-found">
+                    <div class="friend-found-img-name">
+                        <div class="friend-found-img">
+                            <img src="../assets/images/demo-user.png" alt="demo user">
+                        </div>
+                        <p>Luca Ebner</p>
+                    </div>
+                    <p class="request-button">send request</p>
+                </div>
             </div>
         </div>
     </div>
