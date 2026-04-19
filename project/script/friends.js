@@ -30,24 +30,14 @@ function loadAllFriends() {
                         <h3>${friend.Name}</h3>
                     </div>
 
-                    <div class="friend-badge-flex">
-                        <div class="friend-badge">
-                            <div class="badge-img">
-                                <img src="../assets/images/music-badge.png" alt="music badge">
-                            </div>
-                            <p class="badge-name">Music</p>
-                        </div>
-                        <div class="friend-badge">
-                            <div class="badge-img">
-                                <img src="../assets/images/shot-badge.png" alt="shot badge">
-                            </div>
-                            <p class="badge-name">Shotter</p>
-                        </div>
+                    <div class="friend-badge-flex" id="friend-${friend.UserID}-badges">
                     </div>
                 </div>`;
+                loadBadgesFromUser(friend.UserID);
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
             loadFriendCount();
+            
         })
         .catch(error => {
             console.error('Error fetching friends:', error);
@@ -225,7 +215,7 @@ function searchUsers() {
             });
 
             document.getElementById('add-friends-friends-found').innerHTML = temp_string;
-            
+
         })
         .catch(error => {
             console.error('Error searching users:', error);
@@ -245,9 +235,6 @@ function closeAddFriends() {
 }
 
 function sendFriendRequest(userId) {
-
-    
-
     fetch(`../../api/user-api.php?sendFriendRequest=${userId}`, {
         method: 'POST'
     })
@@ -259,5 +246,33 @@ function sendFriendRequest(userId) {
         .catch(error => {
             console.error('Error sending friend request:', error);
         }
-    );   
+        );
+}
+
+function loadBadgesFromUser(userId) {
+    fetch(`../../api/badge-api.php?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const badges = data.data;
+
+
+                let temp_string = "";
+
+                badges.forEach(badge => {
+                    temp_string += `
+                        <div class="friend-badge">
+                            <div class="badge-img">
+                                <img src="../assets/images/music-badge.png" alt="music badge">
+                            </div>
+                            <p class="badge-name">${badge.BadgeName}</p>
+                        </div>
+                        `;
+                });
+
+                document.getElementById(`friend-${userId}-badges`).innerHTML = temp_string;
+            console.log(badges);
+        })
+        .catch(error => {
+            console.error('Error fetching badges:', error);
+        });
 }
