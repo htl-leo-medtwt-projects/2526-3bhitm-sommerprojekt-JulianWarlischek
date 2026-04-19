@@ -1,14 +1,123 @@
-#profile-flex{
+#profile-flex {
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 0.5em;
+    justify-content: center;
+    gap: 2em;
+    padding-top: 5em;
+    width: 100%;
 }
 
-#profile-header{
+#profile-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    gap: 2em;
+    width: 100%;
+}
+
+#profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#profile-name-and-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+}
+
+#profile-name-and-badges h2 {
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#profile-name-and-badges>a {
+    color: gray;
+    font-size: 0.9em;
+    font-family: "komet", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.seperator {
+    width: min(40vw, 900px);
+    height: 2px;
+    border: none;
+    background-color: #9e9e9e;
+    align-self: center;
+    margin: 0.75em 0;
+}
+
+.profile-subpoint>h3{
+    font-family: "komet", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: grey;
+    font-size: 1em;
+    margin-left: 1em;
+}
+
+#profile-subpoints {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-subpoint {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+}
+
+.profile-point-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2em;
+    border-radius: 20px;
+    border: 1px solid #9e9e9e;
+    background-color: rgb(220, 220, 220);
+}
+
+.profile-point{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-point-icon-text{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    font-family: "komet", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.profile-point-icon{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }

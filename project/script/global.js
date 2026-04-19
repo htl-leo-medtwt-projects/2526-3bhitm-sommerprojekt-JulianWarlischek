@@ -66,3 +66,19 @@ function setActiveClass(element,className, activeClassName) {
 
     element.classList.add(activeClassName);
 }
+
+/**
+ * function: loadFriendCount
+ * description: This function fetches the list of friends from the user-api.php endpoint and updates the friend count displayed on the page. It sends a GET request to the endpoint with the parameter 'friends' set to true. If the request is successful, it retrieves the list of friends from the response and updates the inner text of the element with id 'friend-count' to show the number of friends. If there is an error, it logs the error to the console.
+ */
+function loadFriendCount() {
+    fetch(`../../api/user-api.php?friends=true`)
+        .then(response => response.json())
+        .then(data => {
+            let friends = data.data;
+            document.getElementById('friend-count').innerText = friends.length + " Friends";
+        })
+        .catch(error => {
+            console.error('Error fetching friends:', error);
+        });
+}

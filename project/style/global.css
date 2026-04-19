@@ -317,3 +317,17 @@ img {
     border-radius: 50%;
     font-size: 1.2em;
 }
+
+.seperator{
+    border: 10px solid grey;
+    width: 90vw;
+    align-self: center;
+    border-radius: 50px;
+}
+
+.seperator-long{
+    border: 1px solid rgb(198, 198, 198);
+    width: 100%;
+    align-self: center;
+    border-radius: 50px;
+}

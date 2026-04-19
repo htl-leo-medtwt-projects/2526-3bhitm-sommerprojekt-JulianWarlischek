@@ -145,6 +145,11 @@ async function getRequestId(userId, requesterId) {
     }
 }
 
+/**
+ * function: acceptFriendRequest
+ * description: This function is used to accept a friend request. It takes the requestId as a parameter and sends a POST request to the user-api.php endpoint with the parameter 'acceptRequest' set to the requestId. If the request is successful, it reloads the list of friend requests by calling the loadAllRequests function. If there is an error, it logs the error to the console.
+ * @param {*} requestId 
+ */
 function acceptFriendRequest(requestId) {
     fetch(`../../api/user-api.php?acceptRequest=${requestId}`, {
         method: 'POST'
@@ -159,6 +164,12 @@ function acceptFriendRequest(requestId) {
         });
 }
 
+
+/**
+ * function: declineFriendRequest
+ * description: This function is used to decline a friend request. It takes the requestId as a parameter and sends a POST request to the user-api.php endpoint with the parameter 'declineRequest' set to the requestId. If the request is successful, it reloads the list of friend requests by calling the loadAllRequests function. If there is an error, it logs the error to the console.
+ * @param {*} requestId 
+ */
 function declineFriendRequest(requestId) {
     fetch(`../../api/user-api.php?declineRequest=${requestId}`, {
         method: 'POST'
@@ -170,17 +181,5 @@ function declineFriendRequest(requestId) {
         })
         .catch(error => {
             console.error('Error declining friend request:', error);
-        });
-}
-
-function loadFriendCount() {
-    fetch(`../../api/user-api.php?friends=true`)
-        .then(response => response.json())
-        .then(data => {
-            let friends = data.data;
-            document.getElementById('friend-count').innerText = friends.length + " Friends";
-        })
-        .catch(error => {
-            console.error('Error fetching friends:', error);
         });
 }
