@@ -108,6 +108,18 @@ if(isset($_GET['searchUsers'])){
     $answer["message"] = "OK";
 }
 
+if(isset($_GET['sendFriendRequest'])){
+    $userId = $_GET['sendFriendRequest'];
+    $userId1 = 1;
+
+    $stmt = $conn->prepare("INSERT INTO Friend_Request (Date_Of_Req, UserID, UserID1, Status) VALUES (NOW(), ?, ?, 'Pending')");
+    $stmt->bind_param("ii", $userId, $userId1);
+    $stmt->execute();
+
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 echo json_encode($answer);
 
 $conn->close();

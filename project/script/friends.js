@@ -207,8 +207,6 @@ function searchUsers() {
         .then(data => {
             const users = data.data;
 
-            console.log(users);
-
             let temp_string = "";
 
             users.forEach(user => {
@@ -221,7 +219,7 @@ function searchUsers() {
                             </div>
                             <p>${user.Name}</p>
                         </div>
-                        <p class="request-button" onchange="sendFriendRequest(${user.UserID})">send request</p>
+                        <p class="request-button" onclick="sendFriendRequest(${user.UserID})">send request</p>
                     </div>
                 `
             });
@@ -241,5 +239,25 @@ function closeAddFriends() {
     setTimeout(() => {
         addFriendsSection.style.display = 'none';
     }, 300);
+
+    searchInput.value = "";
+
+}
+
+function sendFriendRequest(userId) {
+
     
+
+    fetch(`../../api/user-api.php?sendFriendRequest=${userId}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            closeAddFriends();
+        })
+        .catch(error => {
+            console.error('Error sending friend request:', error);
+        }
+    );   
 }
