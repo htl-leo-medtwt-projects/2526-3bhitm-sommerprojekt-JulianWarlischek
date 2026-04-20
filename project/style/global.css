@@ -143,23 +143,13 @@ img {
     transition: transform 0.3s ease;
 }
 
-#open-navigation-background {
-    background-color: rgb(59, 202, 249);
-    position: fixed;
-    top: -23%;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    transform: rotate(-45deg) translateX(-50%);
-}
-
 #open-navigation-icon {
     position: fixed;
     top: 28px;
     left: 28px;
     color: black;
     font-size: 1.8em;
-    z-index: 1;
+    z-index: 1001;
     cursor: pointer;
 }
 
