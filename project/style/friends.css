@@ -92,6 +92,8 @@
     align-items: start;
     justify-content: center;
     padding: 1em;
+    min-height: 60vh;
+    overflow: scroll;
 }
 
 .friend-img{
