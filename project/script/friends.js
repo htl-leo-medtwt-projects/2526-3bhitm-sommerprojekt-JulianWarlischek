@@ -37,7 +37,7 @@ function loadAllFriends() {
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
             loadFriendCount();
-            
+
         })
         .catch(error => {
             console.error('Error fetching friends:', error);
@@ -90,9 +90,8 @@ async function loadAllRequests() {
             for (const request of requests) {
                 console.log(request);
 
-                const request_id = await getRequestId(1, request.UserID);
+                const request_id = await getRequestId(2, request.UserID);
 
-                console.log(request_id);
 
                 temp_string += `<div class="friend-request liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
@@ -256,10 +255,10 @@ function loadBadgesFromUser(userId) {
             const badges = data.data;
 
 
-                let temp_string = "";
+            let temp_string = "";
 
-                badges.forEach(badge => {
-                    temp_string += `
+            badges.forEach(badge => {
+                temp_string += `
                         <div class="friend-badge">
                             <div class="badge-img">
                                 <img src="../assets/images/music-badge.png" alt="music badge">
@@ -267,10 +266,9 @@ function loadBadgesFromUser(userId) {
                             <p class="badge-name">${badge.BadgeName}</p>
                         </div>
                         `;
-                });
+            });
 
-                document.getElementById(`friend-${userId}-badges`).innerHTML = temp_string;
-            console.log(badges);
+            document.getElementById(`friend-${userId}-badges`).innerHTML = temp_string;
         })
         .catch(error => {
             console.error('Error fetching badges:', error);
