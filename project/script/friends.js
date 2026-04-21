@@ -30,24 +30,14 @@ function loadAllFriends() {
                         <h3>${friend.name}</h3>
                     </div>
 
-                    <div class="friend-badge-flex">
-                        <div class="friend-badge">
-                            <div class="badge-img">
-                                <img src="../assets/images/music-badge.png" alt="music badge">
-                            </div>
-                            <p class="badge-name">Music</p>
-                        </div>
-                        <div class="friend-badge">
-                            <div class="badge-img">
-                                <img src="../assets/images/shot-badge.png" alt="shot badge">
-                            </div>
-                            <p class="badge-name">Shotter</p>
-                        </div>
+                    <div class="friend-badge-flex" id="friend-${friend.UserID}-badges">
                     </div>
                 </div>`;
+                loadBadgesFromUser(friend.UserID);
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
             loadFriendCount();
+
         })
         .catch(error => {
             console.error('Error fetching friends:', error);
@@ -100,9 +90,8 @@ async function loadAllRequests() {
             for (const request of requests) {
                 console.log(request);
 
-                const request_id = await getRequestId(1, request.UserID);
+                const request_id = await getRequestId(2, request.UserID);
 
-                console.log(request_id);
 
                 temp_string += `<div class="friend-request liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
@@ -145,6 +134,11 @@ async function getRequestId(userId, requesterId) {
     }
 }
 
+/**
+ * function: acceptFriendRequest
+ * description: This function is used to accept a friend request. It takes the requestId as a parameter and sends a POST request to the user-api.php endpoint with the parameter 'acceptRequest' set to the requestId. If the request is successful, it reloads the list of friend requests by calling the loadAllRequests function. If there is an error, it logs the error to the console.
+ * @param {*} requestId 
+ */
 function acceptFriendRequest(requestId) {
     fetch(`../../api/user-api.php?acceptRequest=${requestId}`, {
         method: 'POST'
@@ -159,6 +153,12 @@ function acceptFriendRequest(requestId) {
         });
 }
 
+
+/**
+ * function: declineFriendRequest
+ * description: This function is used to decline a friend request. It takes the requestId as a parameter and sends a POST request to the user-api.php endpoint with the parameter 'declineRequest' set to the requestId. If the request is successful, it reloads the list of friend requests by calling the loadAllRequests function. If there is an error, it logs the error to the console.
+ * @param {*} requestId 
+ */
 function declineFriendRequest(requestId) {
     fetch(`../../api/user-api.php?declineRequest=${requestId}`, {
         method: 'POST'
@@ -173,14 +173,104 @@ function declineFriendRequest(requestId) {
         });
 }
 
-function loadFriendCount() {
-    fetch(`../../api/user-api.php?friends=true`)
+function openAddFriends() {
+    const addFriendsSection = document.getElementById('add-friends-section');
+
+    addFriendsSection.style.display = 'flex';
+    setTimeout(() => {
+        addFriendsSection.style.opacity = '1';
+    }, 100);
+
+}
+
+function searchUsers() {
+    const searchInput = document.getElementById('add-friends-search-input');
+    const query = searchInput.value.trim();
+
+    if (query.length === 0) {
+        return;
+    }
+
+    fetch(`../../api/user-api.php?searchUsers=${encodeURIComponent(query)}`)
         .then(response => response.json())
         .then(data => {
-            let friends = data.data;
-            document.getElementById('friend-count').innerText = friends.length + " Friends";
+            const users = data.data;
+
+            let temp_string = "";
+
+            users.forEach(user => {
+                temp_string += `
+                    <hr class="seperator-long">
+                    <div class="friend-found">
+                        <div class="friend-found-img-name">
+                            <div class="friend-found-img">
+                                <img src="../assets/images/demo-user.png" alt="demo user">
+                            </div>
+                            <p>${user.Name}</p>
+                        </div>
+                        <p class="request-button" onclick="sendFriendRequest(${user.UserID})">send request</p>
+                    </div>
+                `
+            });
+
+            document.getElementById('add-friends-friends-found').innerHTML = temp_string;
+
         })
         .catch(error => {
-            console.error('Error fetching friends:', error);
+            console.error('Error searching users:', error);
+        });
+}
+
+function closeAddFriends() {
+    const addFriendsSection = document.getElementById('add-friends-section');
+
+    addFriendsSection.style.opacity = '0';
+    setTimeout(() => {
+        addFriendsSection.style.display = 'none';
+    }, 300);
+
+    searchInput.value = "";
+
+}
+
+function sendFriendRequest(userId) {
+    fetch(`../../api/user-api.php?sendFriendRequest=${userId}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            closeAddFriends();
+        })
+        .catch(error => {
+            console.error('Error sending friend request:', error);
+        }
+        );
+}
+
+function loadBadgesFromUser(userId) {
+    fetch(`../../api/badge-api.php?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const badges = data.data;
+
+
+            let temp_string = "";
+
+            badges.forEach(badge => {
+                temp_string += `
+                        <div class="friend-badge">
+                            <div class="badge-img">
+                                <img src="../assets/images/music-badge.png" alt="music badge">
+                            </div>
+                            <p class="badge-name">${badge.BadgeName}</p>
+                        </div>
+                        `;
+            });
+
+            document.getElementById(`friend-${userId}-badges`).innerHTML = temp_string;
+        })
+        .catch(error => {
+            console.error('Error fetching badges:', error);
         });
 }
