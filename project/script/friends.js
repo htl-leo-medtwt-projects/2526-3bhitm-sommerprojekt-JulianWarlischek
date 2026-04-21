@@ -27,7 +27,7 @@ function loadAllFriends() {
                     </div>
 
                     <div class="friend-name">
-                        <h3>${friend.Name}</h3>
+                        <h3>${friend.name}</h3>
                     </div>
 
                     <div class="friend-badge-flex">
