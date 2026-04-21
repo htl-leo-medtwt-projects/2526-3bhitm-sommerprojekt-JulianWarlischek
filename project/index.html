@@ -7,7 +7,9 @@
     <title>AfterMemory</title>
     <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./style/global.css">
-    <script src="script/global.js" defer></script>
+    <link rel="stylesheet" href="./style/index.css">
+    <script src="./script/global.js" defer></script>
+    <script src="./script/index.js" defer></script>
 </head>
 
 <body>
@@ -97,6 +99,9 @@
                 <i class="fa-solid fa-pen"></i>
             </div>
         </div>
+        <div id="navigation-temp-box">
+
+        </div>
     </div>
 
     <div id="open-navigation">
@@ -106,7 +111,26 @@
     </div>
     <!-- Navigation end -->
 
+    <div id="home-landing-section" class="path-node">
+        <h1>After</h1>
+        <h1>Memory</h1>
 
+        <div id="slide-down-to-path" onclick="slideTo('#path-node-1')">
+            <p>Start memories</p>
+            <div id="slide-down-to-path-icon">
+                <i class="fa-solid fa-sort-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="path-system">
+        <div class="path-node" id="path-node-1">
+            
+        </div>
+        <div class="path-node" id="path-node-2">
+            
+        </div>
+    </div>
 </body>
 
 </html>

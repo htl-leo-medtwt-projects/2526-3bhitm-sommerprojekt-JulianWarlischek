@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 .opacity-overlay {
@@ -90,17 +91,23 @@ img {
 #navigation {
     display: flex;
     flex-direction: column;
+    gap: 1.25em;
     padding: 1em;
-    gap: 1em;
-    max-height: 100vh;
     width: 100%;
-    height: 100vh;
     position: fixed;
+    top: 0;
+    left: 0;
     transform: translateX(-100%);
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 1005;
     background-color: white;
-    overflow: scroll;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+#navigation-temp-box{
+    height: 100vh;
+    width: 100%;
 }
 
 #navigation>#navigation-header>a {
@@ -272,12 +279,14 @@ img {
     padding: 0.3em;
     border-radius: 50px;
     align-self: center;
-    margin-top: 13vh;
+    margin-top: auto;
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
     background-color: rgb(236, 236, 236);
     gap: 0.4em;
+    flex-shrink: 0;
+    min-height: 84px;
 }
 
 #navigation-profile-view-name-img {
@@ -289,7 +298,8 @@ img {
     background-color: white;
     padding: 0.6em 1.2em;
     font-size: 0.8em;
-    width: 80%;
+    flex: 1;
+    min-width: 0;
 }
 
 #navigation-profile-view-name-img img {
@@ -302,10 +312,12 @@ img {
     background-color: white;
     display: flex;
     justify-content: center;
-    padding: 1.2em;
     align-items: center;
     border-radius: 50%;
     font-size: 1.2em;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
 }
 
 .seperator{
