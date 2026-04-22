@@ -15,7 +15,6 @@ function loadAllFriends() {
             let temp_string = "";
 
             friends.forEach(friend => {
-                console.log(friend);
 
                 temp_string += `<div class="friend liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
@@ -30,10 +29,10 @@ function loadAllFriends() {
                         <h3>${friend.name}</h3>
                     </div>
 
-                    <div class="friend-badge-flex" id="friend-${friend.UserID}-badges">
+                    <div class="friend-badge-flex" id="friend-${friend.userid}-badges">
                     </div>
                 </div>`;
-                loadBadgesFromUser(friend.UserID);
+                loadBadgesFromUser(friend.userid);
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
             loadFriendCount();
@@ -87,10 +86,13 @@ async function loadAllRequests() {
             let requests = data.data;
             let temp_string = "";
 
+            console.log(data);
+            
+
             for (const request of requests) {
                 console.log(request);
 
-                const request_id = await getRequestId(2, request.UserID);
+                const request_id = await getRequestId(2, request.userid);
 
 
                 temp_string += `<div class="friend-request liquidGlass-wrapper">
@@ -196,6 +198,9 @@ function searchUsers() {
         .then(data => {
             const users = data.data;
 
+            console.log(data);
+            
+
             let temp_string = "";
 
             users.forEach(user => {
@@ -206,9 +211,9 @@ function searchUsers() {
                             <div class="friend-found-img">
                                 <img src="../assets/images/demo-user.png" alt="demo user">
                             </div>
-                            <p>${user.Name}</p>
+                            <p>${user.name}</p>
                         </div>
-                        <p class="request-button" onclick="sendFriendRequest(${user.UserID})">send request</p>
+                        <p class="request-button" onclick="sendFriendRequest(${user.userid})">send request</p>
                     </div>
                 `
             });
@@ -254,6 +259,8 @@ function loadBadgesFromUser(userId) {
         .then(data => {
             const badges = data.data;
 
+            console.log(userId);
+            
 
             let temp_string = "";
 
@@ -263,7 +270,7 @@ function loadBadgesFromUser(userId) {
                             <div class="badge-img">
                                 <img src="../assets/images/music-badge.png" alt="music badge">
                             </div>
-                            <p class="badge-name">${badge.BadgeName}</p>
+                            <p class="badge-name">${badge.badgename}</p>
                         </div>
                         `;
             });

@@ -13,14 +13,14 @@ function loadAllEvents() {
 
             events.forEach(event => {
                 temp_string += `
-                <div class="event liquidGlass-wrapper">
+                <div class="event liquidGlass-wrapper" onclick="openEvent(${event.event_id})">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
                     <div class="event-left">
-                        <h1>${event.Name}</h1>
-                        <p>${event.Event_Date}</p>
+                        <h1>${event.name}</h1>
+                        <p>${event.date}</p>
                     </div>
                     <div class="event-right">
                     </div>
@@ -33,3 +33,52 @@ function loadAllEvents() {
         .catch(error => console.error('Error fetching events:', error));
 }
 loadAllEvents();
+
+async function openEvent(eventId) {
+    const event = await fetchSingleEvent(eventId);
+
+    if (!event) {
+        return;
+    }
+
+    slideInEventDetailSlider();
+    loadDetailedEventInfo(event);
+}
+
+function loadDetailedEventInfo(event) {
+    console.log(event);
+
+    document.body.style.overflow = "hidden";
+
+    document.getElementById('event-title-header').innerText = event.name;
+}
+
+function slideInEventDetailSlider() {
+    const slider = document.getElementById("event-detail-slider");
+
+    slider.style.transform = "translateX(0)";
+}
+
+function closeEvent() {
+    slideOutEventDetailSlider();
+
+    document.body.style.overflow = "auto";
+}
+
+function slideOutEventDetailSlider() {
+    const slider = document.getElementById("event-detail-slider");
+
+    slider.style.transform = "translateX(100%)";
+}
+
+async function fetchSingleEvent(eventId) {
+    try {
+        const response = await fetch(`../../api/event-api.php?eventId=${eventId}`);
+        const data = await response.json();
+
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching event details:', error);
+        return null;
+    }
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,13 @@
     <script src="../script/global.js" defer></script>
     <script src="../script/events.js" defer></script>
 </head>
+
 <body>
     <!-- Navigation start -->
+    <div id="top-level-blur">
+        
+    </div>
+
     <div id="navigation">
         <div id="navigation-header">
             <a href="../index.html">AfterMemory</a>
@@ -150,5 +156,22 @@
             </div>
         </div>
     </div>
+
+    <div id="event-detail-slider">
+        <div id="event-details-header">
+            <div id="event-details-header-left">
+                <div id="close-detail-event-icon" onclick="closeEvent()">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <p id="event-title-header">Event Title</p>
+            </div>
+            <div id="event-details-header-right">
+                <div id="add-user-to-event-icon">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

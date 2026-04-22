@@ -1,7 +1,7 @@
 <?php
 require './database.php';
 
-$stmt = $conn->prepare("SELECT * FROM Event");
+$stmt = $conn->prepare("SELECT * FROM Event order by date desc");
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -16,7 +16,7 @@ $id = 2; // Simulates the logged in user with ID 2
 
 if(isset($_GET['eventId'])) {
 
-    $stmt = $conn->prepare("SELECT * FROM Event WHERE EventID = ?");
+    $stmt = $conn->prepare("SELECT * FROM Event WHERE Event_ID = ? ");
     $stmt->bind_param("i", $_GET['eventId']);
     $stmt->execute();
 
@@ -26,6 +26,8 @@ if(isset($_GET['eventId'])) {
     $answer["code"] = 200;
     $answer["message"] = "OK";
 }
+
+
 
 echo json_encode($answer);
 
