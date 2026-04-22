@@ -1,0 +1,313 @@
+{
+    "pathSystem": {
+        "id": "onboarding-tour",
+        "title": "AfterMemory App Tour",
+        "description": "A clickable journey through the most important app features.",
+        "version": "1.1.0",
+        "allowLinearNavigation": true,
+        "allowBackNavigation": true,
+        "startStepId": "step-home",
+        "progressStyle": {
+            "showPathLine": true,
+            "pathLineColor": "#9AA4B2",
+            "completedColor": "#2A9D8F",
+            "currentColor": "#E76F51",
+            "lockedColor": "#C9CED6"
+        }
+    },
+    "steps": [
+        {
+            "id": "step-home",
+            "order": 1,
+            "headline": "Welcome to AfterMemory",
+            "description": "This is your home screen and main navigation starting point.",
+            "backgroundInformation": "From here, users quickly access events, friends, and profile settings.",
+            "badge": "/images/badges/one-badge.png",
+            "route": {
+                "page": "index.html",
+                "anchor": "home-landing-section"
+            },
+            "navigation": {
+                "previousStepId": null,
+                "nextStepId": "step-events"
+            },
+            "style": {
+                "theme": "sunrise",
+                "accentColor": "#E76F51",
+                "cardBackground": "linear-gradient(135deg, #FFF1E6 0%, #FFD9C2 100%)",
+                "badgeShape": "circle",
+                "icon": "fa-house",
+                "layout": {
+                    "container": {
+                        "position": "relative",
+                        "minHeight": "520px"
+                    },
+                    "headline": {
+                        "position": "absolute",
+                        "top": "8%",
+                        "left": "8%",
+                        "maxWidth": "48%"
+                    },
+                    "description": {
+                        "position": "absolute",
+                        "top": "26%",
+                        "left": "10%",
+                        "maxWidth": "44%"
+                    },
+                    "backgroundInformation": {
+                        "position": "absolute",
+                        "bottom": "12%",
+                        "left": "8%",
+                        "maxWidth": "38%"
+                    },
+                    "badge": {
+                        "position": "absolute",
+                        "top": "14%",
+                        "right": "10%"
+                    },
+                    "controls": {
+                        "position": "absolute",
+                        "bottom": "8%",
+                        "right": "8%"
+                    }
+                }
+            }
+        },
+        {
+            "id": "step-events",
+            "order": 2,
+            "headline": "Discover Events",
+            "description": "Browse upcoming events and apply quick filters by time range.",
+            "backgroundInformation": "Events are where users plan moments and create future memories.",
+            "badge": "/images/badges/two-badge.png",
+            "route": {
+                "page": "pages/events.html",
+                "anchor": "main-content"
+            },
+            "navigation": {
+                "previousStepId": "step-home",
+                "nextStepId": "step-friends"
+            },
+            "style": {
+                "theme": "ocean",
+                "accentColor": "#118AB2",
+                "cardBackground": "linear-gradient(135deg, #E0F2FF 0%, #BDE3FF 100%)",
+                "badgeShape": "hexagon",
+                "icon": "fa-martini-glass-citrus",
+                "layout": {
+                    "container": {
+                        "position": "relative",
+                        "minHeight": "520px"
+                    },
+                    "headline": {
+                        "position": "absolute",
+                        "top": "12%",
+                        "right": "9%",
+                        "maxWidth": "42%"
+                    },
+                    "description": {
+                        "position": "absolute",
+                        "top": "34%",
+                        "right": "11%",
+                        "maxWidth": "40%"
+                    },
+                    "backgroundInformation": {
+                        "position": "absolute",
+                        "bottom": "10%",
+                        "left": "9%",
+                        "maxWidth": "46%"
+                    },
+                    "badge": {
+                        "position": "absolute",
+                        "top": "9%",
+                        "left": "8%"
+                    },
+                    "controls": {
+                        "position": "absolute",
+                        "bottom": "7%",
+                        "right": "8%"
+                    }
+                }
+            }
+        },
+        {
+            "id": "step-friends",
+            "order": 3,
+            "headline": "Manage Friends",
+            "description": "See friend lists, requests, and social groups in one place.",
+            "backgroundInformation": "The social area helps users connect and share activity across the app.",
+            "badge": "/images/badges/three-badge.png",
+            "route": {
+                "page": "pages/friends.html",
+                "anchor": "friends-main-section"
+            },
+            "navigation": {
+                "previousStepId": "step-events",
+                "nextStepId": "step-profile"
+            },
+            "style": {
+                "theme": "mint",
+                "accentColor": "#2A9D8F",
+                "cardBackground": "linear-gradient(135deg, #E7FFF7 0%, #C8F5E7 100%)",
+                "badgeShape": "rounded-square",
+                "icon": "fa-user-group",
+                "layout": {
+                    "container": {
+                        "position": "relative",
+                        "minHeight": "520px"
+                    },
+                    "headline": {
+                        "position": "absolute",
+                        "top": "10%",
+                        "left": "50%",
+                        "transform": "translateX(-50%)",
+                        "maxWidth": "60%",
+                        "textAlign": "center"
+                    },
+                    "description": {
+                        "position": "absolute",
+                        "top": "30%",
+                        "left": "12%",
+                        "maxWidth": "35%"
+                    },
+                    "backgroundInformation": {
+                        "position": "absolute",
+                        "top": "30%",
+                        "right": "10%",
+                        "maxWidth": "35%"
+                    },
+                    "badge": {
+                        "position": "absolute",
+                        "bottom": "16%",
+                        "left": "14%"
+                    },
+                    "controls": {
+                        "position": "absolute",
+                        "bottom": "8%",
+                        "right": "8%"
+                    }
+                }
+            }
+        },
+        {
+            "id": "step-profile",
+            "order": 4,
+            "headline": "Personalize Your Profile",
+            "description": "Edit personal settings, manage gallery content, and tune privacy options.",
+            "backgroundInformation": "The profile is the personal control center for identity and customization.",
+            "badge": "/images/badges/four-badge.png",
+            "route": {
+                "page": "pages/profile.html",
+                "anchor": "profile-flex"
+            },
+            "navigation": {
+                "previousStepId": "step-friends",
+                "nextStepId": "step-finish"
+            },
+            "style": {
+                "theme": "rose",
+                "accentColor": "#D1495B",
+                "cardBackground": "linear-gradient(135deg, #FFE8EF 0%, #FFD1DD 100%)",
+                "badgeShape": "diamond",
+                "icon": "fa-user",
+                "layout": {
+                    "container": {
+                        "position": "relative",
+                        "minHeight": "520px"
+                    },
+                    "headline": {
+                        "position": "absolute",
+                        "top": "9%",
+                        "left": "7%",
+                        "maxWidth": "55%"
+                    },
+                    "description": {
+                        "position": "absolute",
+                        "top": "28%",
+                        "left": "8%",
+                        "maxWidth": "34%"
+                    },
+                    "backgroundInformation": {
+                        "position": "absolute",
+                        "top": "24%",
+                        "right": "8%",
+                        "maxWidth": "42%"
+                    },
+                    "badge": {
+                        "position": "absolute",
+                        "bottom": "12%",
+                        "right": "11%"
+                    },
+                    "controls": {
+                        "position": "absolute",
+                        "bottom": "8%",
+                        "left": "8%"
+                    }
+                }
+            }
+        },
+        {
+            "id": "step-finish",
+            "order": 5,
+            "headline": "Tour Complete",
+            "description": "You now know the core areas. Start creating your first memory.",
+            "backgroundInformation": "This final step wraps up onboarding and encourages immediate action.",
+            "badge": "/images/badges/five-badge.png",
+            "route": {
+                "page": "index.html",
+                "anchor": "home-landing-section"
+            },
+            "navigation": {
+                "previousStepId": "step-profile",
+                "nextStepId": null
+            },
+            "style": {
+                "theme": "gold",
+                "accentColor": "#E9B949",
+                "cardBackground": "linear-gradient(135deg, #FFF8DB 0%, #FFE9A8 100%)",
+                "badgeShape": "star",
+                "icon": "fa-flag-checkered",
+                "layout": {
+                    "container": {
+                        "position": "relative",
+                        "minHeight": "520px"
+                    },
+                    "headline": {
+                        "position": "absolute",
+                        "top": "18%",
+                        "left": "50%",
+                        "transform": "translateX(-50%)",
+                        "maxWidth": "58%",
+                        "textAlign": "center"
+                    },
+                    "description": {
+                        "position": "absolute",
+                        "top": "39%",
+                        "left": "50%",
+                        "transform": "translateX(-50%)",
+                        "maxWidth": "48%",
+                        "textAlign": "center"
+                    },
+                    "backgroundInformation": {
+                        "position": "absolute",
+                        "bottom": "14%",
+                        "left": "50%",
+                        "transform": "translateX(-50%)",
+                        "maxWidth": "44%",
+                        "textAlign": "center"
+                    },
+                    "badge": {
+                        "position": "absolute",
+                        "top": "9%",
+                        "right": "9%"
+                    },
+                    "controls": {
+                        "position": "absolute",
+                        "bottom": "7%",
+                        "right": "8%"
+                    }
+                }
+            }
+        }
+    ]
+}

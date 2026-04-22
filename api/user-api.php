@@ -37,7 +37,7 @@ if (isset($_GET['friends'])) {
 
 if (isset($_GET['requests'])) {
 
-    $stmt = $conn->prepare("SELECT * FROM User u WHERE u.UserID IN (SELECT f.UserID1 FROM Friend_Request f WHERE f.UserID = ? and f.status = 'Pending')");
+    $stmt = $conn->prepare("SELECT * FROM User u WHERE u.UserID IN (SELECT f.UserID1 FROM Friend_Request f WHERE f.UserID = ? and lower(f.Status) = 'pending')");
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
@@ -51,7 +51,7 @@ if (isset($_GET['requests'])) {
 if (isset($_GET['acceptRequest'])) {
     $request_id = $_GET['acceptRequest'];
 
-    $stmt = $conn->prepare("UPDATE Friend_Request SET Status = 'Accepted' WHERE Friend_Request_ID = ?");
+    $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'accepted' WHERE Friend_Request_ID = ?");
     $stmt->bind_param("i", $request_id);
     $stmt->execute();
 
@@ -68,7 +68,7 @@ if (isset($_GET['acceptRequest'])) {
 if (isset($_GET['declineRequest'])) {
     $request_id = $_GET['declineRequest'];
 
-    $stmt = $conn->prepare("UPDATE Friend_Request SET Status = 'Declined' WHERE Friend_Request_ID = ?");
+    $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'declined' WHERE Friend_Request_ID = ?");
     $stmt->bind_param("i", $request_id);
     $stmt->execute();
 
@@ -80,7 +80,7 @@ if (isset($_GET['getRequestId'])) {
     $userId = $_GET['userId'];
     $requesterId = $_GET['requesterId'];
 
-    $stmt = $conn->prepare("SELECT Friend_Request_ID FROM Friend_Request WHERE UserID = ? AND UserID1 = ? AND Status = 'Pending'");
+    $stmt = $conn->prepare("SELECT Friend_Request_ID FROM Friend_Request WHERE UserID = ? AND UserID1 = ? AND lower(Status) = 'pending'");
     $stmt->bind_param("ii", $userId, $requesterId);
     $stmt->execute();
 

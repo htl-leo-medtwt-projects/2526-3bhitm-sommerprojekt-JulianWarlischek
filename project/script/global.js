@@ -1,8 +1,9 @@
 /**
  * Global JavaScript file for the project.
  * 
- * This file contains JavaScript code that is used across the entire project. It includes functions and event listeners that are necessary for the overall functionality of the website.
- */
+ * @author Julian Warlischek
+ * @description This file contains global functions and variables that are used throughout the project. It is included in all pages to provide common functionality and ensure consistency across the website.
+*/
 
 // Resolve the project root from the loaded global.js script URL.
 const projectRootUrl = (() => {
@@ -29,9 +30,11 @@ function toggleNavigation() {
     if (navigation.style.transform === "translateX(0%)") {
         navigation.style.transform = "translateX(-100%)";
         spinToggleButton(0);
+        document.body.style.overflow = "auto"; // Re-enable scrolling when the navigation is closed
     } else {
         navigation.style.transform = "translateX(0%)";
         spinToggleButton(1);
+        document.body.style.overflow = "hidden"; // Disable scrolling when the navigation is open
     }
 }
 
