@@ -77,6 +77,15 @@
     padding: 1em;
     padding-left: 2em;
     background-color: white;
+    position: relative;
+}
+
+.admin-event-icon{
+    position: absolute;
+    bottom: 0.5em;
+    right: 0.5em;
+    color: gold;
+    font-size: 1.2em;
 }
 
 .event{
@@ -479,7 +488,7 @@
     overflow: hidden;
 }
 
-.drink, .snack, .game{
+.drink, .snack, .game, .shared-user{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -516,3 +525,19 @@
     height: 0;
 }
 
+.shared-user-img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.shared-user-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

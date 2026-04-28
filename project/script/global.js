@@ -150,3 +150,9 @@ function getCorrectEventDurationFormat(durationInHours) {
         return `${Math.round(durationInHours)} Hours`;
     }
 }
+
+/* LOGIN/CHECK */
+
+function checkUserStatus(){
+    fetch(`../../api/user-there-check.php`)
+}

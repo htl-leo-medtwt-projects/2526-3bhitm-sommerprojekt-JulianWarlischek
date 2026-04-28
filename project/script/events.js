@@ -3,6 +3,7 @@
  * @author Julian Warlischek
  */
 let activeEventId = null;
+let userId = 2; // This should be dynamically set based on the logged-in user
 
 
 function loadAllEvents() {
@@ -24,8 +25,11 @@ function loadAllEvents() {
 
                     <div class="event-left">
                         <h1>${event.name}</h1>
-                        <p>${event.startDate.split(' ')[0]}</p>
-                    </div>
+                        <p>${event.startDate.split(' ')[0]}</p>`
+                    + (userId === event.master_userid ? `<div class='admin-event-icon'>
+                            <i class="fa-solid fa-crown"></i>
+                        </div>` : "") +
+                    `</div>
                     <div class="event-right">
                     </div>
                 </div>
@@ -63,6 +67,7 @@ async function loadDetailedEventInfo(event) {
     loadUsersPerEventCount(event.event_id);
 
     showDrinks(event.event_id);
+    setActiveClass(document.getElementsByClassName('drinks-snacks-games-images-shared-with-grid-nav-item')[0], 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active');
 
     document.getElementById('event-title-header').innerText = event.name;
     document.getElementById('event-info-headline').innerText = event.name;
@@ -283,14 +288,15 @@ async function showShared(event_id) {
 
         temp_string += `
                 <div class="shared-user">
-                    <div class='shared-user-img'>
-                        <img src="../assets/images/demo-user.png" alt="demo user">
+                    <div class='shared-user-info'>
+                        <div class='shared-user-img'>
+                            <img src="../assets/images/demo-user.png" alt="demo user">
+                        </div>
+                        <p>${user.username}</p>
                     </div>
-                    <p>${user.username}</p>
                 </div>
                 ` + (count !== data.data.length ? `<hr class="shared-divider">` : "");
     }
 
     document.getElementById('drinks-snacks-games-images-shared-with-content').innerHTML = temp_string;
-    
 }
