@@ -1,28 +1,30 @@
 <?php
-session_start();
+$answer = [
+    "code" => 200,
+    "message" => "OK",
+    "data" => null
+];
 
 if(isset($_SESSION['user_id'])){
 
     $id = $_SESSION['user_id'];
 
-    if($id == null){
-        echo json_encode([
-            "code" => 200,
-            "message" => "User is not logged in",
-            "data" => false
-        ]);
-        return;
+    if($id == -1){
+        $answer["data"] = -1;
+        $answer["message"] = "User is not logged in";
+        $answer["code"] = 401;
+        
+    }else{
+        $answer["data"] = $id;
+        $answer["message"] = "User is logged in";
+        $answer["code"] = 200;
     }
-
-    echo json_encode([
-        "code" => 200,
-        "message" => "User is logged in",
-        "data" => true
-    ]);
 } else {
-    echo json_encode([
-        "code" => 200,
-        "message" => "User is not logged in",
-        "data" => false
-    ]);
+    $answer["data"] = -1;
+    $answer["message"] = "User is not logged in";
+    $answer["code"] = 401;
+
+    $_SESSION['user_id'] = -1;
 }
+
+echo json_encode($answer);

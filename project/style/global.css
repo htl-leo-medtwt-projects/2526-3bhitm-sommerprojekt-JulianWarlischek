@@ -116,8 +116,11 @@ img {
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 1007;
     background-color: white;
-    height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-bottom: 4rem;
 }
 
 #navigation-temp-box {
@@ -359,4 +362,35 @@ img {
     pointer-events: none;
     background: #ffffff;
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+#navigation-login-register{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5em;
+    width: 90%;
+    align-self: center;
+    margin-top: auto;
+}
+
+#navigation-login-register>div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-family: "komet", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#navigation-login-register-login{
+    background-color: dodgerblue;
+    color: white;
+}
+
+#navigation-login-register-register{
+    border: 2px solid black;
+    color: black;
 }

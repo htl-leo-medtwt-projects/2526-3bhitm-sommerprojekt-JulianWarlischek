@@ -16,6 +16,12 @@ const projectRootUrl = (() => {
     return new URL("../", globalScript.src);
 })();
 
+const apiRootUrl = new URL("../api/", projectRootUrl);
+
+function apiUrl(path) {
+    return new URL(path, apiRootUrl).href;
+}
+
 
 
 /**
@@ -75,7 +81,7 @@ function setActiveClass(element, className, activeClassName) {
  * description: This function fetches the list of friends from the user-api.php endpoint and updates the friend count displayed on the page. It sends a GET request to the endpoint with the parameter 'friends' set to true. If the request is successful, it retrieves the list of friends from the response and updates the inner text of the element with id 'friend-count' to show the number of friends. If there is an error, it logs the error to the console.
  */
 function loadFriendCount() {
-    fetch(`../../api/user-api.php?friends=true`)
+    fetch(apiUrl(`user-api.php?friends=true`))
         .then(response => response.json())
         .then(data => {
             let friends = data.data;
@@ -87,11 +93,11 @@ function loadFriendCount() {
 }
 
 function loadUsersPerEventCount(eventId) {
-    fetch(`../../api/event-api.php?userPerEvent=${eventId}`)
+    fetch(apiUrl(`event-api.php?userPerEvent=${eventId}`))
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            
+
             document.getElementById('event-info-details-shared-with-count').innerText = data.data.count;
             document.getElementById('event-shared-with-text').innerText = data.data.count + " People";
         })
@@ -136,7 +142,7 @@ function calculateEventDuration(startDate, endDate) {
 
     const durationInMs = end - start;
     const durationInHours = durationInMs / (1000 * 60 * 60);
-    
+
     return durationInHours;
 }
 
@@ -144,7 +150,7 @@ function getCorrectEventDurationFormat(durationInHours) {
     if (durationInHours < 1) {
         const durationInMinutes = Math.round(durationInHours * 60);
         return `${durationInMinutes} Minutes`;
-    } else if(durationInHours > 24) {
+    } else if (durationInHours > 24) {
         return `${Math.round(durationInHours / 24)} Days`;
     } else {
         return `${Math.round(durationInHours)} Hours`;
@@ -153,6 +159,55 @@ function getCorrectEventDurationFormat(durationInHours) {
 
 /* LOGIN/CHECK */
 
-function checkUserStatus(){
-    fetch(`../../api/user-there-check.php`)
+function checkUserStatus() {
+    fetch(apiUrl(`login-register/user-there-check.php`))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            if (data.data != -1) {
+                fetch(apiUrl(`user-api.php?userId=${data.data}`))
+                    .then(response => response.json())
+                    .then(userData => {
+
+                        document.getElementById('navigation').innerHTML += `
+                <div id="navigation-profile-view" class="liquidGlass-wrapper">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div id="navigation-profile-view-name-img">
+                        <div id="navigation-profile-view-img">
+                            <img src="./assets/images/demo-user.png" alt="demo user">
+                        </div>
+                        <h2>${userData.data.username}</h2>
+                    </div>
+                    <div id="navigation-profile-edit">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                </div>
+                `
+                    })
+            } else {
+                document.getElementById('navigation').innerHTML += `
+                <div id="navigation-login-register">
+                    <div id="navigation-login-register-login" onclick="navigationTo('pages/login.html')">
+                        <p>Login</p>
+                    </div>
+                    <div id="navigation-login-register-register" onclick="navigationTo('pages/register.html')">
+                        <p>Register</p>
+                    </div>
+                </div>
+                `
+            }
+
+            return data.data;
+
+        })
+        .catch(error => {
+            console.error('Error checking user status:', error);
+        });
 }
+
+checkUserStatus();
+

@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Register</title>
+    <title>Login</title>
+    <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
     <script src="../script/global.js" defer></script>
-    
     <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/register-login.css">
 </head>
 <body>
     <!-- Navigation start -->
     <div id="top-level-blur">
-
+        
     </div>
-
     <div id="navigation">
         <div id="navigation-header">
             <a href="../index.html">AfterMemory</a>
@@ -83,21 +83,6 @@
                 <div class="opacity-overlay"></div>
             </div>
         </div>
-        <div id="navigation-profile-view" class="liquidGlass-wrapper">
-            <div class="liquidGlass-effect"></div>
-            <div class="liquidGlass-tint"></div>
-            <div class="liquidGlass-shine"></div>
-
-            <div id="navigation-profile-view-name-img">
-                <div id="navigation-profile-view-img">
-                    <img src="../assets/images/demo-user.png" alt="demo user">
-                </div>
-                <h2>Luca Ebner</h2>
-            </div>
-            <div id="navigation-profile-edit">
-                <i class="fa-solid fa-pen"></i>
-            </div>
-        </div>
     </div>
 
     <div id="open-navigation">
@@ -106,5 +91,7 @@
         </div>
     </div>
     <!-- Navigation end -->
+
+
 </body>
 </html>

@@ -1,21 +1,29 @@
+<?php
+session_start();
+
+if(isset($_SESSION['register_error'])){
+    
+    unset($_SESSION['register_error']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friends</title>
+    <title>Register</title>
     <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../style/global.css">
-    <link rel="stylesheet" href="../style/friends.css">
     <script src="../script/global.js" defer></script>
-    <script src="../script/friends.js" defer></script>
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/register-login.css">
 </head>
 
 <body>
     <!-- Navigation start -->
     <div id="top-level-blur">
-        
+
     </div>
     <div id="navigation">
         <div id="navigation-header">
@@ -95,64 +103,67 @@
     </div>
     <!-- Navigation end -->
 
-    <div id="friends-profile" onclick="navigationTo('pages/profile.html')">
-        <img src="../assets/images/demo-user.png" alt="demo user">
-    </div>
-
-    <div id="friends-main-section">
-        <div id="friends-main-section-header">
-            <div id="friends-main-section-summary">
-                <h2>Your friends</h2>
-                <h3 id="friend-count"></h3>
-            </div>
-            <div id="friends-main-section-add" onclick="openAddFriends()">
-                <i class="fa-solid fa-plus"></i>
-            </div>
+    <div id="register-box">
+        <div id="register-header">
+            <h2>Register</h2>
+            <p>Register to start your experience</p>
         </div>
-        <div id="friends-main-section-main-content">
-            <div id="friends-main-section-navigation">
-                <div class="friends-main-section-nav-item active-friends-nav-item"
-                    onclick="setActiveClass(this,'friends-main-section-nav-item', 'active-friends-nav-item'); setFriendsMainSection('grid');">
-                    <p>Friend list</p>
+
+        <form id="register-form" action="../../api/login-register/register.php" method="POST">
+            <div class="register-form-part-box liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="register-form-item">
+                    <label for="register-username">Username</label>
+                    <input name="register-username" type="text" id="register-username" placeholder="Username" required>
                 </div>
-                <div class="friends-main-section-nav-item"
-                    onclick="setActiveClass(this,'friends-main-section-nav-item', 'active-friends-nav-item'); setFriendsMainSection('flex1');">
-                    <p>Friend requests</p>
+                <div class="register-form-part-box-align-row">
+                    <div class="register-form-item">
+                        <label for="register-firstname">Firstname</label>
+                        <input name="register-firstname" type="text" id="register-firstname" placeholder="Firstname"
+                            required>
+                    </div>
+                    <div class="register-form-item">
+                        <label for="register-lastname">Lastname</label>
+                        <input name="register-lastname" type="text" id="register-lastname" placeholder="Lastname"
+                            required>
+                    </div>
                 </div>
-                <div class="friends-main-section-nav-item"
-                    onclick="setActiveClass(this,'friends-main-section-nav-item', 'active-friends-nav-item'); setFriendsMainSection('flex2');">
-                    <p>Groups</p>
+            </div>
+            <div class="register-form-part-box liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="register-form-item">
+                    <label for="register-email">Email</label>
+                    <input name="register-email" type="email" id="register-email" placeholder="Email" required>
+                </div>
+                <div class="register-form-item">
+                    <label for="register-dob">When were you born?</label>
+                    <input name="register-dob" type="date" id="register-dob" required>
                 </div>
             </div>
-            <div id="friends-main-section-content">
+            <div class="register-form-part-box liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
 
-            </div>
-        </div>
-    </div>
-
-    <div id="add-friends-section">
-        <div id="add-friends-flex-container" class="liquidGlass-wrapper">
-
-            <div id="close-friends-flex-container" onclick="closeAddFriends()">
-                <i class="fa-solid fa-xmark"></i>
-            </div>
-
-            <div class="liquidGlass-effect-less-blur"></div>
-            <div class="liquidGlass-tint-less-blur"></div>
-            <div class="liquidGlass-shine-less-blur"></div>
-            <h3>Add Friends</h3>
-
-            <div id="add-friends-search-bar">
-                <div id="add-friends-search-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="register-form-item">
+                    <label for="register-password">Password</label>
+                    <input name="register-password" type="password" id="register-password" placeholder="Password"
+                        required>
                 </div>
-                <input type="text" placeholder="Search ..." id="add-friends-search-input" oninput="searchUsers()">
+                <div class="register-form-item">
+                    <label for="register-password-repeat">Repeat Password</label>
+                    <input name="register-password-repeat" type="password" id="register-password-repeat"
+                        placeholder="Repeat Password" required>
+                </div>
             </div>
-
-            <div id="add-friends-friends-found">
-                
-            </div>
-        </div>
+            <input type="submit" value="Register" name="submit">
+        </form>
     </div>
 </body>
 

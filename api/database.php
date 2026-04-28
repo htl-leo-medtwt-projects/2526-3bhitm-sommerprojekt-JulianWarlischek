@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $_db_host = 'db_server';
 $_db_username = 'so26';
 $_db_password = 'projekt';
