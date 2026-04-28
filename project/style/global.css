@@ -66,6 +66,21 @@ img {
         inset -2px -2px 4px rgba(255, 255, 255, 0.2);
 }
 
+.liquidGlass-effect-medium-blur {
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.liquidGlass-tint-medium-blur {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.liquidGlass-shine-medium-blur {
+    box-shadow:
+        inset 1.8px 1.8px 3.5px rgba(255, 255, 255, 0.7),
+        inset -1.8px -1.8px 3.5px rgba(255, 255, 255, 0.35);
+}
+
 .liquidGlass-effect-less-blur {
     backdrop-filter: blur(0.5px);
     -webkit-backdrop-filter: blur(0.5px);
@@ -82,7 +97,7 @@ img {
 }
 
 /* CONTENT IMMER OBEN */
-.liquidGlass-wrapper>*:not(.liquidGlass-effect):not(.liquidGlass-tint):not(.liquidGlass-shine):not(.opacity-overlay) {
+.liquidGlass-wrapper>*:not(.liquidGlass-effect):not(.liquidGlass-tint):not(.liquidGlass-shine):not(.opacity-overlay):not(.liquidGlass-effect-less-blur):not(.liquidGlass-tint-less-blur):not(.liquidGlass-shine-less-blur) {
     position: relative;
     z-index: 3;
 }

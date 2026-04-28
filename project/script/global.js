@@ -61,7 +61,7 @@ function navigationTo(page) {
     window.location.href = new URL(page, projectRootUrl).href;
 }
 
-function setActiveClass(element,className, activeClassName) {
+function setActiveClass(element, className, activeClassName) {
     const navItems = document.querySelectorAll(`.${className}`);
     navItems.forEach(item => {
         item.classList.remove(activeClassName);
@@ -84,4 +84,69 @@ function loadFriendCount() {
         .catch(error => {
             console.error('Error fetching friends:', error);
         });
+}
+
+function loadUsersPerEventCount(eventId) {
+    fetch(`../../api/event-api.php?userPerEvent=${eventId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            
+            document.getElementById('event-info-details-shared-with-count').innerText = data.data.count;
+            document.getElementById('event-shared-with-text').innerText = data.data.count + " People";
+        })
+        .catch(error => {
+            console.error('Error fetching users for event:', error);
+        });
+}
+
+/* DATE FORMAT METHODS */
+function parseDate(dateString) {
+    const date = new Date(dateString);
+    return date;
+}
+
+function getDayOfMonth(date) {
+    return date.getDate();
+}
+
+function getMonth(date) {
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return monthNames[date.getMonth()];
+}
+
+function getYear(date) {
+    return date.getFullYear();
+}
+
+function getDayOfWeek(date) {
+    const dayNames = [
+        "Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday"
+    ];
+    return dayNames[date.getDay()];
+}
+
+function calculateEventDuration(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const durationInMs = end - start;
+    const durationInHours = durationInMs / (1000 * 60 * 60);
+    
+    return durationInHours;
+}
+
+function getCorrectEventDurationFormat(durationInHours) {
+    if (durationInHours < 1) {
+        const durationInMinutes = Math.round(durationInHours * 60);
+        return `${durationInMinutes} Minutes`;
+    } else if(durationInHours > 24) {
+        return `${Math.round(durationInHours / 24)} Days`;
+    } else {
+        return `${Math.round(durationInHours)} Hours`;
+    }
 }

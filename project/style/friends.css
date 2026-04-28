@@ -48,6 +48,9 @@
     background-color: white;
     z-index: 5;
     height: 75px;
+    font-family: 'komet', sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .friends-main-section-nav-item{
@@ -119,9 +122,10 @@
 
 .friend-badge-flex{
     display: flex;
-    gap: 0.5em;
+    gap: 0.2em;
     align-items: center;
     justify-content: center;
+    width: 100%;
     justify-self: center; 
 }
 
@@ -130,12 +134,14 @@
     flex-direction: row;
     gap: 0.3em;
     align-items: center;
-    justify-content: center;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .badge-img{
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
 }
 
 .badge-name{
@@ -143,6 +149,11 @@
     font-weight: 400;
     font-style: normal;
     font-size: 0.8em;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .friend-request-info{

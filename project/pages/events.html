@@ -15,7 +15,7 @@
 <body>
     <!-- Navigation start -->
     <div id="top-level-blur">
-        
+
     </div>
 
     <div id="navigation">
@@ -105,7 +105,7 @@
     </div>
 
     <div id="open-navigation">
-        <div id="open-navigation-icon"onclick="toggleNavigation()">
+        <div id="open-navigation-icon" onclick="toggleNavigation()">
             <i class="fa-solid fa-bars"></i>
         </div>
     </div>
@@ -155,6 +155,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <div id="event-detail-slider">
@@ -171,7 +173,145 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div id="event-details-main-image">
+            <div class="opacity-overlay"></div>
+            <div id="event-info-headline-date-desc">
+                <div id="event-info-date-card">
+                    <p id="date-card-month">Mai</p>
+                    <p id="date-card-day">08</p>
+                    <p id="date-card-year">2026</p>
+                </div>
+                <div id="event-info-headline-desc">
+                    <h3 id="event-info-headline">Event headline</h3>
+                    <p id="event-info-desc">Event description</p>
+                    <div id="event-shared-with" class="liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+
+                        <div id="event-shared-with-content">
+                            <div id="shared-with-icon">
+                                <i class="fa-solid fa-user-group"></i>
+                            </div>
+                            <p id="event-shared-with-text">Shared with 3 friends</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="event-info-flex">
+            <div class="event-info" id="event-info-full-description-box">
+                <div class="event-info-header">
+                    <div class="event-info-header-icon">
+                        <i class="fa-regular fa-newspaper"></i>
+                    </div>
+                    <p>Description</p>
+                </div>
+                <p id="event-info-full-description"></p>
+            </div>
+            <div id="event-info-grid">
+                <div class="event-info" id="event-info-date-box">
+                    <div class="event-info-header">
+                        <div class="event-info-header-icon">
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </div>
+                        <p>Date</p>
+                    </div>
+                    <p id="event-info-date"></p>
+                    <p id="event-info-time"></p>
+                </div>
+                <div class="event-info">
+                    <div class="event-info-header">
+                        <div class="event-info-header-icon">
+                            <i class="fa-solid fa-person-dress"></i>
+                        </div>
+                        <p>Dress Code</p>
+                    </div>
+                    <p id="event-info-dress-code"></p>
+                </div>
+                <div class="event-info">
+                    <div class="event-info-header">
+                        <div class="event-info-header-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <p>Duration</p>
+                    </div>
+                    <p id="event-info-duration"></p>
+                </div>
+                <div class="event-info" id="event-info-ranking-box">
+                    <div class="event-info-header">
+                        <div class="event-info-header-icon">
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <p>Ranking</p>
+                    </div>
+                    <p id="event-info-ranking"></p>
+                </div>
+            </div>
+            <div class="event-info" id="event-info-location-box">
+                <div class="event-info-header">
+                    <div class="event-info-header-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <p>Location</p>
+                </div>
+                <p id="event-info-location-name"></p>
+                <p id="event-info-location-description"></p>
+            </div>
+            <div class="event-info" id="event-info-event-details-grid">
+                <div class="event-info-grid-item" id="event-info-details-shared-with">
+                    <div class="event-info-grid-item-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <p id="event-info-details-shared-with-count"></p>
+                    <p class="event-info-grid-item-text">shared</p>
+                </div>
+                <div class="event-info-grid-item" id="event-info-details-created-at-box">
+                    <div class="event-info-grid-item-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <p id="event-info-details-date-created-on"></p>
+                    <p class="event-info-grid-item-text">created at</p>
+                </div>
+            </div>
+
+            <div class="event-info" id="drinks-snacks-games-images-shared-with-event-info">
+                <div id="drinks-snacks-games-images-shared-with-grid-nav">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item active" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showDrinks(activeEventId);">
+                        <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
+                            <i class="fa-solid fa-martini-glass-citrus"></i>
+                        </div>
+                        <p>Drinks</p>
+                    </div>
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showSnacks(activeEventId);">
+                        <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
+                            <i class="fa-solid fa-burger"></i>
+                        </div>
+                        <p>Snacks</p>
+                    </div>
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showGames(activeEventId);">
+                        <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
+                            <i class="fa-solid fa-dice"></i>
+                        </div>
+                        <p>Games</p>
+                    </div>
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showImages(activeEventId);">
+                        <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <p>Images</p>
+                    </div>
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showShared(activeEventId);">
+                        <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <p>Shared</p>
+                    </div>
+                </div>
+                <div id="drinks-snacks-games-images-shared-with-content">
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

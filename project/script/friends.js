@@ -26,7 +26,7 @@ function loadAllFriends() {
                     </div>
 
                     <div class="friend-name">
-                        <h3>${friend.name}</h3>
+                        <h3>${friend.username}</h3>
                     </div>
 
                     <div class="friend-badge-flex" id="friend-${friend.userid}-badges">
@@ -106,7 +106,7 @@ async function loadAllRequests() {
                         </div>
 
                         <div class="friend-name">
-                            <h3>${request.Name}</h3>
+                            <h3>${request.username}</h3>
                         </div>
                     </div>
                     <div class="friend-request-buttons">
@@ -211,7 +211,7 @@ function searchUsers() {
                             <div class="friend-found-img">
                                 <img src="../assets/images/demo-user.png" alt="demo user">
                             </div>
-                            <p>${user.name}</p>
+                            <p>${user.username}</p>
                         </div>
                         <p class="request-button" onclick="sendFriendRequest(${user.userid})">send request</p>
                     </div>
@@ -259,21 +259,20 @@ function loadBadgesFromUser(userId) {
         .then(data => {
             const badges = data.data;
 
-            console.log(userId);
-            
-
             let temp_string = "";
 
-            badges.forEach(badge => {
+            for(let i = 0; i < badges.length && i < 2; i++) {
+                const badge = badges[i];
+
                 temp_string += `
                         <div class="friend-badge">
                             <div class="badge-img">
-                                <img src="../assets/images/music-badge.png" alt="music badge">
+                                <img src="../${badge.badgepath}" alt="music badge">
                             </div>
                             <p class="badge-name">${badge.badgename}</p>
                         </div>
                         `;
-            });
+            }
 
             document.getElementById(`friend-${userId}-badges`).innerHTML = temp_string;
         })

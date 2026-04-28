@@ -125,9 +125,13 @@
     position: fixed;
     top: 0;
     left: 0;
-    min-height: 100vh;
+    height: 100vh;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4rem;
+    box-sizing: border-box;
 }
 
 #event-details-header{
@@ -138,11 +142,15 @@
     gap: 1em;
     width: 100vw;
     align-items: center;
-    padding: 2em;
-    height: 60px;
+    padding: 0.8em 1.5em;
     font-family: "komet", sans-serif;
     font-weight: 700;
     font-style: normal;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 2111;
+    background-color: white;
 }
 
 #event-details-header-left{
@@ -160,3 +168,351 @@
     justify-content: space-between;
     gap: 1em;
 }
+
+#event-details-main-image{
+    width: 100vw;
+    height: 35vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 2em;
+    align-items: center;
+    background: url('../assets/images/demo-party.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#event-details-main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#event-info-headline-date-desc{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+#event-info-date-card{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6em 1.5em;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.112);
+}
+
+#date-card-day{
+    font-family: "komet", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+}
+
+#date-card-month{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.9em;
+    color: red;
+    text-transform: uppercase;
+}
+
+#date-card-year{
+    font-family: "komet", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 0.9em;
+}
+
+#event-info-headline-date-desc{
+    position: relative;
+    z-index: 3;
+}
+
+#event-info-headline-desc{
+    color: white;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-self: flex-start;
+}
+
+#event-info-headline{
+    color: white;
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+}
+
+#event-info-headline{
+    color: white;
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+}
+
+#event-info-desc{
+    color: white;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.9em;
+    width: 20ch;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#event-shared-with{
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1111;
+    position: relative;
+    width: fit-content;
+}
+
+#event-shared-with-content{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    padding: 0.7em;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.6em;
+    z-index: 1111;
+}
+
+.event-info{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.112);
+    width: 90%;
+    border-radius: 10px;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.event-info-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#event-info-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    margin-top: -60px;
+    position: relative;
+    z-index: 1111;
+}
+
+#event-info-full-description{
+    height: 70px;
+    overflow: scroll;
+}
+
+#event-info-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 90%;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+#event-info-grid>div{
+    width: 100%;
+    height: 120px;
+}
+
+#event-info-grid>div:nth-child(3), #event-info-grid>div:nth-child(4){
+    height: 90px;    
+}
+
+.event-info > p{
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.8em;
+}
+
+#event-info-location-name{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#event-info-location-box .event-info-header-icon{
+    color: red;
+}
+
+#event-info-ranking-box .event-info-header-icon{
+    color: #ffb846;
+}
+
+#event-info-date-box .event-info-header-icon{
+    color: rgb(149, 202, 255);
+}
+
+#event-info-event-details-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+.event-info-grid-item{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2em;
+}
+
+#event-info-details-shared-with .event-info-grid-item-icon{
+    color: rgb(92, 198, 92);
+    font-family: "komet-sc", sans-serif;
+    font-style: normal;
+    font-size: 1.2em;
+}
+
+#event-info-details-shared-with .event-info-grid-item-text{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.8em;
+}
+
+#event-info-details-shared-with-count,
+#event-info-details-date-created-on{
+    font-weight: 700;
+}
+
+.event-info-grid-item:nth-child(1){
+    border-right: 1px solid rgb(146, 146, 146);
+}
+
+.event-info-grid-item p:nth-child(1){
+    font-family: "komet-sc", sans-serif;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 1.3em;
+}
+
+#event-info-details-created-at-box .event-info-grid-item{
+    color: violet;
+}
+
+#drinks-snacks-games-images-shared-with-grid-nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0.5em;
+}
+
+.drinks-snacks-games-images-shared-with-grid-nav-item{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 0.5em;
+    flex: 1;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    height: 100%;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.drinks-snacks-games-images-shared-with-grid-nav-item > p{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 0.8em;
+}
+
+.drinks-snacks-games-images-shared-with-grid-nav-item.active{
+    color: red;
+    border-bottom: 1px solid red;
+}
+
+#drinks-snacks-games-images-shared-with-event-info{
+    padding: 0;
+    overflow: hidden;
+}
+
+.drink, .snack, .game{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+}
+
+.drink-name-description, .snack-name-description, .game-name-description{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.8em;
+}
+
+.drink-name-description > p, .snack-name-description > p, .game-name-description > p{
+    color: rgb(98, 98, 98);
+}
+
+#drinks-snacks-games-images-shared-with-content{
+    height: 40vh;
+    overflow: scroll;
+
+}
+
+.drink-divider, .snack-divider, .game-divider{
+    display: block;
+    width: 85%;
+    margin: 0.25rem auto 0.5rem;
+    border: 0;
+    border-top: 1px solid rgb(159, 159, 159);
+    height: 0;
+}
+
