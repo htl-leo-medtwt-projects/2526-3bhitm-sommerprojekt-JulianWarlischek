@@ -1,4 +1,4 @@
-#register-box{
+#register-box, #login-box{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,13 +8,13 @@
     gap: 1em;
 }
 
-#register-header{
+#register-header, #login-header{
     display: flex;
     flex-direction: column;
     gap: 0.5em;
 }
 
-#register-header>h2{
+#register-header>h2, #login-header>h2{
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -22,28 +22,28 @@
     color: dodgerblue;
 }  
 
-#register-header>p{
+#register-header>p, #login-header>p{
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
 }
 
-#register-form{
+#register-form, #login-form{
     display: flex;
     flex-direction: column;
     gap: 1em;
     width: 80vw;
 }
 
-.register-form-item{
+.register-form-item, .login-form-item{
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 0.2em;
 }
 
-.register-form-part-box{
+.register-form-part-box, .login-form-part-box{
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -100,4 +100,124 @@ input[type="submit"]{
     font-weight: 400;
     font-style: normal;
     cursor: pointer;
+}
+
+.switch-login-register-mode-link{
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.7em;
+    color: dodgerblue;
+    text-align: center;
+}
+
+#badge-select-box{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.5em;
+    border: 2px solid dodgerblue;
+}
+
+#badge-add-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: dodgerblue;
+}
+
+#badge-select-slider{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(241, 241, 241, 0.449);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+}
+
+#close-badge-select-slider{
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    color: black;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0.35em 0.5em;
+    border-radius: 50%;
+}
+
+#inner-select-slider{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;   
+}
+
+#inner-select-slider>h3{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+    color: dodgerblue;
+}
+
+#badge-slider{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    width: 100vw;
+    padding: 1em;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+.badge-select-item{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    flex-shrink: 0;
+    transition: all 0.4s ease-in-out;
+}
+
+.badge-select-item-img{
+    width: 100px;
+    height: 100px;
+}
+
+.badge-select-item-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    align-items: center;
+    justify-content: center;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    padding: 0.5em;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background-color: transparent;
+}
+
+.badge-selected{
+    transform: scale(1.05);
 }

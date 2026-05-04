@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,11 @@
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/register-login.css">
 </head>
+
 <body>
     <!-- Navigation start -->
     <div id="top-level-blur">
-        
+
     </div>
     <div id="navigation">
         <div id="navigation-header">
@@ -57,7 +59,7 @@
                     <p>Home</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -66,7 +68,7 @@
                     <p>Events</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -92,6 +94,31 @@
     </div>
     <!-- Navigation end -->
 
+    <div id="login-box">
+        <div id="login-header">
+            <h2>Login</h2>
+            <p>Login to your account</p>
+        </div>
 
+        <form action="../../api/login-register/login.php" method="POST" id="login-form">
+            <div class="login-form-part-box liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                
+                <div class="login-form-item">
+                    <label for="login-username">Username</label>
+                    <input type="text" name="login-username" id="login-username" placeholder="Username" required>
+                </div>
+                <div class="login-form-item">
+                    <label for="login-password">Password</label>
+                    <input type="password" name="login-password" id="login-password" placeholder="Password" required>
+                </div>
+            </div>
+            <a class="switch-login-register-mode-link" href="./register.php">No account yet? Register here.</a>
+            <input type="submit" name="submit" value="Login">
+        </form>
+    </div>
 </body>
+
 </html>

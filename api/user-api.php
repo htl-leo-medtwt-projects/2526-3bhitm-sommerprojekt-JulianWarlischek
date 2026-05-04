@@ -7,7 +7,7 @@ $answer = [
     "data" => null
 ];
 
-$id = 2; // Simulates the logged in user with ID 2
+$activeUserId = $_SESSION['user']['UserID'] ?? null;
 
 
 if (isset($_GET['id'])) {
@@ -23,9 +23,9 @@ if (isset($_GET['id'])) {
     $answer["message"] = "OK";
 }
 
-if (isset($_GET['friends'])) {
+if ($activeUserId !== null && isset($_GET['friends'])) {
     $stmt = $conn->prepare("SELECT * FROM User u WHERE u.UserID IN (SELECT f.UserID FROM Friend_Ship f WHERE f.UserID1 = ?) OR u.UserID IN (SELECT f.UserID1 FROM Friend_Ship f WHERE f.UserID = ?)");
-    $stmt->bind_param("ii", $id, $id);
+    $stmt->bind_param("ii", $activeUserId, $activeUserId);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -35,10 +35,10 @@ if (isset($_GET['friends'])) {
     $answer["message"] = "OK";
 }
 
-if (isset($_GET['requests'])) {
+if ($activeUserId !== null && isset($_GET['requests'])) {
 
     $stmt = $conn->prepare("SELECT * FROM User u WHERE u.UserID IN (SELECT f.UserID1 FROM Friend_Request f WHERE f.UserID = ? and lower(f.Status) = 'pending')");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $activeUserId);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -48,7 +48,7 @@ if (isset($_GET['requests'])) {
     $answer["message"] = "OK";
 }
 
-if (isset($_GET['acceptRequest'])) {
+if ($activeUserId !== null && isset($_GET['acceptRequest'])) {
     $request_id = $_GET['acceptRequest'];
 
     $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'accepted' WHERE Friend_Request_ID = ?");
@@ -57,7 +57,7 @@ if (isset($_GET['acceptRequest'])) {
 
 
     $stmt = $conn->prepare("INSERT INTO Friend_Ship (Created_At, UserID, UserID1) VALUES (NOW() , ?, (SELECT UserID1 FROM Friend_Request WHERE Friend_Request_ID = ?))");
-    $stmt->bind_param("ii", $id, $request_id);
+    $stmt->bind_param("ii", $activeUserId, $request_id);
     $stmt->execute();
 
 
@@ -65,7 +65,7 @@ if (isset($_GET['acceptRequest'])) {
     $answer["message"] = "OK";
 }
 
-if (isset($_GET['declineRequest'])) {
+if ($activeUserId !== null && isset($_GET['declineRequest'])) {
     $request_id = $_GET['declineRequest'];
 
     $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'declined' WHERE Friend_Request_ID = ?");
@@ -76,7 +76,7 @@ if (isset($_GET['declineRequest'])) {
     $answer["message"] = "OK";
 }
 
-if (isset($_GET['getRequestId'])) {
+if ($activeUserId !== null && isset($_GET['getRequestId'])) {
     $userId = $_GET['userId'];
     $requesterId = $_GET['requesterId'];
 
@@ -91,12 +91,12 @@ if (isset($_GET['getRequestId'])) {
     $answer["message"] = "OK";
 }
 
-if(isset($_GET['searchUsers'])){
+if ($activeUserId !== null && isset($_GET['searchUsers'])){
     $query = $_GET['searchUsers'];
 
     $stmt = $conn->prepare("SELECT * FROM User WHERE Name LIKE ? and UserId != ?");
     $likeQuery = "%".$query."%";
-    $stmt->bind_param("si", $likeQuery, $id);
+    $stmt->bind_param("si", $likeQuery, $activeUserId);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -106,11 +106,11 @@ if(isset($_GET['searchUsers'])){
     $answer["message"] = "OK";
 }
 
-if(isset($_GET['sendFriendRequest'])){
+if ($activeUserId !== null && isset($_GET['sendFriendRequest'])){
     $userId = $_GET['sendFriendRequest'];
 
     $stmt = $conn->prepare("INSERT INTO Friend_Request (Date_Of_Req, UserID, UserID1, Status) VALUES (NOW(), ?, ?, 'Pending')");
-    $stmt->bind_param("ii", $userId, $id);
+    $stmt->bind_param("ii", $userId, $activeUserId);
     $stmt->execute();
 
     $answer["code"] = 200;

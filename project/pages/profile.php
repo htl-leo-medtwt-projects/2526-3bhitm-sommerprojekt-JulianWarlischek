@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user = $_SESSION['user'] ?? null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +24,8 @@
 
 <body>
     <!-- Navigation start -->
-     <div id="top-level-blur">
-        
+    <div id="top-level-blur">
+
     </div>
     <div id="navigation">
         <div id="navigation-header">
@@ -60,7 +70,7 @@
                     <p>Home</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -69,7 +79,7 @@
                     <p>Events</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -98,12 +108,13 @@
     <div id="profile-flex">
         <div id="profile-header">
             <div id="profile-picture">
-                <img src="../assets/images/demo-user.png" alt="demo user">
+                <img src="<?php echo isset($user['profileimage']) && $user['profileimage'] !== '' ? '../' . htmlspecialchars($user['profileimage']) : '../assets/images/demo-user.png'; ?>"
+                    alt="profile image">
             </div>
 
             <div id="profile-name-and-badges">
-                <h2>Luca Ebner</h2>
-                <a href="">view badges</a>
+                <h2><?php echo htmlspecialchars($user['username'] ?? 'Guest'); ?></h2>
+                <p onclick="openBadges()">view badges</p>
             </div>
         </div>
         <hr class="seperator">
@@ -159,7 +170,7 @@
                         </div>
                     </div>
                     <hr class="seperator-long">
-                    <div class="profile-point">
+                    <div class="profile-point" onclick="navigationTo('pages/events.php')">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
                                 <i class="fa-solid fa-martini-glass-empty"></i>
@@ -184,6 +195,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="logout" onclick="logout()">
+            <p>Logout</p>
+        </div>
+    </div>
+
+    <div id="profile-badge-slider">
+        <div id="close-badge-slider-icon" class="liquidGlass-wrapper" onclick="closeBadges()">
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div id="profile-badge-slider-header">
+            <h2>Badges</h2>
+            <p>View your achievements and rewards. Click them to change.</p>
+        </div>
+        <hr id="user-badge-content-seperator">
+        <div id="profile-badges">
+
         </div>
     </div>
 </body>

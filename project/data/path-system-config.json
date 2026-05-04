@@ -81,7 +81,7 @@
             "backgroundInformation": "Events are where users plan moments and create future memories.",
             "badge": "/images/badges/two-badge.png",
             "route": {
-                "page": "pages/events.html",
+                "page": "pages/events.php",
                 "anchor": "main-content"
             },
             "navigation": {
@@ -138,7 +138,7 @@
             "backgroundInformation": "The social area helps users connect and share activity across the app.",
             "badge": "/images/badges/three-badge.png",
             "route": {
-                "page": "pages/friends.html",
+                "page": "pages/friends.php",
                 "anchor": "friends-main-section"
             },
             "navigation": {
@@ -197,7 +197,7 @@
             "backgroundInformation": "The profile is the personal control center for identity and customization.",
             "badge": "/images/badges/four-badge.png",
             "route": {
-                "page": "pages/profile.html",
+                "page": "pages/profile.php",
                 "anchor": "profile-flex"
             },
             "navigation": {

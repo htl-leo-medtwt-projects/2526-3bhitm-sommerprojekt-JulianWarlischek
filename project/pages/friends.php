@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user'])){
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,7 +68,7 @@
                     <p>Home</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -69,7 +77,7 @@
                     <p>Events</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -95,7 +103,7 @@
     </div>
     <!-- Navigation end -->
 
-    <div id="friends-profile" onclick="navigationTo('pages/profile.html')">
+    <div id="friends-profile" onclick="navigationTo('pages/profile.php')">
         <img src="../assets/images/demo-user.png" alt="demo user">
     </div>
 

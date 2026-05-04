@@ -92,7 +92,7 @@ async function loadAllRequests() {
             for (const request of requests) {
                 console.log(request);
 
-                const request_id = await getRequestId(2, request.userid);
+                const request_id = await getRequestId(checkUserStatus().userId, request.userid);
 
 
                 temp_string += `<div class="friend-request liquidGlass-wrapper">

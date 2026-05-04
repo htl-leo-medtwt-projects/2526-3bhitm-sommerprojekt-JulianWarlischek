@@ -18,6 +18,7 @@ if(isset($_SESSION['register_error'])){
     <script src="../script/global.js" defer></script>
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/register-login.css">
+    <script src="../script/register-login.js" defer></script>
 </head>
 
 <body>
@@ -68,7 +69,7 @@ if(isset($_SESSION['register_error'])){
                     <p>Home</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -77,7 +78,7 @@ if(isset($_SESSION['register_error'])){
                     <p>Events</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -130,6 +131,11 @@ if(isset($_SESSION['register_error'])){
                         <input name="register-lastname" type="text" id="register-lastname" placeholder="Lastname"
                             required>
                     </div>
+                </div> 
+                <div id="badge-select-box" onclick="openBadgeSlider()">
+                    <div id="badge-add-icon">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
                 </div>
             </div>
             <div class="register-form-part-box liquidGlass-wrapper">
@@ -162,8 +168,28 @@ if(isset($_SESSION['register_error'])){
                         placeholder="Repeat Password" required>
                 </div>
             </div>
+            <input type="hidden" name="register-badges" id="register-badges" value="">
+            <a class="switch-login-register-mode-link" href="./login.php">Already have an account? Login here.</a>
             <input type="submit" value="Register" name="submit">
         </form>
+    </div>
+
+    <div id="badge-select-slider">
+        <div id="close-badge-select-slider" class="liquidGlass-wrapper" onclick="closeBadgeSlider()">
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+            
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div id="inner-select-slider">
+            <h3>Select your badges</h3>
+
+            <div id="badge-slider">
+                
+            </div>
+        </div>
     </div>
 </body>
 

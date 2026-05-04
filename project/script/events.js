@@ -3,7 +3,6 @@
  * @author Julian Warlischek
  */
 let activeEventId = null;
-let userId = 2; // This should be dynamically set based on the logged-in user
 
 
 function loadAllEvents() {
@@ -12,8 +11,7 @@ function loadAllEvents() {
         .then(data => {
             let events = data.data;
             let temp_string = "";
-
-            console.log(events);
+            let userId = sessionStorage.getItem("user");
 
 
             events.forEach(event => {
@@ -299,4 +297,99 @@ async function showShared(event_id) {
     }
 
     document.getElementById('drinks-snacks-games-images-shared-with-content').innerHTML = temp_string;
+}
+
+/**
+ * function: openAddEventSlider
+ * Opens the add event slider by translating it into view and disabling body scroll
+ */
+function openAddEventSlider() {
+    const addEventSlider = document.getElementById("add-event-slider");
+    console.log("openAddEventSlider called");
+    console.log("addEventSlider element:", addEventSlider);
+    
+    if (addEventSlider) {
+        addEventSlider.style.transform = "translateX(0)";
+        document.body.style.overflow = "hidden";
+        console.log("Add event slider opened");
+    } else {
+        console.error("add-event-slider element not found!");
+    }
+}
+
+/**
+ * function: closeAddEventSlider
+ * Closes the add event slider by translating it out of view and re-enabling body scroll
+ */
+function closeAddEventSlider() {
+    const addEventSlider = document.getElementById("add-event-slider");
+    addEventSlider.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+    
+    const form = document.getElementById("add-event-form");
+    form.reset();
+    
+    console.log("Add event slider closed");
+}
+
+/**
+ * function: submitAddEventForm
+ * Handles the form submission for creating a new event
+ * Collects form data, sends it to the API, and reloads the events list on success
+ * 
+ * @param {Event} event - The submit event object
+ */
+function submitAddEventForm(event) {
+    event.preventDefault();
+    
+    const eventName = document.getElementById("event-name").value;
+    const eventDescription = document.getElementById("event-description").value;
+    const eventStartDate = document.getElementById("event-start-date").value;
+    const eventEndDate = document.getElementById("event-end-date").value;
+    const eventDressCode = document.getElementById("event-dress-code").value;
+    const eventLocation = document.getElementById("event-location").value;
+    const eventRanking = document.getElementById("event-ranking").value;
+    
+    console.log("Form submitted with data:", {
+        name: eventName,
+        description: eventDescription,
+        startDate: eventStartDate,
+        endDate: eventEndDate,
+        dresscode: eventDressCode,
+        location: eventLocation,
+        ranking: eventRanking
+    });
+    
+    // Send data to API
+    fetch("../../api/event-api.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: eventName,
+            description: eventDescription,
+            startDate: eventStartDate,
+            endDate: eventEndDate,
+            dresscode: eventDressCode,
+            location: eventLocation,
+            ranking: eventRanking
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("API response:", data);
+        
+        if (data.code === 200 || data.code === 201) {
+            alert("Event created successfully!");
+            closeAddEventSlider();
+            loadAllEvents();
+        } else {
+            alert("Error creating event: " + (data.message || "Unknown error"));
+        }
+    })
+    .catch(error => {
+        console.error("Error submitting form:", error);
+        alert("Error creating event");
+    });
 }

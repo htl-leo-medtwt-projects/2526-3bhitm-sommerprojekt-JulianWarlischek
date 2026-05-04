@@ -163,38 +163,43 @@ function checkUserStatus() {
     fetch(apiUrl(`login-register/user-there-check.php`))
         .then(response => response.json())
         .then(data => {
-            console.log(data);
 
-            if (data.data != -1) {
-                fetch(apiUrl(`user-api.php?userId=${data.data}`))
-                    .then(response => response.json())
-                    .then(userData => {
+            if (data.data !== null) {
+                
+                let user = data.data;
 
-                        document.getElementById('navigation').innerHTML += `
+                sessionStorage["user"] = user.userid;
+
+                // determine correct relative path to assets depending on current page (Copilot generated code)
+                const navImg = window.location.pathname.includes('/pages/') ? '../assets/images/demo-user.png' : './assets/images/demo-user.png';
+
+                document.getElementById('navigation').innerHTML += `
                 <div id="navigation-profile-view" class="liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
-                    <div id="navigation-profile-view-name-img">
+                    <div id="navigation-profile-view-name-img" onclick="navigationTo('pages/profile.php')">
                         <div id="navigation-profile-view-img">
-                            <img src="./assets/images/demo-user.png" alt="demo user">
+                            <img src="${navImg}" alt="demo user">
                         </div>
-                        <h2>${userData.data.username}</h2>
+                        <h2>${user.username}</h2>
                     </div>
                     <div id="navigation-profile-edit">
                         <i class="fa-solid fa-pen"></i>
                     </div>
                 </div>
                 `
-                    })
             } else {
+
+                sessionStorage.removeItem("user");
+                
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-login-register">
-                    <div id="navigation-login-register-login" onclick="navigationTo('pages/login.html')">
+                    <div id="navigation-login-register-login" onclick="navigationTo('pages/login.php')">
                         <p>Login</p>
                     </div>
-                    <div id="navigation-login-register-register" onclick="navigationTo('pages/register.html')">
+                    <div id="navigation-login-register-register" onclick="navigationTo('pages/register.php')">
                         <p>Register</p>
                     </div>
                 </div>

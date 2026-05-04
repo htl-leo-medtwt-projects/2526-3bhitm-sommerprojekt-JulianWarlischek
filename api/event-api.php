@@ -1,7 +1,9 @@
 <?php
+session_start();
 require './database.php';
 
-$stmt = $conn->prepare("SELECT * FROM Event order by startDate");
+$stmt = $conn->prepare("SELECT * FROM Event where Event_ID IN (SELECT Event_ID FROM User_Event WHERE UserID = ?) order by startDate");
+$stmt->bind_param("i", $_SESSION['user']['userid']);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -83,5 +85,4 @@ if(isset($_GET['usersPerEvent'])){
 }
 
 echo json_encode($answer);
-
 $conn->close();

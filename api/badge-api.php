@@ -2,10 +2,17 @@
 require './database.php';
 
 $answer = [
-    "code" => 404,
-    "message" => "Not found",
+    "code" => 200,
+    "message" => "OK",
     "data" => null
 ];
+
+$stmt = $conn->prepare("SELECT * FROM Badge");
+$stmt->execute();
+$result = $stmt->get_result();
+
+$answer["data"] = $result->fetch_all(MYSQLI_ASSOC);
+
 
 if (isset($_GET['userId'])) {
     $id = $_GET['userId'];

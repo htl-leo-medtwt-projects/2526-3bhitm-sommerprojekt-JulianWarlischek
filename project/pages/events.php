@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +70,7 @@
                     <p>Home</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -70,7 +79,7 @@
                     <p>Events</p>
                 </div>
                 <div class="link-container">
-                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.html')">
+                    <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -111,15 +120,26 @@
                 <p>Filter Events</p>
             </div>
             <div id="filter-more-info">
-                <div id="smart-filter-date" class="liquidGlass-wrapper">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
+                <div id="smart-filter-date-add">
+                    <div id="smart-filter-date" class="liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
 
-                    <div id="smart-filter-date-icon">
-                        <i class="fa-solid fa-angle-down"></i>
+                        <div id="smart-filter-date-icon">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                        <p>Week</p>
                     </div>
-                    <p>Week</p>
+                    <div id="add-event-button" class="liquidGlass-wrapper" onclick="openAddEventSlider()">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+
+                        <div id="add-event-button-icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
                 </div>
                 <p>Click event to see details</p>
             </div>
@@ -178,7 +198,7 @@
                             <div id="shared-with-icon">
                                 <i class="fa-solid fa-user-group"></i>
                             </div>
-                            <p id="event-shared-with-text">Shared with 3 friends</p>
+                            <p id="event-shared-with-text"></p>
                         </div>
                     </div>
                 </div>
@@ -262,31 +282,36 @@
 
             <div class="event-info" id="drinks-snacks-games-images-shared-with-event-info">
                 <div id="drinks-snacks-games-images-shared-with-grid-nav">
-                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item active" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showDrinks(activeEventId);">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item active"
+                        onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showDrinks(activeEventId);">
                         <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
                             <i class="fa-solid fa-martini-glass-citrus"></i>
                         </div>
                         <p>Drinks</p>
                     </div>
-                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showSnacks(activeEventId);">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item"
+                        onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showSnacks(activeEventId);">
                         <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
                             <i class="fa-solid fa-burger"></i>
                         </div>
                         <p>Snacks</p>
                     </div>
-                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showGames(activeEventId);">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item"
+                        onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showGames(activeEventId);">
                         <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
                             <i class="fa-solid fa-dice"></i>
                         </div>
                         <p>Games</p>
                     </div>
-                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showImages(activeEventId);">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item"
+                        onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showImages(activeEventId);">
                         <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
                             <i class="fa-solid fa-image"></i>
                         </div>
                         <p>Images</p>
                     </div>
-                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item" onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showShared(activeEventId);">
+                    <div class="drinks-snacks-games-images-shared-with-grid-nav-item"
+                        onclick="setActiveClass(this, 'drinks-snacks-games-images-shared-with-grid-nav-item', 'active'); showShared(activeEventId);">
                         <div class="drinks-snacks-games-images-shared-with-grid-nav-item-icon">
                             <i class="fa-solid fa-users"></i>
                         </div>
@@ -297,6 +322,128 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="add-event-slider">
+        <div id="add-event-slider-header">
+            <div id="close-add-event-icon" class="liquidGlass-wrapper" onclick="closeAddEventSlider()">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Create New Event</h2>
+
+            <div></div>
+        </div>
+
+        <form id="add-event-form">
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-martini-glass-citrus"></i>
+                    </div>
+                    <p>Basic Information</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-name">Event Name *</label>
+                    <input type="text" id="event-name" name="name" placeholder="Enter event name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-description">Description *</label>
+                    <textarea id="event-description" name="description" placeholder="Enter event description" required
+                        rows="4"></textarea>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                    <p>Date & Time</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-start-date">Start Date *</label>
+                        <input type="datetime-local" id="event-start-date" name="startDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-end-date">End Date *</label>
+                        <input type="datetime-local" id="event-end-date" name="endDate" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <p>Event Details</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-dress-code">Dress Code</label>
+                        <input type="text" id="event-dress-code" name="dresscode" placeholder="e.g. Casual, Formal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-ranking">Ranking (1-5) *</label>
+                        <input type="number" id="event-ranking" name="ranking" min="1" max="5" placeholder="5" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <p>Location</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-location">Location *</label>
+                    <input type="text" id="event-location" name="location" placeholder="Enter location" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="btn-cancel liquidGlass-wrapper" onclick="closeAddEventSlider()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+                    Cancel
+                </div>
+
+                <input type="submit" class="btn-submit" value="Create Event">
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
