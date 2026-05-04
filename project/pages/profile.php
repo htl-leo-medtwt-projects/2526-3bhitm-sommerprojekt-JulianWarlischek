@@ -126,7 +126,7 @@ $user = $_SESSION['user'] ?? null;
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
-                    <div class="profile-point">
+                    <div class="profile-point" onclick="openMyDataSection()">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
                                 <i class="fa-regular fa-user"></i>
@@ -217,6 +217,60 @@ $user = $_SESSION['user'] ?? null;
         <div id="profile-badges">
 
         </div>
+    </div>
+
+    <div id="profile-my-data-slider">
+        <div id="profile-my-data-header">
+            <div id="close-my-data-icon" class="liquidGlass-wrapper" onclick="closeMyDataSection()">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <h2>My Data</h2>
+            <div></div>
+        </div>
+
+        <form id="profile-my-data-form" class="liquidGlass-wrapper" action="../../api/login-register/update-profile.php" method="POST">
+             <
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+
+            <div class="my-data-group">
+                <label for="my-data-username">Username</label>
+                <input type="text" id="my-data-username" name="username" value="<?php echo htmlspecialchars($user['username'] ?? ''); ?>">
+            </div>
+
+            <div class="my-data-grid">
+                <div class="my-data-group">
+                    <label for="my-data-firstname">Firstname</label>
+                    <input type="text" id="my-data-firstname" name="firstname" value="<?php echo htmlspecialchars($user['firstname'] ?? ''); ?>">
+                </div>
+
+                <div class="my-data-group">
+                    <label for="my-data-lastname">Lastname</label>
+                    <input type="text" id="my-data-lastname" name="lastname" value="<?php echo htmlspecialchars($user['lastname'] ?? ''); ?>">
+                </div>
+            </div>
+
+            <div class="my-data-group">
+                <label for="my-data-email">Email</label>
+                <input type="email" id="my-data-email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
+            </div>
+
+            <div class="my-data-group">
+                <label for="my-data-dob">Date of Birth</label>
+                <input type="date" id="my-data-dob" name="dob" value="<?php echo htmlspecialchars(isset($user['dob']) ? substr((string)$user['dob'], 0, 10) : ''); ?>">
+            </div>
+
+            <div class="my-data-group">
+                <label for="my-data-profileimage">Profile Image Path</label>
+                <input type="text" id="my-data-profileimage" name="profileimage" value="<?php echo htmlspecialchars($user['profileimage'] ?? ''); ?>">
+            </div>
+
+            <input type="submit" id="my-data-submit" value="Save Changes">
+        </form>
     </div>
 </body>
 

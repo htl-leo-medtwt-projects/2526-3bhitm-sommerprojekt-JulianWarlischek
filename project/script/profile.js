@@ -21,6 +21,20 @@ function closeBadges() {
     badgeSlider.style.opacity = "0";
 }
 
+function openMyDataSection() {
+    const myDataSlider = document.getElementById("profile-my-data-slider");
+
+    myDataSlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
+}
+
+function closeMyDataSection() {
+    const myDataSlider = document.getElementById("profile-my-data-slider");
+
+    myDataSlider.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+}
+
 function loadBadgesOfUser() {
     fetch("../../api/badge-api.php?userId=" + sessionStorage.getItem("user"))
         .then(response => response.json())

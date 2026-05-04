@@ -305,16 +305,9 @@ async function showShared(event_id) {
  */
 function openAddEventSlider() {
     const addEventSlider = document.getElementById("add-event-slider");
-    console.log("openAddEventSlider called");
-    console.log("addEventSlider element:", addEventSlider);
-    
-    if (addEventSlider) {
-        addEventSlider.style.transform = "translateX(0)";
-        document.body.style.overflow = "hidden";
-        console.log("Add event slider opened");
-    } else {
-        console.error("add-event-slider element not found!");
-    }
+
+    addEventSlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
 }
 
 /**
@@ -325,9 +318,9 @@ function closeAddEventSlider() {
     const addEventSlider = document.getElementById("add-event-slider");
     addEventSlider.style.transform = "translateX(100%)";
     document.body.style.overflow = "auto";
-    
+
     const form = document.getElementById("add-event-form");
     form.reset();
-    
+
     console.log("Add event slider closed");
 }

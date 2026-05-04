@@ -339,7 +339,7 @@ if (!isset($_SESSION['user'])) {
             <div></div>
         </div>
 
-        <form id="add-event-form">
+        <form id="add-event-form" action="">
             <div class="add-event-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
