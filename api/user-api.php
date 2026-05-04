@@ -1,4 +1,5 @@
 <?php
+session_start();
 require './database.php';
 
 $answer = [
@@ -7,7 +8,7 @@ $answer = [
     "data" => null
 ];
 
-$activeUserId = $_SESSION['user']['UserID'] ?? null;
+$activeUserId = $_SESSION['user']['userid'] ?? null;
 
 
 if (isset($_GET['id'])) {
@@ -51,7 +52,7 @@ if ($activeUserId !== null && isset($_GET['requests'])) {
 if ($activeUserId !== null && isset($_GET['acceptRequest'])) {
     $request_id = $_GET['acceptRequest'];
 
-    $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'accepted' WHERE Friend_Request_ID = ?");
+    $stmt = $conn->prepare("UPDATE Friend_Request SET `Status` = 'accepted' WHERE Friend_Request_ID = ?");
     $stmt->bind_param("i", $request_id);
     $stmt->execute();
 
@@ -94,7 +95,7 @@ if ($activeUserId !== null && isset($_GET['getRequestId'])) {
 if ($activeUserId !== null && isset($_GET['searchUsers'])){
     $query = $_GET['searchUsers'];
 
-    $stmt = $conn->prepare("SELECT * FROM User WHERE Name LIKE ? and UserId != ?");
+    $stmt = $conn->prepare("SELECT * FROM User WHERE Username LIKE ? and UserId != ?");
     $likeQuery = "%".$query."%";
     $stmt->bind_param("si", $likeQuery, $activeUserId);
     $stmt->execute();

@@ -92,7 +92,7 @@ async function loadAllRequests() {
             for (const request of requests) {
                 console.log(request);
 
-                const request_id = await getRequestId(checkUserStatus().userId, request.userid);
+                const request_id = await getRequestId(sessionStorage.getItem('user'), request.userid);
 
 
                 temp_string += `<div class="friend-request liquidGlass-wrapper">
@@ -233,9 +233,6 @@ function closeAddFriends() {
     setTimeout(() => {
         addFriendsSection.style.display = 'none';
     }, 300);
-
-    searchInput.value = "";
-
 }
 
 function sendFriendRequest(userId) {
