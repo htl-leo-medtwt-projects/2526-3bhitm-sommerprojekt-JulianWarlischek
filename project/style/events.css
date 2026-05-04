@@ -757,6 +757,9 @@
 }
 
 .btn-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: black;
     background-color: rgba(220, 220, 220, 0.75);
 }
