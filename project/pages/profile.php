@@ -6,6 +6,12 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+if (isset($_GET['myData']) && $_GET['myData'] === 'true') {
+    $showMyData = true;
+} else {
+    $showMyData = false;
+}
+
 $user = $_SESSION['user'] ?? null;
 ?>
 <!DOCTYPE html>
@@ -202,21 +208,18 @@ $user = $_SESSION['user'] ?? null;
     </div>
 
     <div id="profile-badge-slider">
-        <div id="close-badge-slider-icon" class="liquidGlass-wrapper" onclick="closeBadges()">
-            <div class="liquidGlass-effect"></div>
-            <div class="liquidGlass-tint"></div>
-            <div class="liquidGlass-shine"></div>
-
+        <div id="close-badge-slider-icon" onclick="closeBadges()">
             <i class="fa-solid fa-xmark"></i>
         </div>
-        <div id="profile-badge-slider-header">
-            <h2>Badges</h2>
-            <p>View your achievements and rewards. Click them to change.</p>
-        </div>
-        <hr id="user-badge-content-seperator">
-        <div id="profile-badges">
 
+        <div id="profile-badge-slider-header">
+            <h2>Your Badges</h2>
+            <p>Click them to edit.</p>
         </div>
+
+        <hr id="user-badge-content-seperator">
+
+        <div id="profile-badges"></div>
     </div>
 
     <div id="profile-my-data-slider">
@@ -227,50 +230,99 @@ $user = $_SESSION['user'] ?? null;
                 <div class="liquidGlass-shine"></div>
                 <i class="fa-solid fa-angle-left"></i>
             </div>
+
             <h2>My Data</h2>
             <div></div>
         </div>
 
-        <form id="profile-my-data-form" class="liquidGlass-wrapper" action="../../api/login-register/update-profile.php" method="POST">
-             <
+        <form id="profile-my-data-form" action="../../api/login-register/update-profile.php" method="POST">
+
+            <div class="my-data-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="my-data-section-header">
+                    <div class="my-data-section-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <p>Account</p>
+                </div>
+
+                <div class="my-data-group">
+                    <label for="my-data-username">Username</label>
+                    <input type="text" id="my-data-username" name="username"
+                        value="<?php echo htmlspecialchars($user['username'] ?? ''); ?>">
+                </div>
+
+                <div class="my-data-group">
+                    <label for="my-data-email">Email</label>
+                    <input type="email" id="my-data-email" name="email"
+                        value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
+                </div>
+            </div>
+
+            <div class="my-data-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="my-data-section-header">
+                    <div class="my-data-section-icon">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <p>Personal Information</p>
+                </div>
+
+                <div class="my-data-grid">
+                    <div class="my-data-group">
+                        <label for="my-data-firstname">Firstname</label>
+                        <input type="text" id="my-data-firstname" name="firstname"
+                            value="<?php echo htmlspecialchars($user['firstname'] ?? ''); ?>">
+                    </div>
+
+                    <div class="my-data-group">
+                        <label for="my-data-lastname">Lastname</label>
+                        <input type="text" id="my-data-lastname" name="lastname"
+                            value="<?php echo htmlspecialchars($user['lastname'] ?? ''); ?>">
+                    </div>
+                </div>
+
+                <div class="my-data-group">
+                    <label for="my-data-dob">Date of Birth</label>
+                    <input type="date" id="my-data-dob" name="dob"
+                        value="<?php echo htmlspecialchars(isset($user['dob']) ? substr((string) $user['dob'], 0, 10) : ''); ?>">
+                </div>
+            </div>
+
+            <div class="my-data-actions">
+                <div type="button" class="my-data-btn-cancel" onclick="closeMyDataSection()">Cancel</div>
+                <input type="submit" id="my-data-submit" class="my-data-btn-submit" value="Save Changes" name="submit">
+            </div>
+
+        </form>
+    </div>
+    <div id="badge-info">
+        <div id="close-badge-info" class="liquidGlass-wrapper" onclick="closeBadgeInfo()">
             <div class="liquidGlass-effect"></div>
             <div class="liquidGlass-tint"></div>
             <div class="liquidGlass-shine"></div>
 
-            <div class="my-data-group">
-                <label for="my-data-username">Username</label>
-                <input type="text" id="my-data-username" name="username" value="<?php echo htmlspecialchars($user['username'] ?? ''); ?>">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div id="badge-info-content">
+            <div id="badge-info-img">
             </div>
-
-            <div class="my-data-grid">
-                <div class="my-data-group">
-                    <label for="my-data-firstname">Firstname</label>
-                    <input type="text" id="my-data-firstname" name="firstname" value="<?php echo htmlspecialchars($user['firstname'] ?? ''); ?>">
-                </div>
-
-                <div class="my-data-group">
-                    <label for="my-data-lastname">Lastname</label>
-                    <input type="text" id="my-data-lastname" name="lastname" value="<?php echo htmlspecialchars($user['lastname'] ?? ''); ?>">
-                </div>
+            <div id="badge-info-text">
+                <h2 id="badge-info-name">Badge Name</h2>
+                <p id="badge-info-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia mi
+                    quis euismod ultrices.</p>
             </div>
-
-            <div class="my-data-group">
-                <label for="my-data-email">Email</label>
-                <input type="email" id="my-data-email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
+            <div id="remove-badge">
+                <i class="fa-solid fa-trash"></i>
             </div>
-
-            <div class="my-data-group">
-                <label for="my-data-dob">Date of Birth</label>
-                <input type="date" id="my-data-dob" name="dob" value="<?php echo htmlspecialchars(isset($user['dob']) ? substr((string)$user['dob'], 0, 10) : ''); ?>">
-            </div>
-
-            <div class="my-data-group">
-                <label for="my-data-profileimage">Profile Image Path</label>
-                <input type="text" id="my-data-profileimage" name="profileimage" value="<?php echo htmlspecialchars($user['profileimage'] ?? ''); ?>">
-            </div>
-
-            <input type="submit" id="my-data-submit" value="Save Changes">
-        </form>
+        </div>
     </div>
 </body>
 

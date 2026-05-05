@@ -1,6 +1,4 @@
 <?php
-require '../database.php';
-
 function validateUsername($username){
     if(strlen($username) < 3 || userNameExists($username)){
         return false;
@@ -12,7 +10,7 @@ function validateUsername($username){
 function userNameExists($username){
     global $conn;
 
-    $stmt = $conn->prepare("SELECT * FROM User WHERE username like ?");
+    $stmt = $conn->prepare("SELECT * FROM User WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
 

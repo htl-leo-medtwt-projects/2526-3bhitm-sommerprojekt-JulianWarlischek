@@ -41,11 +41,14 @@ function loadBadgesOfUser() {
         .then(data => {
             let temp_string = "";
 
+            console.log(data);
+
+
             for (let i = 0; i < data.data.length; i++) {
                 temp_string += `
-                <div class='user-badge'>`
-                   
-                if(i % 2 === 0) {
+                <div class='user-badge' onclick="openBadgeInfo(${data.data[i].badge_id})">`;
+
+                if (i % 2 === 0) {
                     temp_string += `<div class='user-badge-info liquidGlass-wrapper'>
                         <div class='liquidGlass-effect'></div>
                         <div class='liquidGlass-tint'></div>
@@ -72,13 +75,65 @@ function loadBadgesOfUser() {
 
                 temp_string += `</div>`;
 
-                if(i !== data.data.length - 1) {
+                if (i !== data.data.length - 1) {
                     temp_string += `<hr class="user-badge-seperator">`;
                 }
-               
+
             }
 
             document.getElementById("profile-badges").innerHTML = temp_string;
         });
 }
 loadBadgesOfUser();
+
+// Auto-open sliders based on URL parameters (Copilot generated code)
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('myData') === 'true') {
+        openMyDataSection();
+    }
+});
+
+
+function openBadgeInfo(badgeId) {
+    const badgeInfo = document.getElementById("badge-info");
+
+    badgeInfo.style.transform = "translateY(0)";
+    document.body.style.overflow = "hidden";
+
+    document.getElementById("remove-badge").addEventListener("click", function () {
+        fetch(`../../api/badge-api.php?removeBadge=${badgeId}&userId=${sessionStorage.getItem("user")}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                closeBadgeInfo();
+                loadBadgesOfUser();
+            })
+            .catch(error => {
+                console.error('Error removing badge:', error);
+            });
+    });
+
+    fetch("../../api/badge-api.php?badgeId=" + badgeId)
+        .then(response => response.json())
+        .then(data => {
+            const badge = data.data;
+
+            console.log(data);
+
+
+            document.getElementById("badge-info-name").textContent = badge.badgename;
+            document.getElementById("badge-info-description").textContent = badge.description;
+            document.getElementById("badge-info-img").innerHTML = `<img src='../${badge.badgepath}' alt='${badge.badgename}'>`;
+        }).catch(error => {
+            console.error('Error fetching badge info:', error);
+        });
+}
+
+function closeBadgeInfo() {
+    const badgeInfo = document.getElementById("badge-info");
+
+    badgeInfo.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+}

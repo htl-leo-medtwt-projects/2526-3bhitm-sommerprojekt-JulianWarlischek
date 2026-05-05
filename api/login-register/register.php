@@ -54,3 +54,4 @@ if (!empty($_POST['submit'])) {
 } else {
     header("Location: ../../project/pages/register.php");
 }
+

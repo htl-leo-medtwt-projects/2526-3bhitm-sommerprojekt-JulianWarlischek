@@ -1,6 +1,7 @@
 <?php
 session_start();
 require './database.php';
+require './login-register/validations.php';
 
 $answer = [
     "code" => 404,
@@ -69,7 +70,7 @@ if ($activeUserId !== null && isset($_GET['acceptRequest'])) {
 if ($activeUserId !== null && isset($_GET['declineRequest'])) {
     $request_id = $_GET['declineRequest'];
 
-    $stmt = $conn->prepare("UPDATE Friend_Request SET lower(Status) = 'declined' WHERE Friend_Request_ID = ?");
+    $stmt = $conn->prepare("UPDATE Friend_Request SET `Status` = 'declined' WHERE Friend_Request_ID = ?");
     $stmt->bind_param("i", $request_id);
     $stmt->execute();
 
@@ -95,9 +96,9 @@ if ($activeUserId !== null && isset($_GET['getRequestId'])) {
 if ($activeUserId !== null && isset($_GET['searchUsers'])){
     $query = $_GET['searchUsers'];
 
-    $stmt = $conn->prepare("SELECT * FROM User WHERE Username LIKE ? and UserId != ?");
+    $stmt = $conn->prepare("SELECT * FROM User WHERE Username LIKE ? and UserId != ? and UserId NOT IN (SELECT UserID FROM Friend_Ship WHERE UserID1 = ?) and UserId NOT IN (SELECT UserID1 FROM Friend_Ship WHERE UserID = ?)");
     $likeQuery = "%".$query."%";
-    $stmt->bind_param("si", $likeQuery, $activeUserId);
+    $stmt->bind_param("siii", $likeQuery, $activeUserId, $activeUserId, $activeUserId);
     $stmt->execute();
 
     $result = $stmt->get_result();

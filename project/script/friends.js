@@ -56,23 +56,31 @@ setFriendsMainSection('grid');
 function setFriendsMainSection(display) {
     const friendsMainSection = document.getElementById('friends-main-section-content');
 
+    friendsMainSection.style.justifyContent = 'flex-start';
+    friendsMainSection.style.alignContent = 'flex-start';
+    friendsMainSection.style.placeContent = 'unset';
+    friendsMainSection.style.gridTemplateColumns = '';
+
     if (display === 'grid') {
         friendsMainSection.style.display = 'grid';
         friendsMainSection.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
         friendsMainSection.style.alignItems = 'start';
+        friendsMainSection.style.justifyContent = 'center';
+        friendsMainSection.style.alignContent = 'start';
         loadAllFriends();
     } else if (display === 'flex1') {
         friendsMainSection.style.display = 'flex';
         friendsMainSection.style.flexDirection = 'column';
-        friendsMainSection.style.alignItems = 'center';
+        friendsMainSection.style.alignItems = 'stretch';
+        friendsMainSection.style.justifyContent = 'flex-start';
         loadAllRequests();
     } else if (display === 'flex2') {
         friendsMainSection.style.display = 'flex';
         friendsMainSection.style.flexDirection = 'column';
-        friendsMainSection.style.alignItems = 'center';
+        friendsMainSection.style.alignItems = 'stretch';
+        friendsMainSection.style.justifyContent = 'flex-start';
         loadAllSentRequests();
     }
-
 }
 
 /**

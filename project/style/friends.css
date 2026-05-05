@@ -109,6 +109,8 @@
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
     font-style: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .friend{

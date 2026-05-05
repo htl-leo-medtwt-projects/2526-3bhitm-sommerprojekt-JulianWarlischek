@@ -147,18 +147,7 @@ if (!isset($_SESSION['user'])) {
         <hr class="seperator-long">
 
         <div id="event-flex">
-            <div class="event liquidGlass-wrapper">
-                <div class="liquidGlass-effect"></div>
-                <div class="liquidGlass-tint"></div>
-                <div class="liquidGlass-shine"></div>
 
-                <div class="event-left">
-                    <h1>Event Title</h1>
-                    <p>Event Date</p>
-                </div>
-                <div class="event-right">
-                </div>
-            </div>
         </div>
 
 
@@ -437,7 +426,8 @@ if (!isset($_SESSION['user'])) {
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
-                    Cancel
+
+                    <span>Cancel</span>
                 </div>
 
                 <input type="submit" class="btn-submit" value="Create Event">

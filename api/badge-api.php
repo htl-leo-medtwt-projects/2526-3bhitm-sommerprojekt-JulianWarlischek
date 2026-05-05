@@ -27,6 +27,31 @@ if (isset($_GET['userId'])) {
     $answer["message"] = "OK";
 }
 
+if (isset($_GET['badgeId'])) {
+    $id = $_GET['badgeId'];
+    $stmt = $conn->prepare("SELECT * FROM Badge WHERE Badge_ID = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $answer["data"] = $result->fetch_assoc();
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
+if (isset($_GET['userId']) && isset($_GET['removeBadge'])) {
+    $userId = $_GET['userId'];
+    $badgeId = $_GET['removeBadge'];
+
+    $stmt = $conn->prepare("DELETE FROM User_Badge WHERE UserID = ? AND Badge_ID = ?");
+    $stmt->bind_param("ii", $userId, $badgeId);
+    $stmt->execute();
+
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 echo json_encode($answer);
 
 $conn->close();

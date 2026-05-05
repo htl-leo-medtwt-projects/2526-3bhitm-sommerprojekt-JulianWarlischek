@@ -185,7 +185,7 @@ function checkUserStatus() {
                         </div>
                         <h2>${user.username}</h2>
                     </div>
-                    <div id="navigation-profile-edit">
+                    <div id="navigation-profile-edit" onclick="navigationTo('pages/profile.php?myData=true')">
                         <i class="fa-solid fa-pen"></i>
                     </div>
                 </div>

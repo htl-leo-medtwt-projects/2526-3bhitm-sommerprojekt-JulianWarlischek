@@ -270,6 +270,7 @@
     z-index: 2111;
     background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 #profile-my-data-header h2 {
@@ -277,7 +278,9 @@
     margin: 0;
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
+    font-style: normal;
     font-size: 1.35em;
+    color: rgb(20, 20, 20);
 }
 
 #close-my-data-icon {
@@ -291,21 +294,77 @@
     justify-content: center;
 }
 
+#close-my-data-icon i {
+    position: relative;
+    z-index: 2;
+    color: rgb(20, 20, 20);
+}
+
 #profile-my-data-form {
     display: flex;
     flex-direction: column;
     gap: 1.2em;
-    width: calc(100% - 2em);
+    width: 100%;
     max-width: 760px;
-    margin: 1.5em auto 0 auto;
-    padding: 1.4em;
+    margin: 0 auto;
+    padding: 1.5em;
     box-sizing: border-box;
+    font-family: "komet", sans-serif;
+}
+
+.my-data-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.4em;
     border-radius: 22px;
     overflow: hidden;
     position: relative;
 }
 
-.my-data-group {
+.my-data-form-section > *:not(.liquidGlass-effect):not(.liquidGlass-tint):not(.liquidGlass-shine) {
+    position: relative;
+    z-index: 2;
+}
+
+.my-data-section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7em;
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: rgb(40, 40, 40);
+    position: relative;
+    z-index: 2;
+}
+
+.my-data-section-header p {
+    margin: 0;
+    font-size: 1em;
+}
+
+.my-data-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: dodgerblue;
+    color: white;
+    flex-shrink: 0;
+}
+
+.my-data-section-icon i {
+    font-size: 0.95em;
+}
+
+.my-data-group,
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 0.45em;
@@ -314,7 +373,8 @@
     z-index: 2;
 }
 
-.my-data-group label {
+.my-data-group label,
+.form-group label {
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -322,27 +382,49 @@
     color: rgb(80, 80, 80);
 }
 
-.my-data-group input {
+.my-data-group input,
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 0.85em 0.9em;
     border: 1px solid rgba(180, 180, 180, 0.7);
     border-radius: 14px;
     font-family: "komet", sans-serif;
     font-weight: 400;
+    font-style: normal;
     font-size: 0.95em;
+    line-height: 1.2;
     box-sizing: border-box;
     transition: all 0.3s ease;
     background-color: rgba(255, 255, 255, 0.75);
+    color: rgb(30, 30, 30);
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-.my-data-group input:focus {
+.my-data-group input:focus,
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
-    border-color: rgb(106, 255, 98);
-    box-shadow: 0 0 0 4px rgba(106, 255, 98, 0.2);
+    border-color: dodgerblue;
+    box-shadow: 0 0 0 4px rgba(30, 143, 255, 0.218);
     background-color: rgba(255, 255, 255, 0.95);
 }
 
-.my-data-grid {
+.my-data-group input::placeholder,
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    font-family: "komet", sans-serif;
+    color: rgba(80, 80, 80, 0.55);
+}
+
+.my-data-group input[type="date"] {
+    min-height: 45px;
+    color: rgb(30, 30, 30);
+}
+
+.my-data-grid,
+.form-row {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1em;
@@ -351,26 +433,138 @@
     z-index: 2;
 }
 
+.my-data-actions,
+.form-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    width: 100%;
+    padding-top: 0.4em;
+    box-sizing: border-box;
+}
+
+.my-data-btn-cancel,
+.my-data-btn-submit,
 #my-data-submit {
     position: relative;
-    z-index: 2;
-    width: 100%;
-    margin-top: 0.4em;
+    overflow: hidden;
     padding: 0.95em 2em;
     border: none;
     border-radius: 22px;
     font-family: "komet-sc", sans-serif;
     font-weight: 700;
+    font-style: normal;
     font-size: 1em;
+    line-height: 1.2;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.my-data-btn-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: rgba(220, 220, 220, 0.75);
+    text-decoration: none;
+}
+
+.my-data-btn-cancel:hover {
+    transform: translateY(-2px);
+    background-color: rgba(200, 200, 200, 0.9);
+}
+
+.my-data-btn-submit,
+#my-data-submit {
     color: white;
-    background-color: rgb(106, 255, 98);
+    background-color: dodgerblue;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.14);
 }
 
+.my-data-btn-submit:hover,
 #my-data-submit:hover {
     transform: translateY(-2px);
-    background-color: rgb(90, 220, 85);
+    background-color: rgb(121, 188, 255);
     box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.2);
+}
+
+.my-data-btn-cancel:active,
+.my-data-btn-submit:active,
+#my-data-submit:active {
+    transform: translateY(0);
+}
+
+#badge-info{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2007;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+}
+
+#close-badge-info{
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    color: black;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0.35em 0.5em;
+    border-radius: 50%;
+}
+
+#badge-info-content{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;   
+}
+
+#badge-info-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#badge-info-text>h2{
+    font-family: "komet-sc", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#badge-info-text>p{
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: grey;
+}
+
+#remove-badge{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 1em;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border: 3px solid rgb(255, 70, 70);
+    color: rgb(255, 70, 70);
+    border-radius: 10px;
 }
