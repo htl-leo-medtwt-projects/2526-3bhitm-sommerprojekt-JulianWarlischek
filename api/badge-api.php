@@ -1,4 +1,5 @@
 <?php
+SESSION_START();
 require './database.php';
 
 $answer = [
@@ -50,6 +51,31 @@ if (isset($_GET['userId']) && isset($_GET['removeBadge'])) {
 
     $answer["code"] = 200;
     $answer["message"] = "OK";
+}
+
+if (!empty($_POST['submit-badges'])) {
+    $user = $_SESSION['user'];
+    $userId = $user['userid'];
+
+    $badges = json_decode($_POST['selectedBadges'], true);
+
+    for ($i = 0; $i < count($badges); $i++) {
+        $badgeId = $badges[$i];
+        $stmt = $conn->prepare("SELECT * FROM User_Badge WHERE UserID = ? AND Badge_ID = ?");
+        $stmt->bind_param("ii", $userId, $badgeId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            continue;
+        }
+
+        $stmt = $conn->prepare("INSERT INTO User_Badge (UserID, Badge_ID) VALUES (?, ?)");
+        $stmt->bind_param("ii", $userId, $badgeId);
+        $stmt->execute();
+    }
+
+    header("Location: ../project/pages/profile.php?badge=true");
 }
 
 echo json_encode($answer);

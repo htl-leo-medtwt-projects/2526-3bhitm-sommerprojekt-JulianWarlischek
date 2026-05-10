@@ -35,6 +35,26 @@ function closeMyDataSection() {
     document.body.style.overflow = "auto";
 }
 
+function loadProfileImage(){
+    fetch("../../api/user-api.php?id=" + sessionStorage.getItem("user"))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            
+            if (!data.data.profile_image_id) {
+                console.log("No profile image set");
+                return;
+            }
+
+            fetch("../../api/image-api.php?id=" + data.data.profile_image_id)
+                .then(response => response.json())
+                .then(imageData => {
+                    document.getElementById("profile-image").src = imageData.data;                    
+                });
+        });
+}
+loadProfileImage();
+
 function loadBadgesOfUser() {
     fetch("../../api/badge-api.php?userId=" + sessionStorage.getItem("user"))
         .then(response => response.json())
@@ -93,6 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.get('myData') === 'true') {
         openMyDataSection();
     }
+    if (urlParams.get('badge') === 'true') {
+        openBadges();
+    }
 });
 
 
@@ -137,3 +160,73 @@ function closeBadgeInfo() {
     badgeInfo.style.transform = "translateX(100%)";
     document.body.style.overflow = "auto";
 }
+
+let selectedBadges = []; // Array to store selected badge IDs
+
+function openBadgeSlider() {
+    const badgeSlider = document.getElementById("badge-select-slider");
+
+    badgeSlider.style.transform = "translateX(0)";
+}
+
+function closeBadgeSlider() {
+    const badgeSlider = document.getElementById("badge-select-slider");
+
+    badgeSlider.style.transform = "translateX(100%)";
+}
+
+function loadBadges() {
+    fetch("../../api/badge-api.php")
+        .then(response => response.json())
+        .then(data => {
+            let temp_string = "";
+
+            data.data.forEach(badge => {
+                temp_string += `
+                <div class="badge-select-item" onclick="selectBadge(${badge.badge_id})">
+                    <div class="badge-select-item-info liquidGlass-wrapper">
+                        <div class="liquidGlass-effect"></div>
+                        <div class="liquidGlass-tint"></div>
+                        <div class="liquidGlass-shine"></div>
+
+                        <p>${badge.badgename}</p>
+                    </div>
+                    <div class="badge-select-item-img">
+                        <img src="../${badge.badgepath}" alt="${badge.badgename}">
+                    </div>
+                </div>
+                `
+            });
+
+            document.getElementById("badge-slider").innerHTML = temp_string;
+        });
+}
+loadBadges();
+
+function selectBadge(badgeId) {
+
+    
+    if(document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.contains("badge-selected")) {
+        document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.remove("badge-selected");
+        document.getElementsByClassName("badge-select-item-info")[badgeId - 1].style.backgroundColor = "transparent";
+        const idx = selectedBadges.indexOf(badgeId);
+        if (idx !== -1) selectedBadges.splice(idx, 1);
+    } else {
+        document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.add("badge-selected");
+        document.getElementsByClassName("badge-select-item-info")[badgeId - 1].style.backgroundColor = "dodgerblue";
+        selectedBadges.push(badgeId);
+    }
+
+    console.log(selectedBadges);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('badge-select-form');
+    const badgesInput = document.getElementById('selected-badges');
+
+    if (form && badgesInput) {
+        form.addEventListener('submit', function (event) {
+            badgesInput.value = JSON.stringify(selectedBadges);
+        });
+    }
+});

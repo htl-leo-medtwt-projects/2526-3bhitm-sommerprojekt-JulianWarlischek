@@ -22,7 +22,7 @@ function loadAllFriends() {
                     <div class="liquidGlass-shine"></div>
 
                     <div class="friend-img">
-                        <img src="../assets/images/demo-user.png" alt="demo user">
+                        <img id="friend-${friend.userid}-img" src="" alt="demo user">
                     </div>
 
                     <div class="friend-name">
@@ -32,6 +32,7 @@ function loadAllFriends() {
                     <div class="friend-badge-flex" id="friend-${friend.userid}-badges">
                     </div>
                 </div>`;
+                loadProfileImage(friend.userid);
                 loadBadgesFromUser(friend.userid);
             });
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
@@ -43,6 +44,38 @@ function loadAllFriends() {
         });
 }
 setFriendsMainSection('grid');
+
+function loadProfileImage(userId) {
+    fetch(`../../api/user-api.php?id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const user = data.data;
+
+            if (!user.profile_image_id) {
+                return;
+            }
+
+            fetch(`../../api/image-api.php?id=${user.profile_image_id}`)
+                .then(response => response.json())
+                .then(imageData => {
+                    const imageSrc = imageData.data;
+                    const imgElement = document.getElementById(`friend-${userId}-img`);
+
+                    console.log(imageData);
+
+
+                    if (imgElement) {
+                        imgElement.src = imageSrc;
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching profile image for user ${userId}:`, error);
+                });
+        })
+        .catch(error => {
+            console.error(`Error fetching user data for user ${userId}:`, error);
+        });
+}
 
 
 
@@ -95,7 +128,7 @@ async function loadAllRequests() {
             let temp_string = "";
 
             console.log(data);
-            
+
 
             for (const request of requests) {
                 console.log(request);
@@ -110,7 +143,7 @@ async function loadAllRequests() {
 
                     <div class="friend-request-info">
                         <div class="friend-img">
-                            <img src="../assets/images/demo-user.png" alt="demo user">
+                            <img id="friend-image-request-${request_id}" src="" alt="demo user">
                         </div>
 
                         <div class="friend-name">
@@ -122,12 +155,42 @@ async function loadAllRequests() {
                         <div class="decline-button" onclick="declineFriendRequest('${request_id}')"><i class="fa-solid fa-xmark"></i></div>
                     </div>
                 </div>`;
+                loadFriendImage(request_id, request.userid);
             }
             document.getElementById('friends-main-section-content').innerHTML = temp_string;
             loadFriendCount();
         })
         .catch(error => {
             console.error('Error fetching friend requests:', error);
+        });
+}
+
+function loadFriendImage(requestId, userId) {
+    fetch(`../../api/user-api.php?id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (!data.data.profile_image_id) {
+                console.log("No profile image set for user " + userId);
+                return;
+            }
+
+            fetch(`../../api/image-api.php?id=${data.data.profile_image_id}`)
+                .then(response => response.json())
+                .then(imageData => {
+                    const imgElement = document.getElementById(`friend-image-request-${requestId}`);
+                    console.log(imageData);
+                    if (imgElement) {
+                        imgElement.src = imageData.data;
+                    }
+
+                })
+                .catch(error => {
+                    console.error(`Error fetching profile image for user ${userId}:`, error);
+                });
+        })
+        .catch(error => {
+            console.error(`Error fetching user data for user ${userId}:`, error);
         });
 }
 
@@ -207,7 +270,7 @@ function searchUsers() {
             const users = data.data;
 
             console.log(data);
-            
+
 
             let temp_string = "";
 
@@ -217,13 +280,36 @@ function searchUsers() {
                     <div class="friend-found">
                         <div class="friend-found-img-name">
                             <div class="friend-found-img">
-                                <img src="../assets/images/demo-user.png" alt="demo user">
+                                <img id="friend-${user.userid}-img-search" src="" alt="demo user">
                             </div>
                             <p>${user.username}</p>
                         </div>
                         <p class="request-button" onclick="sendFriendRequest(${user.userid})">send request</p>
                     </div>
                 `
+
+                fetch(`../../api/user-api.php?id=${user.userid}`)
+                    .then(response => response.json())
+                    .then(userData => {
+                        if (!userData.data.profile_image_id) {
+                            return;
+                        }
+
+                        fetch(`../../api/image-api.php?id=${userData.data.profile_image_id}`)
+                            .then(response => response.json())
+                            .then(imageData => {
+                                const imgElement = document.getElementById(`friend-${user.userid}-img-search`);
+                                if (imgElement) {
+                                    imgElement.src = imageData.data;
+                                }
+                            })
+                            .catch(error => {
+                                console.error(`Error fetching profile image for user ${user.userid}:`, error);
+                            });
+                    })
+                    .catch(error => {
+                        console.error(`Error fetching user data for user ${user.userid}:`, error);
+                    });
             });
 
             document.getElementById('add-friends-friends-found').innerHTML = temp_string;
@@ -266,7 +352,7 @@ function loadBadgesFromUser(userId) {
 
             let temp_string = "";
 
-            for(let i = 0; i < badges.length && i < 2; i++) {
+            for (let i = 0; i < badges.length && i < 2; i++) {
                 const badge = badges[i];
 
                 temp_string += `
@@ -285,3 +371,35 @@ function loadBadgesFromUser(userId) {
             console.error('Error fetching badges:', error);
         });
 }
+
+function loadOwnProfileImage() {
+    fetch(`../../api/user-api.php?id=${sessionStorage.getItem("user")}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            if (!data.data.profile_image_id) {
+                return;
+            }
+
+            fetch(`../../api/image-api.php?id=${data.data.profile_image_id}`)
+                .then(response => response.json())
+                .then(imageData => {
+                    const imageSrc = imageData.data;
+                    const imgElement = document.getElementById(`friends-profile-image`);
+
+
+                    if (imgElement) {
+                        imgElement.src = imageSrc;
+                    }   
+
+                })
+                .catch(error => {
+                    console.error(`Error fetching profile image for user ${sessionStorage.getItem("user")}:`, error);
+                });
+        })
+        .catch(error => {
+            console.error(`Error fetching user data for user ${sessionStorage.getItem("user")}:`, error);
+        });
+}
+loadOwnProfileImage();

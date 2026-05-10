@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AfterMemory</title>
+
     <script src="https://kit.fontawesome.com/3a03b4384b.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
+
     <script src="./script/global.js" defer></script>
     <script src="./script/index.js" defer></script>
 </head>
@@ -15,16 +18,17 @@
 <body>
 
     <!-- Navigation start -->
-    <div id="top-level-blur">
-        
-    </div>
+    <div id="top-level-blur"></div>
+
     <div id="navigation">
         <div id="navigation-header">
             <a href="./index.html">AfterMemory</a>
+
             <div id="navigation-inner-toggle-button" onclick="toggleNavigation()">
                 <i class="fa-solid fa-caret-right"></i>
             </div>
         </div>
+
         <div id="navigation-links">
             <div id="prev-event" class="liquidGlass-wrapper">
                 <div class="liquidGlass-effect-less-blur"></div>
@@ -36,12 +40,14 @@
                     <div id="prev-event-headline">
                         <p>Last Event</p>
                     </div>
+
                     <div id="prev-event-details">
                         <p id="prev-event-name">Demo Party</p>
                         <p>-</p>
                         <p id="prev-event-date">01.01.2024</p>
                     </div>
                 </div>
+
                 <div id="prev-event-edit" class="liquidGlass-wrapper">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
@@ -50,6 +56,7 @@
                     <i class="fa-solid fa-pen"></i>
                 </div>
             </div>
+
             <div id="pages-links">
                 <div class="link-container">
                     <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('index.html')">
@@ -60,6 +67,7 @@
                     </div>
                     <p>Home</p>
                 </div>
+
                 <div class="link-container">
                     <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/events.php')">
                         <div class="liquidGlass-effect"></div>
@@ -69,6 +77,7 @@
                     </div>
                     <p>Events</p>
                 </div>
+
                 <div class="link-container">
                     <div class="link-icon liquidGlass-wrapper" onclick="navigationTo('pages/friends.php')">
                         <div class="liquidGlass-effect"></div>
@@ -79,6 +88,7 @@
                     <p>Friends</p>
                 </div>
             </div>
+
             <div id="img-memories" class="liquidGlass-wrapper">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
@@ -87,7 +97,6 @@
                 <div class="opacity-overlay"></div>
             </div>
         </div>
-        
     </div>
 
     <div id="open-navigation">
@@ -97,26 +106,37 @@
     </div>
     <!-- Navigation end -->
 
+    <!-- Home start -->
     <div id="home-landing-section" class="path-node">
         <h1>After</h1>
         <h1>Memory</h1>
 
-        <div id="slide-down-to-path" onclick="slideTo('#path-node-1')">
+        <div id="slide-down-to-path" onclick="slideTo('#path-system')">
             <p>Start memories</p>
+
             <div id="slide-down-to-path-icon">
                 <i class="fa-solid fa-sort-down"></i>
             </div>
         </div>
     </div>
+    <!-- Home end -->
 
+    <!-- Tour path system start -->
     <div id="path-system">
-        <div class="path-node" id="path-node-1">
-            
+        <div id="tour-header">
+            <p id="tour-eyebrow">Interactive App Tour</p>
+            <h2>Explore AfterMemory</h2>
+            <p>
+                Follow the interactive tour to discover the features of AfterMemory. Click on the highlighted areas to learn more about each section and how to make the most of your experience.
+            </p>
         </div>
-        <div class="path-node" id="path-node-2">
-            
-        </div>
+
+        <div id="tour-progress"></div>
+
+        <div id="tour-stage"></div>
     </div>
+    <!-- Tour path system end -->
+
 </body>
 
 </html>

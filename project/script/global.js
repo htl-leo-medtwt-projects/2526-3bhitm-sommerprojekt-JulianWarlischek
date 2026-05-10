@@ -23,6 +23,39 @@ function apiUrl(path) {
 }
 
 
+/* Copilot */
+function resolveImageUrl(imagePath) {
+    if (!imagePath) {
+        return "";
+    }
+
+    // Keep already absolute URLs untouched.
+    if (/^(https?:)?\/\//i.test(imagePath) || imagePath.startsWith("data:")) {
+        return imagePath;
+    }
+
+    const normalizedPath = String(imagePath).replace(/\\/g, "/").trim();
+    const imageName = normalizedPath.split("/").pop();
+
+    if (!imageName) {
+        return "";
+    }
+
+    const currentPath = window.location.pathname;
+    const projectPath = projectRootUrl.pathname;
+    let depthFromProjectRoot = 0;
+
+    if (currentPath.startsWith(projectPath)) {
+        const relativePath = currentPath.slice(projectPath.length);
+        const pathParts = relativePath.split("/").filter(Boolean);
+        depthFromProjectRoot = Math.max(pathParts.length - 1, 0);
+    }
+
+    const prefix = "../".repeat(depthFromProjectRoot + 1);
+    return `${prefix}api/uploads/${imageName}`;
+}
+
+
 
 /**
  * function: toggleNavigation
@@ -158,7 +191,6 @@ function getCorrectEventDurationFormat(durationInHours) {
 }
 
 /* LOGIN/CHECK */
-
 function checkUserStatus() {
     fetch(apiUrl(`login-register/user-there-check.php`))
         .then(response => response.json())
@@ -170,8 +202,7 @@ function checkUserStatus() {
 
                 sessionStorage["user"] = user.userid;
 
-                // determine correct relative path to assets depending on current page (Copilot generated code)
-                const navImg = window.location.pathname.includes('/pages/') ? '../assets/images/demo-user.png' : './assets/images/demo-user.png';
+                
 
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-profile-view" class="liquidGlass-wrapper">
@@ -181,7 +212,7 @@ function checkUserStatus() {
 
                     <div id="navigation-profile-view-name-img" onclick="navigationTo('pages/profile.php')">
                         <div id="navigation-profile-view-img">
-                            <img src="${navImg}" alt="demo user">
+                            <img src="" alt="demo user">
                         </div>
                         <h2>${user.username}</h2>
                     </div>
@@ -190,6 +221,23 @@ function checkUserStatus() {
                     </div>
                 </div>
                 `
+
+                fetch(apiUrl(`image-api.php?id=${user.profile_image_id}`))
+                    .then(response => response.json())
+                    .then(imageData => {
+                        const navProfileImg = document.querySelector("#navigation-profile-view-img img");
+
+                        console.log(user);
+                        
+                        console.log(imageData);
+                        
+                        if (navProfileImg) {
+                            navProfileImg.src = resolveImageUrl(imageData.data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching profile image:', error);
+                    });
             } else {
 
                 sessionStorage.removeItem("user");

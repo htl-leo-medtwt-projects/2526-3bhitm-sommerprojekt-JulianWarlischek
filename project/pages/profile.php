@@ -12,6 +12,12 @@ if (isset($_GET['myData']) && $_GET['myData'] === 'true') {
     $showMyData = false;
 }
 
+if (isset($_GET['badge'])) {
+    $showBadge = true;
+} else {
+    $showBadge = false;
+}
+
 $user = $_SESSION['user'] ?? null;
 ?>
 <!DOCTYPE html>
@@ -114,7 +120,7 @@ $user = $_SESSION['user'] ?? null;
     <div id="profile-flex">
         <div id="profile-header">
             <div id="profile-picture">
-                <img src="<?php echo isset($user['profileimage']) && $user['profileimage'] !== '' ? '../' . htmlspecialchars($user['profileimage']) : '../assets/images/demo-user.png'; ?>"
+                <img id="profile-image" src=""
                     alt="profile image">
             </div>
 
@@ -217,9 +223,14 @@ $user = $_SESSION['user'] ?? null;
             <p>Click them to edit.</p>
         </div>
 
+        <div id="add-badges-button" onclick="openBadgeSlider()">
+            <p>Add Badges</p>
+        </div>
+
         <hr id="user-badge-content-seperator">
 
         <div id="profile-badges"></div>
+
     </div>
 
     <div id="profile-my-data-slider">
@@ -235,7 +246,7 @@ $user = $_SESSION['user'] ?? null;
             <div></div>
         </div>
 
-        <form id="profile-my-data-form" action="../../api/login-register/update-profile.php" method="POST">
+        <form id="profile-my-data-form" action="../../api/login-register/update-profile.php" method="POST" enctype="multipart/form-data">
 
             <div class="my-data-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
@@ -259,6 +270,25 @@ $user = $_SESSION['user'] ?? null;
                     <label for="my-data-email">Email</label>
                     <input type="email" id="my-data-email" name="email"
                         value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>">
+                </div>
+            </div>
+
+            <div class="my-data-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="my-data-section-header">
+                    <div class="my-data-section-icon">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <p>Profile Image</p>
+                </div>
+
+                <div class="my-data-group">
+                    <label for="my-data-profile-image">Select image to upload</label>
+                    <input type="hidden" name="user-id" value="<?php echo htmlspecialchars($user['userid'] ?? ''); ?>">
+                    <input type="file" id="my-data-profile-image" name="profile-image" accept="image/*">
                 </div>
             </div>
 
@@ -323,6 +353,30 @@ $user = $_SESSION['user'] ?? null;
                 <i class="fa-solid fa-trash"></i>
             </div>
         </div>
+    </div>
+
+    <div id="badge-select-slider">
+        <div id="close-badge-select-slider" class="liquidGlass-wrapper" onclick="closeBadgeSlider()">
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <form id="badge-select-form" action="../../api/badge-api.php" method="POST">
+            <input type="hidden" id="selected-badges" name="selectedBadges" value="[]">
+
+            <div id="inner-select-slider">
+                <h3>Select your badges</h3>
+
+                <div id="badge-slider">
+
+                </div>
+
+                <input type="submit" id="badges-add" value="Add" name="submit-badges">
+            </div>
+        </form>
     </div>
 </body>
 

@@ -104,7 +104,7 @@ if(!isset($_SESSION['user'])){
     <!-- Navigation end -->
 
     <div id="friends-profile" onclick="navigationTo('pages/profile.php')">
-        <img src="../assets/images/demo-user.png" alt="demo user">
+        <img id="friends-profile-image" src="" alt="demo user">
     </div>
 
     <div id="friends-main-section">

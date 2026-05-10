@@ -119,6 +119,9 @@ if ($activeUserId !== null && isset($_GET['sendFriendRequest'])){
     $answer["message"] = "OK";
 }
 
+
+
+
 echo json_encode($answer);
 
 $conn->close();
