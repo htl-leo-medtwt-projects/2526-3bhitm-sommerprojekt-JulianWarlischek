@@ -51,7 +51,6 @@ if (!empty($_POST['submit'])) {
 
         if (empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
             $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
-            $_SESSION['errors'][] = $checkSum;
         } else {
             if (move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
                 try{
@@ -59,20 +58,17 @@ if (!empty($_POST['submit'])) {
                     $stmt->bind_param("s", $target_file);
                     $stmt->execute();
 
-                    // Get the ID of the newly inserted image
                     $imageId = $conn->insert_id;
 
                     $stmt = $conn->prepare("UPDATE User SET profile_image_id = ? WHERE UserID = ?");
                     $stmt->bind_param("ii", $imageId, $activeUserId);
                     $stmt->execute();
 
-                    // Refresh session with updated user data
                     $stmt = $conn->prepare("SELECT * FROM User WHERE UserID = ?");
                     $stmt->bind_param("i", $activeUserId);
                     $stmt->execute();
                     $updatedUser = $stmt->get_result()->fetch_assoc();
                     $_SESSION['user'] = $updatedUser;
-
                 }catch(Exception $e){
                     $_SESSION['errors'][] = "Error saving image to database.";
                 }

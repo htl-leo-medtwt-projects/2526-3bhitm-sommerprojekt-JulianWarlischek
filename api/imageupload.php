@@ -1,9 +1,6 @@
 <?php
 
-
-
 function checkFile($target_file) {
-
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $check = getimagesize($_FILES["profile-image"]["tmp_name"]);
     
