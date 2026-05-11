@@ -221,3 +221,50 @@ input[type="submit"]{
 .badge-selected{
     transform: scale(1.05);
 }
+
+/* File input styling to match text inputs (no preview) */
+input[type="file"]{
+    display: block;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid rgb(198, 198, 198);
+    background-color: #fff;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* Style the chooser button in modern browsers */
+input[type="file"]::file-selector-button{
+    background: dodgerblue;
+    color: #fff;
+    border: none;
+    padding: 0.5em 0.8em;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="file"]::-webkit-file-upload-button{
+    background: dodgerblue;
+    color: #fff;
+    border: none;
+    padding: 0.5em 0.8em;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Keep the control visually aligned with other inputs when placed inside the form boxes */
+.register-form-part-box input[type="file"]{
+    background-color: transparent;
+}
+
+/* small hint text under inputs */
+.register-form-item .hint{
+    font-family: "komet", sans-serif;
+    font-size: 0.75em;
+    color: rgba(0,0,0,0.6);
+    margin-top: 0.25em;
+}

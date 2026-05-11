@@ -110,7 +110,7 @@ if(isset($_SESSION['register_error'])){
             <p>Register to start your experience</p>
         </div>
 
-        <form id="register-form" action="../../api/login-register/register.php" method="POST">
+        <form id="register-form" action="../../api/login-register/register.php" method="POST" enctype="multipart/form-data">
             <div class="register-form-part-box liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -136,6 +136,11 @@ if(isset($_SESSION['register_error'])){
                     <div id="badge-add-icon">
                         <i class="fa-solid fa-plus"></i>
                     </div>
+                </div>
+                <div class="register-form-item">
+                    <label for="profile-image">Profilbild</label>
+                    <input type="file" accept="image/*" name="profile-image" id="profile-image" required>
+                    <p class="hint">This image will be used as your profile picture.</p>
                 </div>
             </div>
             <div class="register-form-part-box liquidGlass-wrapper">

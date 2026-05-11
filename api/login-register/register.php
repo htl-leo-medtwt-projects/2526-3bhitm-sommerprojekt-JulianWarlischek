@@ -3,6 +3,7 @@ session_start();
 
 require '../database.php';
 require './validations.php';
+require '../imageupload.php';
 
 if (!empty($_POST['submit'])) {
 
@@ -17,6 +18,9 @@ if (!empty($_POST['submit'])) {
     $_password = $conn->real_escape_string($_POST['register-password']);
     $_passwordRepeat = $conn->real_escape_string($_POST['register-password-repeat']);
     $_badges = json_decode($_POST['register-badges'] ?? '[]', true);
+
+    $target_dir = "../../api/uploads/";
+    $target_file = $target_dir . basename($_FILES["profile-image"]["name"]);
 
     if (!is_array($_badges)) {
         $_badges = [];
@@ -44,6 +48,31 @@ if (!empty($_POST['submit'])) {
             $stmt = $conn->prepare("INSERT INTO User_Badge (UserID, Badge_ID) VALUES (?, ?)");
             $stmt->bind_param("ii", $id, $badgeId);
             $stmt->execute();
+        }
+
+        $checkSum = checkFile($target_file);
+
+        if(empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
+            $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
+            $_SESSION['errors'][] = $checkSum;
+        } else {
+            if (move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
+                try{
+                    $stmt = $conn->prepare("INSERT INTO `Image` (path) VALUES (?)");
+                    $stmt->bind_param("s", $target_file);
+                    $stmt->execute();
+
+                    $imageId = $stmt->insert_id;
+
+                    $stmt = $conn->prepare("UPDATE User SET profile_image_id = ? WHERE UserID = ?");
+                    $stmt->bind_param("ii", $imageId, $id);
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    $_SESSION['errors'][] = "An error occurred while uploading the image.";
+                }
+            } else {
+                $_SESSION['errors'][] = "Sorry, there was an error uploading your file.";
+            }
         }
 
 

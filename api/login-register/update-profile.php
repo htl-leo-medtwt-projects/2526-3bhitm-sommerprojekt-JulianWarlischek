@@ -47,8 +47,6 @@ if (!empty($_POST['submit'])) {
 
         $checkSum = checkFile($target_file);
 
-
-
         if (empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
             $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
             $_SESSION['errors'][] = $checkSum;
@@ -59,7 +57,6 @@ if (!empty($_POST['submit'])) {
                     $stmt->bind_param("s", $target_file);
                     $stmt->execute();
 
-                    // Get the ID of the newly inserted image
                     $imageId = $conn->insert_id;
 
                     $stmt = $conn->prepare("UPDATE User SET profile_image_id = ? WHERE UserID = ?");
