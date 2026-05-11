@@ -47,8 +47,6 @@ if (!empty($_POST['submit'])) {
 
         $checkSum = checkFile($target_file);
 
-
-
         if (empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
             $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
         } else {
