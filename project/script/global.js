@@ -264,3 +264,17 @@ function checkUserStatus() {
 
 checkUserStatus();
 
+function fadeOutErrorMessages() {
+    const errorContainers = document.querySelectorAll('.error-container');
+
+    errorContainers.forEach(container => {
+        setTimeout(() => {
+            container.style.transition = 'opacity 0.5s ease';
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.remove();
+            }, 500);
+        }, 3000);
+    });
+}
+fadeOutErrorMessages();
