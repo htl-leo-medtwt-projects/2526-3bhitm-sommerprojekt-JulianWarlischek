@@ -1,10 +1,6 @@
 <?php
+require '../global-functions.php';
 session_start();
-
-if(isset($_SESSION['register_error'])){
-    
-    unset($_SESSION['register_error']);
-}
 
 ?>
 <!DOCTYPE html>
@@ -22,6 +18,9 @@ if(isset($_SESSION['register_error'])){
 </head>
 
 <body>
+    <div id="error-flex">
+        <?php printErrors() ?>
+    </div>
     <!-- Navigation start -->
     <div id="top-level-blur">
 
@@ -110,7 +109,8 @@ if(isset($_SESSION['register_error'])){
             <p>Register to start your experience</p>
         </div>
 
-        <form id="register-form" action="../../api/login-register/register.php" method="POST" enctype="multipart/form-data">
+        <form id="register-form" action="../../api/login-register/register.php" method="POST"
+            enctype="multipart/form-data">
             <div class="register-form-part-box liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -131,7 +131,7 @@ if(isset($_SESSION['register_error'])){
                         <input name="register-lastname" type="text" id="register-lastname" placeholder="Lastname"
                             required>
                     </div>
-                </div> 
+                </div>
                 <div id="badge-select-box" onclick="openBadgeSlider()">
                     <div id="badge-add-icon">
                         <i class="fa-solid fa-plus"></i>
@@ -184,7 +184,7 @@ if(isset($_SESSION['register_error'])){
             <div class="liquidGlass-effect"></div>
             <div class="liquidGlass-tint"></div>
             <div class="liquidGlass-shine"></div>
-            
+
             <i class="fa-solid fa-xmark"></i>
         </div>
 
@@ -192,7 +192,7 @@ if(isset($_SESSION['register_error'])){
             <h3>Select your badges</h3>
 
             <div id="badge-slider">
-                
+
             </div>
         </div>
     </div>
