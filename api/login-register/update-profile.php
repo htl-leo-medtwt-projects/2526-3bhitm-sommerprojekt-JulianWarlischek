@@ -45,14 +45,17 @@ if (!empty($_POST['submit'])) {
         $user = $stmt->get_result()->fetch_assoc();
         $_SESSION['user'] = $user;
 
-        $checkSum = checkFile($target_file);
 
-        if (empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
-            $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
-            $_SESSION['errors'][] = $checkSum;
+        if (empty($_FILES["profile-image"]["name"])) {
+            if($user['profile_image_id'] === null) {
+                $_SESSION['errors'][] = "No profile image uploaded.";
+            } 
         } else {
-            if (move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
-                try{
+
+            $checkSum = checkFile($target_file);
+
+            if ($checkSum == 1 && move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
+                try {
                     $stmt = $conn->prepare("INSERT INTO `Image` (path) VALUES (?)");
                     $stmt->bind_param("s", $target_file);
                     $stmt->execute();
@@ -63,16 +66,17 @@ if (!empty($_POST['submit'])) {
                     $stmt->bind_param("ii", $imageId, $activeUserId);
                     $stmt->execute();
 
-                    // Refresh session with updated user data
                     $stmt = $conn->prepare("SELECT * FROM User WHERE UserID = ?");
                     $stmt->bind_param("i", $activeUserId);
                     $stmt->execute();
                     $updatedUser = $stmt->get_result()->fetch_assoc();
                     $_SESSION['user'] = $updatedUser;
 
-                }catch(Exception $e){
+                } catch (Exception $e) {
                     $_SESSION['errors'][] = "Error saving image to database.";
                 }
+            }else {
+                $_SESSION['errors'][] = "Sorry, there was an error uploading your file.";
             }
         }
         header("Location: ../../project/pages/profile.php");

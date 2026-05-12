@@ -1,4 +1,6 @@
 <?php
+require '../global-functions.php';
+
 session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -19,6 +21,7 @@ if (isset($_GET['badge'])) {
 }
 
 $user = $_SESSION['user'] ?? null;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +38,9 @@ $user = $_SESSION['user'] ?? null;
 </head>
 
 <body>
+    <div id="error-flex">
+        <?php printErrors() ?>
+    </div>
     <!-- Navigation start -->
     <div id="top-level-blur">
 
@@ -120,8 +126,7 @@ $user = $_SESSION['user'] ?? null;
     <div id="profile-flex">
         <div id="profile-header">
             <div id="profile-picture">
-                <img id="profile-image" src=""
-                    alt="profile image">
+                <img id="profile-image" src="" alt="profile image">
             </div>
 
             <div id="profile-name-and-badges">
@@ -246,7 +251,8 @@ $user = $_SESSION['user'] ?? null;
             <div></div>
         </div>
 
-        <form id="profile-my-data-form" action="../../api/login-register/update-profile.php" method="POST" enctype="multipart/form-data">
+        <form id="profile-my-data-form" action="../../api/login-register/update-profile.php" method="POST"
+            enctype="multipart/form-data">
 
             <div class="my-data-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>

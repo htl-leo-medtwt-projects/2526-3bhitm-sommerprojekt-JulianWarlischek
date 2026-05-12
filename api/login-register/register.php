@@ -27,6 +27,7 @@ if (!empty($_POST['submit'])) {
     }
 
     if (strcmp($_password, $_passwordRepeat) != 0 || !validateUsername($_username) || !validateEmail($_email) || !validatePassword($_password)) {
+        $_SESSION['errors'][] = "Please ensure all fields are valid and passwords match.";
         header("Location: ../../project/pages/register.php");
         exit();
     }
@@ -50,13 +51,12 @@ if (!empty($_POST['submit'])) {
             $stmt->execute();
         }
 
-        $checkSum = checkFile($target_file);
 
-        if(empty($_FILES["profile-image"]["name"]) || $checkSum == 0) {
+        if(empty($_FILES["profile-image"]["name"])) {
             $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
-            $_SESSION['errors'][] = $checkSum;
         } else {
-            if (move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
+            $checkSum = checkFile($target_file);
+            if ($checkSum == 1 && move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
                 try{
                     $stmt = $conn->prepare("INSERT INTO `Image` (path) VALUES (?)");
                     $stmt->bind_param("s", $target_file);
@@ -74,10 +74,11 @@ if (!empty($_POST['submit'])) {
                 $_SESSION['errors'][] = "Sorry, there was an error uploading your file.";
             }
         }
-
+    
 
         header("Location: ../../project/pages/login.php");
     } else {
+        $_SESSION['errors'][] = "An error occurred while registering.";
         header("Location: ../../project/pages/register.php");
     }
 } else {
