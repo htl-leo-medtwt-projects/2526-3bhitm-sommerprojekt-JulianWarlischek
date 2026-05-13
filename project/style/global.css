@@ -6,6 +6,8 @@
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-family: "komet", sans-serif;
+    font-style: normal;
 }
 
 .opacity-overlay {
