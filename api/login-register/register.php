@@ -28,15 +28,13 @@ if (!empty($_POST['submit'])) {
 
     if (strcmp($_password, $_passwordRepeat) != 0 || !validateUsername($_username) || !validateEmail($_email) || !validatePassword($_password)) {
         $_SESSION['errors'][] = "Please ensure all fields are valid and passwords match.";
-        header("Location: ../../project/pages/register.php");
-        exit();
     }
 
     $passwordHash = password_hash($_password, PASSWORD_BCRYPT);
 
     $insertStatement = "INSERT INTO User (username, firstname, lastname, email, dob, password, created_at) VALUES ('$_username', '$_firstname', '$_lastname', '$_email', '$_dob', '$passwordHash', NOW())";
 
-    if ($res = $conn->query($insertStatement)) {
+    if (empty($_SESSION['errors']) && ($res = $conn->query($insertStatement))) {
 
         $stmt = $conn->prepare("SELECT MAX(UserID) as id FROM User");
         $stmt->execute();
@@ -79,9 +77,12 @@ if (!empty($_POST['submit'])) {
         header("Location: ../../project/pages/login.php");
     } else {
         $_SESSION['errors'][] = "An error occurred while registering.";
-        header("Location: ../../project/pages/register.php");
     }
 } else {
-    header("Location: ../../project/pages/register.php");
+    $_SESSION['errors'][] = "Invalid form submission.";
 }
 
+if(!empty($_SESSION['errors'])){
+    header("Location: ../../project/pages/register.php");
+    exit();
+}

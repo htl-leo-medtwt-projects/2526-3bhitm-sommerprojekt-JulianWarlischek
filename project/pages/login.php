@@ -1,3 +1,9 @@
+<?php
+require '../global-functions.php';
+session_start();
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +18,10 @@
 </head>
 
 <body>
+    <div id="error-flex">
+        <?php printErrors() ?>
+    </div>
+    
     <!-- Navigation start -->
     <div id="top-level-blur">
 
