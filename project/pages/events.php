@@ -328,7 +328,7 @@ if (!isset($_SESSION['user'])) {
             <div></div>
         </div>
 
-        <form id="add-event-form" action="">
+        <form id="add-event-form" action="../../api/add-event-api.php" method="POST" enctype="">
             <div class="add-event-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -417,7 +417,20 @@ if (!isset($_SESSION['user'])) {
 
                 <div class="form-group">
                     <label for="event-location">Location *</label>
-                    <input type="text" id="event-location" name="location" placeholder="Enter location" required>
+                    <div id="event-location-select-add">
+                        <div id="event-location" class="event-location-select" role="button" tabindex="0" aria-label="Select location">
+                            Select location
+                        </div>
+                        <div id="add-location-button" class="liquidGlass-wrapper" role="button" tabindex="0" aria-label="Add location">
+                            <div class="liquidGlass-effect"></div>
+                            <div class="liquidGlass-tint"></div>
+                            <div class="liquidGlass-shine"></div>
+
+                            <div id="add-location-button-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

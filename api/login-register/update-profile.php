@@ -67,7 +67,6 @@ if (!empty($_POST['submit'])) {
                     $stmt->execute();
                     $updatedUser = $stmt->get_result()->fetch_assoc();
                     $_SESSION['user'] = $updatedUser;
-
                 }catch(Exception $e){
                     $_SESSION['errors'][] = "Error saving image to database.";
                 }
