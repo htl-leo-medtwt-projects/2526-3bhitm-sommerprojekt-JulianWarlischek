@@ -25,19 +25,15 @@ if (!empty($_POST['submit'])) {
 
     if ($_username !== $currentUser['username'] && !validateUsername($_username)) {
         $_SESSION['errors'][] = "Invalid username.";
-        header("Location: ../../project/pages/profile.php");
-        exit();
     }
 
     if ($_email !== $currentUser['email'] && !validateEmail($_email)) {
         $_SESSION['errors'][] = "Invalid email.";
-        header("Location: ../../project/pages/profile.php");
-        exit();
     }
 
     $updateStatement = "UPDATE User SET username = '$_username', firstname = '$_firstname', lastname = '$_lastname', email = '$_email', dob = '$_dob' WHERE UserID = $activeUserId";
 
-    if ($res = $conn->query($updateStatement)) {
+    if (empty($_SESSION['errors']) && ($res = $conn->query($updateStatement))) {
         $stmt = $conn->prepare("SELECT * FROM User WHERE UserID = ?");
         $stmt->bind_param("i", $activeUserId);
         $stmt->execute();
@@ -80,10 +76,12 @@ if (!empty($_POST['submit'])) {
             }
         }
         header("Location: ../../project/pages/profile.php");
-        exit();
     } else {
         $_SESSION['errors'][] = "Error updating profile.";
-        header("Location: ../../project/pages/profile.php");
-        exit();
     }
+}
+
+if(!empty($_SESSION['errors'])){
+    header("Location: ../../project/pages/update-profile.php");
+    exit();
 }

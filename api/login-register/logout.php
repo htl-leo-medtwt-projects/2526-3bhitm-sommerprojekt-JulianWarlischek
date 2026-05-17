@@ -14,5 +14,5 @@ if(ini_get("session.use_cookies")){
 
 session_destroy();
 
-header("Location: ../../project/index.html");
+header("Location: ../../project/pages/login.php");
 exit();
