@@ -29,7 +29,7 @@ if (!empty($_POST['submit'])) {
 
             if (password_verify($_password, $user['password'])) {
                 $_SESSION['user'] = $user;
-                header("Location: ../../project/pages/profile.php");
+                header("Location: ../../project/index.html");
                 exit();
             } else {
                 $_SESSION['errors'][] = "Invalid username or password.";
