@@ -421,7 +421,7 @@ if (!isset($_SESSION['user'])) {
                         <div id="event-location" class="event-location-select" role="button" tabindex="0" aria-label="Select location">
                             Select location
                         </div>
-                        <div id="add-location-button" class="liquidGlass-wrapper" role="button" tabindex="0" aria-label="Add location">
+                        <div id="add-location-button" class="liquidGlass-wrapper" role="button" tabindex="0" aria-label="Add location" onclick="openAddLocation()">
                             <div class="liquidGlass-effect"></div>
                             <div class="liquidGlass-tint"></div>
                             <div class="liquidGlass-shine"></div>
@@ -446,6 +446,39 @@ if (!isset($_SESSION['user'])) {
                 <input type="submit" class="btn-submit" value="Create Event">
             </div>
         </form>
+    </div>
+
+    <div id="add-location-slider">
+        <div id="add-location-inner">
+            <div id="add-location-header">
+                <div id="close-add-location-icon" class="liquidGlass-wrapper" onclick="closeAddLocation()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+    
+
+                <div><h2>Add Location</h2>
+
+                <p>Note: Everyone can view the location information.</p>
+            </div> 
+                </div>
+            <form action="../../api/location-api.php" method="POST" id="add-location-form">
+                <div class="form-group">
+                    <label for="location-name">Location Name *</label>
+                    <input type="text" id="location-name" name="name" placeholder="Enter location name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-description">Description</label>
+                    <textarea id="location-description" name="description" placeholder="Enter location description" rows="4"></textarea>
+                </div>
+
+                <input name="add-location" type="submit" id="add-location-submit" value="Add Location">
+            </form>
+        </div>
     </div>
 </body>
 

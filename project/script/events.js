@@ -324,3 +324,22 @@ function closeAddEventSlider() {
 
     console.log("Add event slider closed");
 }
+
+
+function openAddLocation() {
+    const addLocationSlider = document.getElementById("add-location-slider");
+
+    addLocationSlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
+
+}
+
+function closeAddLocation() {
+    const addLocationSlider = document.getElementById("add-location-slider");
+    addLocationSlider.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+
+    const form = document.getElementById("add-location-form");
+    form.reset();
+    
+}
