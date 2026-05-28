@@ -26,6 +26,8 @@ if (isset($_GET['id'])) {
 }
 
 if ($activeUserId !== null && isset($_GET['friends'])) {
+
+    
     $stmt = $conn->prepare("SELECT * FROM User u WHERE u.UserID IN (SELECT f.UserID FROM Friend_Ship f WHERE f.UserID1 = ?) OR u.UserID IN (SELECT f.UserID1 FROM Friend_Ship f WHERE f.UserID = ?)");
     $stmt->bind_param("ii", $activeUserId, $activeUserId);
     $stmt->execute();
@@ -107,6 +109,22 @@ if ($activeUserId !== null && isset($_GET['searchUsers'])){
     $answer["code"] = 200;
     $answer["message"] = "OK";
 }
+
+
+if ($activeUserId !== null && isset($_GET['searchFriends'])){
+    $query = $_GET['searchFriends'];
+    $stmt = $conn->prepare("SELECT * FROM User u WHERE lower(u.Username) LIKE ? AND (u.UserID IN (SELECT f.UserID FROM Friend_Ship f WHERE f.UserID1 = ?) OR u.UserID IN (SELECT f.UserID1 FROM Friend_Ship f WHERE f.UserID = ?)) ORDER BY u.Username ASC");
+    $likeQuery = "%".$query."%";
+    $stmt->bind_param("sii", $likeQuery, $activeUserId, $activeUserId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $answer["data"] = $result->fetch_all(MYSQLI_ASSOC);
+    
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 
 if ($activeUserId !== null && isset($_GET['sendFriendRequest'])){
     $userId = $_GET['sendFriendRequest'];

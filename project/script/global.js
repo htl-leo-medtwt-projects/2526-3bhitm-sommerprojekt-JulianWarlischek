@@ -176,6 +176,8 @@ function calculateEventDuration(startDate, endDate) {
     const durationInMs = end - start;
     const durationInHours = durationInMs / (1000 * 60 * 60);
 
+    console.log(`Event duration in hours: ${durationInHours}`);
+
     return durationInHours;
 }
 

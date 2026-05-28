@@ -1,4 +1,6 @@
 <?php
+require '../global-functions.php';
+
 session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -22,6 +24,9 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
+    <div id="error-flex">
+        <?php printErrors() ?>
+    </div>
     <!-- Navigation start -->
     <div id="top-level-blur">
 
@@ -328,7 +333,7 @@ if (!isset($_SESSION['user'])) {
             <div></div>
         </div>
 
-        <form id="add-event-form" action="../../api/add-event-api.php" method="POST" enctype="">
+        <form id="add-event-form" action="../../api/event-api.php" method="POST" enctype="multipart/form-data">
             <div class="add-event-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -418,10 +423,10 @@ if (!isset($_SESSION['user'])) {
                 <div class="form-group">
                     <label for="event-location">Location *</label>
                     <div id="event-location-select-add">
-                        <div id="event-location" class="event-location-select" role="button" tabindex="0" aria-label="Select location">
+                        <div id="event-location" class="event-location-select" onclick="openLocationSelect()">
                             Select location
                         </div>
-                        <div id="add-location-button" class="liquidGlass-wrapper" role="button" tabindex="0" aria-label="Add location" onclick="openAddLocation()">
+                        <div id="add-location-button" class="liquidGlass-wrapper" onclick="openAddLocation()">
                             <div class="liquidGlass-effect"></div>
                             <div class="liquidGlass-tint"></div>
                             <div class="liquidGlass-shine"></div>
@@ -431,8 +436,142 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="event-location-id" name="locationId" value="">
                 </div>
             </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-share-with-header">
+                    <div class="add-event-section-header-left">
+                        <div class="add-event-section-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <p>Share Event With</p>
+                    </div>
+                    <div id="add-event-shared-with-counter">
+                        0
+                    </div>
+                </div>
+                <div id="add-event-share-with-content">
+                    <input type="text" id="add-event-share-with-search" placeholder="Search friends to share with ..."
+                        oninput="searchFriendsToShareWith()">
+                    <input type="hidden" id="event-shared-with-hidden" name="sharedWith" value="[]">
+
+                    <div id="add-event-share-with-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-snacks-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <p>Snacks</p>
+                </div>
+                <div id="add-event-snacks-content">
+                    <input type="text" id="add-event-snacks-search" placeholder="Search snacks to add ..."
+                        oninput="searchSnacks()">
+                    <input type="hidden" id="event-snacks-hidden" name="snacks" value="[]">
+
+                    <div id="add-event-snacks-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-drinks-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-glass-water"></i>
+                    </div>
+                    <p>Drinks</p>
+                </div>
+                <div id="add-event-drinks-content">
+                    <input type="text" id="add-event-drinks-search" placeholder="Search drinks to add ..."
+                        oninput="searchDrinks()">
+                    <input type="hidden" id="event-drinks-hidden" name="drinks" value="[]">
+
+                    <div id="add-event-drinks-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-games-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                    <p>Games</p>
+                </div>
+                <div id="add-event-games-content">
+                    <input type="text" id="add-event-games-search" placeholder="Search games to add ..."
+                        oninput="searchGames()">
+                    <input type="hidden" id="event-games-hidden" name="games" value="[]">
+
+                    <div id="add-event-games-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <p>Images</p>
+                </div>
+                <div class="form-group">
+                    <label for="event-images">Upload Images</label>
+                    <input type="file" id="event-images" name="event-images[]" accept="image/*" multiple >
+                    <div id="event-images-preview" class="images-preview">
+
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <p>Cover Image</p>
+                </div>
+                <div class="form-group">
+                    <label for="event-cover-images">Upload an image which will be displayed as the event cover</label>
+                    <input type="file" id="event-cover-image" name="event-cover-image" accept="image/*" >
+                </div>
+                
+            </div>
+
 
             <div class="form-actions">
                 <div class="btn-cancel liquidGlass-wrapper" onclick="closeAddEventSlider()">
@@ -443,7 +582,7 @@ if (!isset($_SESSION['user'])) {
                     <span>Cancel</span>
                 </div>
 
-                <input type="submit" class="btn-submit" value="Create Event">
+                <input type="submit" class="btn-submit" value="Create Event" name="add-event">
             </div>
         </form>
     </div>
@@ -458,13 +597,13 @@ if (!isset($_SESSION['user'])) {
 
                     <i class="fa-solid fa-angle-left"></i>
                 </div>
-    
 
-                <div><h2>Add Location</h2>
+                <div>
+                    <h2>Add Location</h2>
 
-                <p>Note: Everyone can view the location information.</p>
-            </div> 
+                    <p>Note: Everyone can view the location information.</p>
                 </div>
+            </div>
             <form action="../../api/location-api.php" method="POST" id="add-location-form">
                 <div class="form-group">
                     <label for="location-name">Location Name *</label>
@@ -473,11 +612,32 @@ if (!isset($_SESSION['user'])) {
 
                 <div class="form-group">
                     <label for="location-description">Description</label>
-                    <textarea id="location-description" name="description" placeholder="Enter location description" rows="4"></textarea>
+                    <textarea id="location-description" name="description" placeholder="Enter location description"
+                        rows="4"></textarea>
                 </div>
 
                 <input name="add-location" type="submit" id="add-location-submit" value="Add Location">
             </form>
+        </div>
+    </div>
+
+    <div id="select-location-slider">
+        <div id="select-location-header">
+            <div id="close-select-location-icon" onclick="closeLocationSelect()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Select Location</h2>
+        </div>
+        <div id="select-location-inner">
+
+            <input type="text" id="search-location" placeholder="Search ..." oninput="searchLocation()">
+
+            <hr class="location-search-seperator">
+
+            <div id="search-location-results">
+
+            </div>
         </div>
     </div>
 </body>
