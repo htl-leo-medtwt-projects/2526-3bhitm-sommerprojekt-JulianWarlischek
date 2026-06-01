@@ -199,12 +199,12 @@ function checkUserStatus() {
         .then(data => {
 
             if (data.data !== null) {
-                
+
                 let user = data.data;
 
                 sessionStorage["user"] = user.userid;
 
-                
+
 
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-profile-view" class="liquidGlass-wrapper">
@@ -230,9 +230,9 @@ function checkUserStatus() {
                         const navProfileImg = document.querySelector("#navigation-profile-view-img img");
 
                         console.log(user);
-                        
+
                         console.log(imageData);
-                        
+
                         if (navProfileImg) {
                             navProfileImg.src = resolveImageUrl(imageData.data);
                         }
@@ -243,7 +243,7 @@ function checkUserStatus() {
             } else {
 
                 sessionStorage.removeItem("user");
-                
+
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-login-register">
                     <div id="navigation-login-register-login" onclick="navigationTo('pages/login.php')">
@@ -307,13 +307,13 @@ function loadRandomMemory() {
 }
 loadRandomMemory();
 
-function loadLastEvent(){
+function loadLastEvent() {
     fetch(apiUrl('event-api.php'))
         .then(response => response.json())
         .then(data => {
             console.log(data);
             const lastEventElement = document.getElementById('last-event');
-            
+
             if (data == null || !data.data) {
                 document.getElementById("prev-event-name").innerText = "No Events Yet";
                 document.getElementById("prev-event-date").innerText = "";
@@ -321,6 +321,10 @@ function loadLastEvent(){
             }
 
             const lastEvent = data.data[data.data.length - 1];
+
+            document.getElementById("prev-event-edit").addEventListener("click", function () {
+                window.location.href = new URL(`pages/events.php?updateEvent=${lastEvent.event_id}`, projectRootUrl).href;
+            });
 
             document.getElementById("prev-event-name").innerText = lastEvent.name;
             document.getElementById("prev-event-date").innerText = `${getDayOfMonth(parseDate(lastEvent.startDate))}. ${getMonth(parseDate(lastEvent.startDate))} ${getYear(parseDate(lastEvent.startDate))}`;
