@@ -186,10 +186,6 @@ img {
     border-radius: 50px;
     position: relative;
     overflow: hidden;
-    background-image: url('../assets/images/demo-party.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     padding: 1em;
 }
 
@@ -283,10 +279,7 @@ img {
     font-weight: 700;
     font-style: normal;
     font-size: 0.9em;
-    background-image: url('../assets/images/party-demo.webp');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    
     color: white;
 }
 

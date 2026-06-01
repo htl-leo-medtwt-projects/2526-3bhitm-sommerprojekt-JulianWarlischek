@@ -93,7 +93,7 @@ if (!isset($_SESSION['user'])) {
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -167,7 +167,7 @@ if (!isset($_SESSION['user'])) {
                 <p id="event-title-header">Event Title</p>
             </div>
             <div id="event-details-header-right">
-                <div id="add-user-to-event-icon">
+                <div id="add-user-to-event-icon" onclick="slideInInviteTo()">
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </div>
             </div>
@@ -315,6 +315,29 @@ if (!isset($_SESSION['user'])) {
                 <div id="drinks-snacks-games-images-shared-with-content">
                 </div>
             </div>
+
+            <div id="edit-and-delete-buttons">
+                <div id="edit-event-button" class="liquidGlass-wrapper edit-delete-button" onclick="openEditEvent()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div id="edit-event-button-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                    <p>Edit Event</p>
+                </div>
+                <div id="remove-event-button" class="liquidGlass-wrapper edit-delete-button" onclick="removeEvent()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div id="remove-event-button-icon">
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                    <p>Remove Event</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -334,6 +357,8 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <form id="add-event-form" action="../../api/event-api.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="event-id" id="event-id-input" value="">
+
             <div class="add-event-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -546,12 +571,12 @@ if (!isset($_SESSION['user'])) {
                 </div>
                 <div class="form-group">
                     <label for="event-images">Upload Images</label>
-                    <input type="file" id="event-images" name="event-images[]" accept="image/*" multiple >
+                    <input type="file" id="event-images" name="event-images[]" accept="image/*" multiple>
                     <div id="event-images-preview" class="images-preview">
 
                     </div>
                 </div>
-                
+
             </div>
 
             <div class="add-event-form-section liquidGlass-wrapper">
@@ -567,9 +592,9 @@ if (!isset($_SESSION['user'])) {
                 </div>
                 <div class="form-group">
                     <label for="event-cover-images">Upload an image which will be displayed as the event cover</label>
-                    <input type="file" id="event-cover-image" name="event-cover-image" accept="image/*" >
+                    <input type="file" id="event-cover-image" name="event-cover-image" accept="image/*">
                 </div>
-                
+
             </div>
 
 
@@ -582,7 +607,7 @@ if (!isset($_SESSION['user'])) {
                     <span>Cancel</span>
                 </div>
 
-                <input type="submit" class="btn-submit" value="Create Event" name="add-event">
+                <input id="create-update-event" type="submit" class="btn-submit" value="Create Event" name="add-event">
             </div>
         </form>
     </div>
@@ -636,6 +661,26 @@ if (!isset($_SESSION['user'])) {
             <hr class="location-search-seperator">
 
             <div id="search-location-results">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="invite-to-slider">
+        <div id="invite-to-header">
+            <div id="close-invite-to-icon" onclick="closeInviteTo()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Add Participants</h2>
+            <div></div>
+        </div>
+
+        <div id="invite-to-content">
+            <input type="text" id="invite-to-search" placeholder="Search friends to invite ..."
+                oninput="searchFriendsToInvite()">
+            <hr class="invite-to-search-seperator">
+            <div id="invite-to-search-results">
 
             </div>
         </div>

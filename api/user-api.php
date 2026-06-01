@@ -138,7 +138,25 @@ if ($activeUserId !== null && isset($_GET['sendFriendRequest'])){
 }
 
 
+if($activeUserId !== null && isset($_GET['gallery'])) {
+    $stmt = $conn->prepare("
+        SELECT DISTINCT i.*
+        FROM Image i
+        INNER JOIN Event_Image ei ON ei.image_id = i.images_id
+        INNER JOIN Event e ON e.event_id = ei.event_id
+        LEFT JOIN User_Event ue ON ue.event_id = e.event_id
+        WHERE ue.userid = ?
+           OR e.master_userid = ?
+    ");
 
+    $stmt->bind_param("ii", $activeUserId, $activeUserId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $answer["data"] = $result->fetch_all(MYSQLI_ASSOC);
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
 
 echo json_encode($answer);
 

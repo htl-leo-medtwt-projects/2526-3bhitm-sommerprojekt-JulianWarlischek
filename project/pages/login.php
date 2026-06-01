@@ -87,7 +87,7 @@ session_start();
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>

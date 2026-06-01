@@ -106,7 +106,7 @@ $user = $_SESSION['user'] ?? null;
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -155,7 +155,7 @@ $user = $_SESSION['user'] ?? null;
                         </div>
                     </div>
                     <hr class="seperator-long">
-                    <div class="profile-point">
+                    <div class="profile-point" onclick="slideInGallery()">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
                                 <i class="fa-regular fa-image"></i>
@@ -175,18 +175,6 @@ $user = $_SESSION['user'] ?? null;
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
-                    <div class="profile-point">
-                        <div class="profile-point-icon-text">
-                            <div class="profile-point-icon">
-                                <i class="fa-solid fa-palette"></i>
-                            </div>
-                            <p>Design</p>
-                        </div>
-                        <div class="profile-point-arrow">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <hr class="seperator-long">
                     <div class="profile-point" onclick="navigationTo('pages/events.php')">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
@@ -383,6 +371,20 @@ $user = $_SESSION['user'] ?? null;
                 <input type="submit" id="badges-add" value="Add" name="submit-badges">
             </div>
         </form>
+    </div>
+
+    <div id="gallery-slider">
+        <div id="gallery-slider-header">
+            <div id="close-gallery-slider" onclick="closeGallerySlider()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <h2>Gallery</h2>
+            <div></div>
+        </div>
+
+        <div id="gallery-content">
+
+        </div>
     </div>
 </body>
 

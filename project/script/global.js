@@ -280,3 +280,65 @@ function fadeOutErrorMessages() {
     });
 }
 fadeOutErrorMessages();
+
+function loadRandomMemory() {
+    fetch(apiUrl(`user-api.php?gallery=true`))
+        .then(response => response.json())
+        .then(data => {
+            const imgElement = document.getElementById('img-memories');
+            const imgMemoriesHeadline = imgElement.querySelector('h2');
+
+            if (!data.data || data.data.length === 0) {
+                imgMemoriesHeadline.textContent = 'No Memories Yet';
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * data.data.length);
+            const randomImage = data.data[randomIndex];
+
+
+            imgElement.style.backgroundImage = `url('${resolveImageUrl(randomImage.path)}')`;
+            imgElement.style.backgroundPosition = 'center';
+            imgElement.style.backgroundSize = 'cover';
+            imgElement.style.backgroundRepeat = 'no-repeat';
+        })
+        .catch(error => {
+            console.error('Error fetching gallery images:', error);
+        });
+}
+loadRandomMemory();
+
+function loadLastEvent(){
+    fetch(apiUrl('event-api.php'))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const lastEventElement = document.getElementById('last-event');
+            
+            if (data == null || !data.data) {
+                document.getElementById("prev-event-name").innerText = "No Events Yet";
+                document.getElementById("prev-event-date").innerText = "";
+                return;
+            }
+
+            const lastEvent = data.data[data.data.length - 1];
+
+            document.getElementById("prev-event-name").innerText = lastEvent.name;
+            document.getElementById("prev-event-date").innerText = `${getDayOfMonth(parseDate(lastEvent.startDate))}. ${getMonth(parseDate(lastEvent.startDate))} ${getYear(parseDate(lastEvent.startDate))}`;
+            fetch(apiUrl(`image-api.php?id=${lastEvent.cover_image}`))
+                .then(response => response.json())
+                .then(imageData => {
+                    console.log(imageData);
+                    document.getElementById("prev-event").style.backgroundImage = `url('${resolveImageUrl(imageData.data)}')`;
+                    document.getElementById("prev-event").style.backgroundPosition = 'center';
+                    document.getElementById("prev-event").style.backgroundSize = 'cover';
+                    document.getElementById("prev-event").style.backgroundRepeat = 'no-repeat';
+
+                })
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+        });
+
+}
+
+loadLastEvent();

@@ -86,7 +86,7 @@ if(!isset($_SESSION['user'])){
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -126,10 +126,6 @@ if(!isset($_SESSION['user'])){
                 <div class="friends-main-section-nav-item"
                     onclick="setActiveClass(this,'friends-main-section-nav-item', 'active-friends-nav-item'); setFriendsMainSection('flex1');">
                     <p>Friend requests</p>
-                </div>
-                <div class="friends-main-section-nav-item"
-                    onclick="setActiveClass(this,'friends-main-section-nav-item', 'active-friends-nav-item'); setFriendsMainSection('flex2');">
-                    <p>Groups</p>
                 </div>
             </div>
             <div id="friends-main-section-content">

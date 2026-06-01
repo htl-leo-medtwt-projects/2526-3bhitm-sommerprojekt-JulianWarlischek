@@ -16,7 +16,6 @@ async function loadAllEvents() {
             for (const event of events) {
                 const image = await fetchEventImage(event.event_id);
 
-                console.log("Event: " + event.name + ", Master UserID: " + event.master_userid + ", Current UserID: " + userId);
                 temp_string += `
                 <div class="event liquidGlass-wrapper" onclick="openEvent(${event.event_id})" style="background: url('${image}'); background-size: cover; background-position: center;">
                     <div class="liquidGlass-effect"></div>
@@ -101,6 +100,8 @@ async function loadDetailedEventInfo(event) {
     document.getElementById('event-details-main-image').style.background = `url('${eventImage}')`;
     document.getElementById('event-details-main-image').style.backgroundSize = "cover";
     document.getElementById('event-details-main-image').style.backgroundPosition = "center";
+    document.getElementById('edit-event-button').style.display = sessionStorage.getItem("user") == event.master_userid ? "flex" : "none";
+    document.getElementById('remove-event-button').style.display = sessionStorage.getItem("user") == event.master_userid ? "flex" : "none";
 }
 
 async function fetchLocation(locationId) {
@@ -140,6 +141,8 @@ function slideInEventDetailSlider() {
 
 function closeEvent() {
     slideOutEventDetailSlider();
+
+    activeEventId = null;
 
     document.body.style.overflow = "auto";
 }
@@ -222,7 +225,6 @@ async function showSnacks(event_id) {
     const response = await fetch(`../../api/event-api.php?snacksPerEvent=${event_id}`);
     const data = await response.json();
 
-    console.log(data);
 
     let temp_string = "";
     let count = 0;
@@ -261,7 +263,6 @@ async function fetchSingleSnack(snackId) {
 async function showGames(event_id) {
     const response = await fetch(`../../api/event-api.php?gamesPerEvent=${event_id}`);
     const data = await response.json();
-    console.log(data);
 
     let temp_string = "";
     let count = 0;
@@ -309,7 +310,6 @@ async function showImages(event_id) {
         const eventImage = await fetch(`../../api/image-api.php?id=${image.image_id}`);
         const eventImageData = await eventImage.json();
 
-        console.log(eventImageData);
         temp_string += `
                 <div class="event-image">
                     <img src="../${eventImageData.data}" alt="Event Image">
@@ -400,6 +400,7 @@ function openAddEventSlider() {
 
     addEventSlider.style.transform = "translateX(0)";
     document.body.style.overflow = "hidden";
+    changePostSubmit();
 }
 
 /**
@@ -413,6 +414,10 @@ function closeAddEventSlider() {
 
     const form = document.getElementById("add-event-form");
     form.reset();
+
+
+    document.getElementById("event-location").innerHTML = "Select Location";
+    document.getElementById("event-location-id").value = "";
 
     friendsToShareWith = [];
     snacksSelected = [];
@@ -530,17 +535,11 @@ function searchFriendsToShareWith() {
 
     const query = document.getElementById("add-event-share-with-search").value.toLowerCase();
 
-    console.log("Searching friends with query: " + query);
-
-    console.log(`../../api/user-api.php?` + (query === "" ? "friends=true" : `searchFriends=${query}`))
-
     fetch(`../../api/user-api.php?` + (query === "" ? "friends=true" : `searchFriends=${query}`))
         .then(response => response.json())
         .then(data => {
             let users = data.data;
             let temp_string = "";
-
-            console.log(users);
 
             users.forEach(user => {
                 temp_string += `
@@ -638,7 +637,6 @@ function syncSnacksToInput() {
     const hiddenInput = document.getElementById("event-snacks-hidden");
 
     hiddenInput.value = JSON.stringify(snacksSelected);
-    console.log("Synced snacks to input: " + hiddenInput.value);
 }
 
 function addSnackToEvent(snackId) {
@@ -730,7 +728,6 @@ function syncDrinksToInput() {
     const hiddenInput = document.getElementById("event-drinks-hidden");
 
     hiddenInput.value = JSON.stringify(drinksSelected);
-    console.log("Synced drinks to input: " + hiddenInput.value);
 }
 
 function addDrinkToEvent(drinkId) {
@@ -817,7 +814,6 @@ function syncGamesToInput() {
     const hiddenInput = document.getElementById("event-games-hidden");
 
     hiddenInput.value = JSON.stringify(gamesSelected);
-    console.log("Synced games to input: " + hiddenInput.value);
 }
 
 function addGameToEvent(gameId) {
@@ -898,4 +894,254 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.get('addEvent') === 'true') {
         openAddEventSlider();
     }
+    if(urlParams.get('updateEvent') === 'true' ) {
+        activeEventId = urlParams.get('eventId');
+        openEvent(activeEventId);
+    }
 });
+
+function slideInInviteTo() {
+    const inviteToSlider = document.getElementById("invite-to-slider");
+
+    inviteToSlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
+    searchFriendsToInvite();
+}
+
+function closeInviteTo() {
+    const inviteToSlider = document.getElementById("invite-to-slider");
+
+    inviteToSlider.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+    document.getElementById("invite-to-search").value = "";
+    document.getElementById("invite-to-search-results").innerHTML = "";
+}
+
+async function searchFriendsToInvite() {
+    const query = document.getElementById("invite-to-search").value.toLowerCase();
+
+    try {
+        const response = await fetch(`../../api/user-api.php?searchFriends=${query}`);
+        const data = await response.json();
+        let users = data.data;
+        let temp_string = "";
+
+        for (const user of users) {
+            let alreadyInvited = false;
+
+            const userImage = await fetch(`../../api/image-api.php?id=${user.profile_image_id}`)
+            const userImageData = await userImage.json();
+
+            const invitedResponse = await fetch(`../../api/event-api.php?usersPerEvent=${activeEventId}`);
+            const invitedData = await invitedResponse.json();
+
+            for (const invitedUser of invitedData.data) {
+                if (invitedUser.userid === user.userid) {
+                    alreadyInvited = true;
+                    break;
+                }
+            }
+
+            temp_string += `
+            <div class="friend-found" id="invite-friend-${user.userid}">
+                <div class="friend-found-img-name">
+                    <div class="friend-found-img">
+                        <img id="invite-friend-${user.userid}-img-search" src="${userImageData.data}" alt="demo user">
+                    </div>
+                    <p>${user.username}</p>
+                </div>
+                
+                <div class="invite-friends-btns">
+                    `
+
+                + (alreadyInvited ? `<div class="friend-found-remove-btn friend-found-add-btn" onclick="removeInvitedFriend(${user.userid}, ${activeEventId})">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>` : '')
+                +
+                `` + (!alreadyInvited ? `<div id="invite-friend-${user.userid}-add-btn" class="friend-found-add-btn` + (alreadyInvited ? ` already-invited` : ``) + `" onclick="inviteFriend(${user.userid}, ${activeEventId})">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>` : '') +
+
+                `
+                </div>
+            </div>
+            `;
+
+
+        }
+
+        document.getElementById("invite-to-search-results").innerHTML = temp_string;
+    } catch (error) {
+        console.error('Error searching friends to invite:', error);
+    }
+}
+
+async function inviteFriend(friendId, eventId) {
+    try {
+        const response = await fetch(`../../api/event-api.php?inviteFriend=${friendId}&eventToInvite=${eventId}`);
+        const data = await response.json();
+
+        console.log(data);
+
+        searchFriendsToInvite();
+    } catch (error) {
+        console.error('Error inviting friend:', error);
+    }
+}
+
+async function removeInvitedFriend(friendId, eventId) {
+    try {
+        const response = await fetch(`../../api/event-api.php?removeInvitedFriend=${friendId}&eventToRemoveFrom=${eventId}`);
+        const data = await response.json();
+
+        console.log(data);
+
+        searchFriendsToInvite();
+
+    } catch (error) {
+        console.error('Error removing invited friend:', error);
+    }
+}
+
+function changePostSubmit() {
+    const button = document.getElementById("create-update-event");
+
+    button.value = activeEventId ? "Update Event" : "Create Event";
+    document.getElementById("create-update-event").name = activeEventId ? "update-event" : "add-event";
+
+}
+
+async function openEditEvent() {
+    openAddEventSlider();
+    await setEventDataInForm();
+}
+
+async function setEventDataInForm() {
+    try {
+        const event = await fetch(`../../api/event-api.php?eventId=${activeEventId}`);
+        const eventData = await event.json();
+
+        const location = await fetch(`../../api/location-api.php?locationId=${eventData.data.location_id}`);
+        const locationData = await location.json();
+
+        const invitedResponse = await fetch(`../../api/event-api.php?usersPerEvent=${activeEventId}`);
+        const invitedData = await invitedResponse.json();
+
+        const snacks = await fetch(`../../api/event-api.php?snacksPerEvent=${activeEventId}`);
+        const snacksData = await snacks.json();
+
+        const drinks = await fetch(`../../api/event-api.php?drinksPerEvent=${activeEventId}`);
+        const drinksData = await drinks.json();
+
+        const games = await fetch(`../../api/event-api.php?gamesPerEvent=${activeEventId}`);
+        const gamesData = await games.json();
+
+        const images = await fetch(`../../api/event-api.php?imagesPerEvent=${activeEventId}`);
+        const imagesData = await images.json();
+
+        for (const invitedUser of invitedData.data) {
+            friendsToShareWith.push(invitedUser.userid);
+        }
+
+        searchFriendsToShareWith();
+        syncFriendsToShareWithInput();
+        updateFriendsToShareWithCounter();
+
+        for (const snack of snacksData.data) {
+            snacksSelected.push({ snack_id: snack.snack_id, count: snack.count });
+        }
+
+        searchSnacks();
+        syncSnacksToInput();
+
+        for (const drink of drinksData.data) {
+            drinksSelected.push({ drink_id: drink.drink_id, count: drink.count });
+        }
+
+        searchDrinks();
+        syncDrinksToInput();
+
+        for (const game of gamesData.data) {
+            gamesSelected.push(game.game_id);
+        }
+
+        searchGames();
+        syncGamesToInput();
+
+
+        for (const image of imagesData.data) {
+            let _image = await fetch(`../../api/image-api.php?id=${image.image_id}`);
+            let imageData = await _image.json();
+
+            /** Copilot generated code */
+            const imageUrl = "../" + imageData.data;
+            const blob = await fetch(imageUrl).then(response => response.blob());
+
+            const extension = imageUrl.split(".").pop().toLowerCase();
+            let mimeType = "image/jpeg";
+
+            if (extension === "png") mimeType = "image/png";
+            if (extension === "gif") mimeType = "image/gif";
+            if (extension === "jpg" || extension === "jpeg") mimeType = "image/jpeg";
+
+            const fileName = imageUrl.split("/").pop();
+            const file = new File([blob], fileName, { type: mimeType });
+
+            imagesSelected.push(file);
+
+            /* End Copilot generated code */
+        }
+        syncInputFiles();
+        addImageToEvent();
+
+        const coverImage = await fetch(`../../api/image-api.php?id=${eventData.data.cover_image}`);
+        const coverImageData = await coverImage.json();
+
+        if (coverImageData?.data) {
+            const coverImageUrl = "../" + coverImageData.data;
+            const coverBlob = await fetch(coverImageUrl).then(response => response.blob());
+
+            const coverExtension = coverImageUrl.split(".").pop().toLowerCase();
+            let coverMimeType = "image/jpeg";
+
+            if (coverExtension === "png") coverMimeType = "image/png";
+            if (coverExtension === "gif") coverMimeType = "image/gif";
+            if (coverExtension === "jpg" || coverExtension === "jpeg") coverMimeType = "image/jpeg";
+
+            const coverFileName = coverImageUrl.split("/").pop();
+            const coverFile = new File([coverBlob], coverFileName, { type: coverMimeType });
+            const coverDataTransfer = new DataTransfer();
+
+            coverDataTransfer.items.add(coverFile);
+            document.getElementById("event-cover-image").files = coverDataTransfer.files;
+        }
+
+        
+
+
+        document.getElementById("event-name").value = eventData.data.name;
+        document.getElementById("event-description").value = eventData.data.describtion;
+        document.getElementById("event-start-date").value = eventData.data.startDate;
+        document.getElementById("event-end-date").value = eventData.data.endDate;
+        document.getElementById("event-dress-code").value = eventData.data.dresscode_desc;
+        document.getElementById("event-ranking").value = eventData.data.ranking;
+        document.getElementById("event-location").innerHTML = locationData.data.name;
+        document.getElementById("event-location-id").value = locationData.data.location_id;
+        document.getElementById("event-id-input").value = activeEventId;
+
+        console.log(activeEventId);
+
+    } catch (error) {
+        console.error('Error fetching event data:', error);
+    }
+}
+
+function removeEvent(){
+    fetch(`../../api/event-api.php?deleteEvent=${activeEventId}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        window.location.href = "events.php";
+    })
+    .catch(error => console.error('Error deleting event:', error));
+}

@@ -35,12 +35,12 @@ function closeMyDataSection() {
     document.body.style.overflow = "auto";
 }
 
-function loadProfileImage(){
+function loadProfileImage() {
     fetch("../../api/user-api.php?id=" + sessionStorage.getItem("user"))
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            
+
             if (!data.data.profile_image_id) {
                 console.log("No profile image set");
                 return;
@@ -49,7 +49,7 @@ function loadProfileImage(){
             fetch("../../api/image-api.php?id=" + data.data.profile_image_id)
                 .then(response => response.json())
                 .then(imageData => {
-                    document.getElementById("profile-image").src = imageData.data;                    
+                    document.getElementById("profile-image").src = imageData.data;
                 });
         });
 }
@@ -205,8 +205,8 @@ loadBadges();
 
 function selectBadge(badgeId) {
 
-    
-    if(document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.contains("badge-selected")) {
+
+    if (document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.contains("badge-selected")) {
         document.getElementsByClassName("badge-select-item")[badgeId - 1].classList.remove("badge-selected");
         document.getElementsByClassName("badge-select-item-info")[badgeId - 1].style.backgroundColor = "transparent";
         const idx = selectedBadges.indexOf(badgeId);
@@ -228,5 +228,53 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             badgesInput.value = JSON.stringify(selectedBadges);
         });
+    }
+});
+
+function slideInGallery() {
+    const gallerySlider = document.getElementById("gallery-slider");
+
+    gallerySlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
+}
+
+function closeGallerySlider() {
+    const gallerySlider = document.getElementById("gallery-slider");
+    gallerySlider.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+}
+
+function loadGallery() {
+    fetch("../../api/user-api.php?gallery=true")
+        .then(response => response.json())
+        .then(data => {
+            let temp_string = "";
+
+            console.log(data);
+
+
+            data.data.forEach(image => {
+
+                console.log(image);
+                temp_string += `
+                <div class="gallery-image">
+                    <img src="../${image.path}" alt="Gallery Image">
+                </div>
+                `
+            });
+
+            document.getElementById("gallery-content").innerHTML = temp_string;
+        })
+        .catch(error => {
+            console.error('Error fetching gallery images:', error);
+        });
+}
+loadGallery();
+
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('gallery') === 'true') {
+        slideInGallery();
     }
 });
