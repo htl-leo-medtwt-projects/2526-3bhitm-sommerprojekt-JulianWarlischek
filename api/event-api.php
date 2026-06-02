@@ -140,6 +140,10 @@ if (isset($_POST['add-event'])) {
         $_SESSION['errors'][] = "Location is required.";
     }
 
+    if(strtotime($_startDate) >= strtotime($_endDate)) {
+        $_SESSION['errors'][] = "Start date must be before end date.";
+    }
+
     if (empty($_SESSION['errors'])) {
         $stmt = $conn->prepare("INSERT INTO Event (name, startDate, endDate, describtion, dresscode_desc, ranking, like_count, location_id, master_userid) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?)");
         $stmt->bind_param("ssssssii", $_name, $_startDate, $_endDate, $_description, $_dressCode, $_ranking, $_location, $_SESSION['user']['userid']);
@@ -247,6 +251,10 @@ if (isset($_POST['update-event'])) {
 
     if (empty($_location)) {
         $_SESSION['errors'][] = "Location is required.";
+    }
+
+    if(strtotime($_startDate) >= strtotime($_endDate)) {
+        $_SESSION['errors'][] = "Start date must be before end date.";
     }
 
 
