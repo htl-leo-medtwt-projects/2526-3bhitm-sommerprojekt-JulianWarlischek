@@ -23,6 +23,9 @@
     border-radius: 50%;
     overflow: hidden;
     object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #gallery-content{
