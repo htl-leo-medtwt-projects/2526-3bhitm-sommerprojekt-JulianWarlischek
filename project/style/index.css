@@ -1,5 +1,12 @@
 body{
-    overflow-y: hidden;
+    overflow: hidden;
+}
+
+body.home-touch-scroll-lock #home-landing-section {
+    height: 100dvh;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
 }
 
 #home-landing-section {

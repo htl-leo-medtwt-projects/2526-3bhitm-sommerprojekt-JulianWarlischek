@@ -314,7 +314,8 @@ function loadLastEvent() {
             console.log(data);
             const lastEventElement = document.getElementById('last-event');
 
-            if (data == null || !data.data) {
+
+            if (data == null || !data.data || data.data.length === 0) {
                 document.getElementById("prev-event-name").innerText = "No Events Yet";
                 document.getElementById("prev-event-date").innerText = "";
                 return;

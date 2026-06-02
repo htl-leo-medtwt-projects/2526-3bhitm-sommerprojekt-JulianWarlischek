@@ -5,6 +5,11 @@
     right: 35px;
     top: 25px;
     z-index: 1002;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #friends-main-section{
