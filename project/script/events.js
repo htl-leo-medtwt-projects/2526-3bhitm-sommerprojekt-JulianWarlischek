@@ -4,14 +4,26 @@
  */
 let activeEventId = null;
 
+let filterOptions = ['All', 'Week', 'Month', 'Year'];
+let activeFilter = 0;
+
+let filterState = {
+    own: false,
+    search: "",
+    direction: "asc"
+}
 
 async function loadAllEvents() {
-    fetch('../../api/event-api.php')
+    console.log("Loading events with filter:" + filterOptions[activeFilter]);
+    fetch('../../api/event-api.php?filter=' + filterOptions[activeFilter].toLowerCase())
         .then(response => response.json())
         .then(async data => {
             let events = data.data;
             let temp_string = "";
             let userId = sessionStorage.getItem("user");
+
+            events = filterEvents(events);
+
 
             for (const event of events) {
                 const image = await fetchEventImage(event.event_id);
@@ -40,6 +52,23 @@ async function loadAllEvents() {
         .catch(error => console.error('Error fetching events:', error));
 }
 loadAllEvents();
+
+function filterEvents(events) {
+    console.log("Filtering events with state:", filterState);
+    if (!filterState.own) {
+        events = events.filter(event => event.master_userid != sessionStorage.getItem("user"));
+    }
+    if (filterState.search) {
+        const searchTerm = filterState.search.toLowerCase();
+        events = events.filter(event => event.name.toLowerCase().includes(searchTerm) || event.describtion.toLowerCase().includes(searchTerm));
+    }
+    if (filterState.direction === "asc") {
+        events.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+    } else {
+        events.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+    }
+    return events;
+}
 
 async function fetchEventImage(eventId) {
     return fetch(`../../api/event-api.php?eventId=${eventId}`)
@@ -894,7 +923,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.get('addEvent') === 'true') {
         openAddEventSlider();
     }
-    if(urlParams.get('updateEvent') === 'true' ) {
+    if (urlParams.get('updateEvent') === 'true') {
         activeEventId = urlParams.get('eventId');
         openEvent(activeEventId);
     }
@@ -981,8 +1010,6 @@ async function inviteFriend(friendId, eventId) {
         const response = await fetch(`../../api/event-api.php?inviteFriend=${friendId}&eventToInvite=${eventId}`);
         const data = await response.json();
 
-        console.log(data);
-
         searchFriendsToInvite();
     } catch (error) {
         console.error('Error inviting friend:', error);
@@ -993,8 +1020,6 @@ async function removeInvitedFriend(friendId, eventId) {
     try {
         const response = await fetch(`../../api/event-api.php?removeInvitedFriend=${friendId}&eventToRemoveFrom=${eventId}`);
         const data = await response.json();
-
-        console.log(data);
 
         searchFriendsToInvite();
 
@@ -1116,7 +1141,7 @@ async function setEventDataInForm() {
             document.getElementById("event-cover-image").files = coverDataTransfer.files;
         }
 
-        
+
 
 
         document.getElementById("event-name").value = eventData.data.name;
@@ -1136,12 +1161,83 @@ async function setEventDataInForm() {
     }
 }
 
-function removeEvent(){
+function removeEvent() {
     fetch(`../../api/event-api.php?deleteEvent=${activeEventId}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        window.location.href = "events.php";
-    })
-    .catch(error => console.error('Error deleting event:', error));
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            window.location.href = "events.php";
+        })
+        .catch(error => console.error('Error deleting event:', error));
+}
+
+function changeSmartDateFilter() {
+    activeFilter = (activeFilter + 1) % filterOptions.length;
+    document.getElementById("smart-filter-date-text").textContent = filterOptions[activeFilter];
+    loadAllEvents()
+}
+
+function setOwnFilter() {
+    filterState.own = !filterState.own;
+
+    if (filterState.own) {
+        document.getElementById("filter-event-own-clickable").classList.add("active-checked");
+        document.getElementById('filter-event-own-clickable').innerHTML = `<i class="fa-solid fa-check"></i>`;
+    } else {
+        document.getElementById("filter-event-own-clickable").classList.remove("active-checked");
+        document.getElementById('filter-event-own-clickable').innerHTML = `<i class="fa-solid fa-plus"></i>`;
+    }
+    loadAllEvents();
+}
+setOwnFilter();
+
+function slideOutFilterOptions() {
+    const filterOptions = document.getElementById("filter-events-options");
+
+    filterOptions.style.transform = "translateX(-50%) translateY(200%)";
+
+    document.getElementById("filter-advanced-selection").removeEventListener("click", slideOutFilterOptions);
+    document.getElementById("filter-advanced-selection").addEventListener("click", slideInFilterOptions);
+}
+slideOutFilterOptions();
+
+function slideInFilterOptions() {
+    const filterOptions = document.getElementById("filter-events-options");
+
+    filterOptions.style.transform = "translateX(-50%) translateY(0)";
+    document.getElementById("filter-advanced-selection").removeEventListener("click", slideInFilterOptions);
+    document.getElementById("filter-advanced-selection").addEventListener("click", slideOutFilterOptions);
+}
+
+function filterDirection() {
+
+    if (filterState.direction === "asc") {
+        filterState.direction = "desc";
+    } else {
+        filterState.direction = "asc";
+    }
+
+    document.getElementById("filter-events-options-direction").style.transform = filterState.direction === "asc" ? "rotate(0deg)" : "rotate(180deg)";
+    loadAllEvents();
+}
+
+function searchEvents() {
+    filterState.search = document.getElementById("search-events").value;
+    loadAllEvents();
+}
+
+function resetEventFilter() {
+    filterState = {
+        own: false,
+        search: "",
+        direction: "asc"
+    };
+
+
+    activeFilter = filterOptions.length - 1;
+    changeSmartDateFilter();    
+    document.getElementById("search-events").value = "";
+    document.getElementById("filter-events-options-direction").style.transform = "rotate(0deg)";
+    setOwnFilter();
+    loadAllEvents();
 }

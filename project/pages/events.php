@@ -114,7 +114,7 @@ if (!isset($_SESSION['user'])) {
         <h1>Events</h1>
 
         <div id="filter-section">
-            <div id="filter-advanced-selection" class="liquidGlass-wrapper">
+            <div id="filter-advanced-selection" class="liquidGlass-wrapper" onclick="slideInFilterOptions()">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
@@ -126,7 +126,7 @@ if (!isset($_SESSION['user'])) {
             </div>
             <div id="filter-more-info">
                 <div id="smart-filter-date-add">
-                    <div id="smart-filter-date" class="liquidGlass-wrapper">
+                    <div id="smart-filter-date" class="liquidGlass-wrapper" onclick="changeSmartDateFilter()">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -134,7 +134,7 @@ if (!isset($_SESSION['user'])) {
                         <div id="smart-filter-date-icon">
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
-                        <p>Week</p>
+                        <p id="smart-filter-date-text">All</p>
                     </div>
                     <div id="add-event-button" class="liquidGlass-wrapper" onclick="openAddEventSlider()">
                         <div class="liquidGlass-effect"></div>
@@ -685,6 +685,43 @@ if (!isset($_SESSION['user'])) {
             </div>
         </div>
     </div>
+
+    <div id="filter-events-options" class="liquidGlass-wrapper">
+        <div class="liquidGlass-effect"></div>
+        <div class="liquidGlass-tint"></div>
+        <div class="liquidGlass-shine"></div>
+
+        <div id="search-events-input">
+            <div id="search-events-input-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="text" id="search-events" placeholder="Search events ..." oninput="searchEvents()"
+                name="event-search">
+        </div>
+        <div id="filter-event-options-split">
+            <div id="filter-event-own">
+                <div id="filter-event-own-clickable" onclick="setOwnFilter()">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <div id="filter-event-own-clickable-description">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+            </div>
+            <div id="filter-events-options-close" onclick="slideOutFilterOptions()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div id="filter-events-options-reset" onclick="resetEventFilter()">
+                <i class="fa-solid fa-rotate"></i>
+            </div>
+            <div id="filter-events-options-direction" onclick="filterDirection()">
+                <i class="fa-solid fa-sort-down"></i>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>&copy; 2026 AfterMemory. All rights reserved.</p>
+        <p id="website-created-by">Created by Julian Warlischek</p>
+    </div>  
 </body>
 
 </html>

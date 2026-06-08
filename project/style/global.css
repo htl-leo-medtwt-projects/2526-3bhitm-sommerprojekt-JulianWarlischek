@@ -279,7 +279,7 @@ img {
     font-weight: 700;
     font-style: normal;
     font-size: 0.9em;
-    
+
     color: white;
 }
 
@@ -359,7 +359,7 @@ img {
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-#navigation-login-register{
+#navigation-login-register {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5em;
@@ -368,7 +368,7 @@ img {
     margin-top: auto;
 }
 
-#navigation-login-register>div{
+#navigation-login-register>div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -380,17 +380,17 @@ img {
     font-style: normal;
 }
 
-#navigation-login-register-login{
+#navigation-login-register-login {
     background-color: dodgerblue;
     color: white;
 }
 
-#navigation-login-register-register{
+#navigation-login-register-register {
     border: 2px solid black;
     color: black;
 }
 
-#error-flex{
+#error-flex {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -403,11 +403,28 @@ img {
     z-index: 10000;
 }
 
-.error-container{
+.error-container {
     background-color: rgb(255, 122, 122);
     border-left: 5px solid rgb(255, 31, 31);
     padding: 0.5em 1em;
     border-radius: 5px 10px 10px 5px;
     margin-bottom: 0.5em;
     width: fit-content;
+}
+
+#footer {
+    margin-top: 2em;
+    padding: 1em;
+    text-align: center;
+    font-family: "komet", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    bottom: 0;
+    background-color: white;
+    width: 100%;
+}
+
+#website-created-by {
+    font-size: 0.8em;
+    color: grey;
 }

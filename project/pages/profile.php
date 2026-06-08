@@ -386,6 +386,11 @@ $user = $_SESSION['user'] ?? null;
 
         </div>
     </div>
+
+    <div id="footer">
+        <p>&copy; 2026 AfterMemory. All rights reserved.</p>
+        <p id="website-created-by">Created by Julian Warlischek</p>
+    </div>
 </body>
 
 </html>

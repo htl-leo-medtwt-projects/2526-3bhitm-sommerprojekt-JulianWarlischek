@@ -11,18 +11,33 @@ $answer = [
 ];
 
 if (isset($_SESSION['user'])) {
-    $stmt = $conn->prepare("SELECT * FROM Event where Event_ID IN (SELECT Event_ID FROM User_Event WHERE UserID = ?) or master_userid = ? order by startDate");
+
+    $filterStmt = "";
+
+    if (isset($_GET['filter'])) {
+        $filter = $_GET['filter'];
+
+        if ($filter == 'all') {
+            $filterStmt = "";
+        } elseif ($filter == 'week') {
+            $filterStmt = "AND WEEK(startDate, 1) = WEEK(CURRENT_DATE, 1) AND YEAR(startDate) = YEAR(CURRENT_DATE)";
+        } elseif ($filter == 'month') {
+            $filterStmt = "AND MONTH(startDate) = MONTH(CURRENT_DATE) AND YEAR(startDate) = YEAR(CURRENT_DATE)";
+        }elseif ($filter == 'year') {
+            $filterStmt = "AND YEAR(startDate) = YEAR(CURRENT_DATE)";
+        }
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM Event where (Event_ID IN (SELECT Event_ID FROM User_Event WHERE UserID = ?) or master_userid = ?) " . $filterStmt . " order by startDate");
     $stmt->bind_param("ii", $_SESSION['user']['userid'], $_SESSION['user']['userid']);
     $stmt->execute();
     $result = $stmt->get_result();
-
 
     $answer = [
         "code" => 200,
         "message" => "OK",
         "data" => $result->fetch_all(MYSQLI_ASSOC)
     ];
-
 }
 
 if (isset($_GET['inviteFriend']) && isset($_GET['eventToInvite'])) {
@@ -140,7 +155,7 @@ if (isset($_POST['add-event'])) {
         $_SESSION['errors'][] = "Location is required.";
     }
 
-    if(strtotime($_startDate) >= strtotime($_endDate)) {
+    if (strtotime($_startDate) >= strtotime($_endDate)) {
         $_SESSION['errors'][] = "Start date must be before end date.";
     }
 
@@ -253,7 +268,7 @@ if (isset($_POST['update-event'])) {
         $_SESSION['errors'][] = "Location is required.";
     }
 
-    if(strtotime($_startDate) >= strtotime($_endDate)) {
+    if (strtotime($_startDate) >= strtotime($_endDate)) {
         $_SESSION['errors'][] = "Start date must be before end date.";
     }
 
@@ -369,7 +384,7 @@ if (isset($_POST['update-event'])) {
     }
 }
 
-if(isset($_GET['deleteEvent'])) {
+if (isset($_GET['deleteEvent'])) {
     $stmt = $conn->prepare("DELETE FROM Event WHERE Event_ID = ?");
     $stmt->bind_param("i", $_GET['deleteEvent']);
     $stmt->execute();
