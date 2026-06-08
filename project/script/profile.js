@@ -116,6 +116,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.get('badge') === 'true') {
         openBadges();
     }
+    if (urlParams.get('privacy') === 'true') {
+        openPrivacySlider();
+    }
 });
 
 
@@ -158,6 +161,20 @@ function closeBadgeInfo() {
     const badgeInfo = document.getElementById("badge-info");
 
     badgeInfo.style.transform = "translateX(100%)";
+    document.body.style.overflow = "auto";
+}
+
+function openPrivacySlider() {
+    const privacySlider = document.getElementById("privacy-slider");
+
+    privacySlider.style.transform = "translateX(0)";
+    document.body.style.overflow = "hidden";
+}
+
+function closePrivacySlider() {
+    const privacySlider = document.getElementById("privacy-slider");
+
+    privacySlider.style.transform = "translateX(100%)";
     document.body.style.overflow = "auto";
 }
 
