@@ -38,5 +38,18 @@ if(isset($_GET['search'])) {
     $answer["message"] = "OK";
 }
 
+if(isset($_GET['ingredients'])) {
+    $drinkId = $_GET['ingredients'];
+
+    $stmt = $conn->prepare("SELECT * FROM Drink_Ingredient WHERE drink_ingredient_id IN (SELECT drink_ingredient_id FROM Drink_Ingredient_Drink WHERE drink_id = ?)");
+    $stmt->bind_param("i", $drinkId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $answer["data"] = $result->fetch_all(MYSQLI_ASSOC);
+    $answer["code"] = 200;
+    $answer["message"] = "OK";
+}
+
 echo json_encode($answer);
 $conn->close();

@@ -21,22 +21,23 @@
 #filter-section{
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: clamp(0.75em, 2vw, 1.25em);
 }
 
 #filter-advanced-selection{
     display: flex;
     flex-direction: row;
-    gap: 1em;
+    gap: clamp(0.6em, 2vw, 1.2em);
     align-items: center;
     justify-content: center;
-    padding: 0.6em;
-    border-radius: 20px;
+    padding: clamp(0.5em, 1.5vw, 0.8em);
+    border-radius: clamp(15px, 4vw, 25px);
     background-color: rgb(235, 235, 235);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.112);
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
+    flex-wrap: wrap;
 }
 
 #filter-more-info{
@@ -49,17 +50,18 @@
 #smart-filter-date{
     display: flex;
     flex-direction: row;
-    gap: 0.5em;
+    gap: clamp(0.3em, 1.5vw, 0.6em);
     align-items: center;
     justify-content: center;
     background-color: rgb(235, 235, 235);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.112);
-    padding: 0.6em 1em;
-    border-radius: 20px;
+    padding: clamp(0.5em, 1.5vw, 0.8em) clamp(0.8em, 2vw, 1.2em);
+    border-radius: clamp(15px, 4vw, 25px);
     color: grey;
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-size: clamp(0.85em, 2.5vw, 0.95em);
 }
 
 #smart-filter-date-add{
@@ -73,17 +75,24 @@
 #add-event-button{
     display: flex;
     flex-direction: row;
-    gap: 0.5em;
+    gap: clamp(0.3em, 1.5vw, 0.6em);
     align-items: center;
     justify-content: center;
     background-color: rgb(106, 255, 98);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.112);
-    padding: 0.6em 1em;
-    border-radius: 20px;
+    padding: clamp(0.5em, 1.5vw, 0.8em) clamp(0.8em, 3vw, 1.5em);
+    border-radius: clamp(15px, 4vw, 25px);
     color: rgb(255, 255, 255);
     font-family: "komet", sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-size: clamp(0.85em, 2.5vw, 0.95em);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#add-event-button:hover{
+    transform: translateY(-2px);
 }
 
 #filter-more-info>p{
@@ -91,7 +100,7 @@
     font-weight: 400;
     font-style: normal;
     color: grey;
-    font-size: 0.8em;
+    font-size: clamp(0.7em, 1.5vw, 0.9em);
     text-decoration: underline;
 }
 
@@ -1946,25 +1955,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.9rem;
-    width: 95%;
+    gap: clamp(0.6rem, 2vw, 1.2rem);
+    width: clamp(85%, 90vw, 95%);
     background-color: white;
     position: fixed;
-    bottom: 20px;
+    bottom: clamp(15px, 3vh, 25px);
     left: 50%;
-    border-radius: 40px;
-    padding: 1rem;
+    transform: translateX(-50%);
+    border-radius: clamp(30px, 8vw, 50px);
+    padding: clamp(0.8rem, 2vw, 1.3rem);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.282);
     z-index: 3;
 }
 
 #search-events-input{
     width: 100%;
-    padding: 0.7rem 0.9rem;
-    border-radius: 30px;
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(0.7rem, 2vw, 1rem);
+    border-radius: clamp(20px, 6vw, 35px);
     background-color: rgba(231, 231, 231, 0.95);
     font-family: "komet", sans-serif;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
     color: rgb(40,40,40);
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.06s ease;
@@ -1972,12 +1982,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: clamp(0.7rem, 2vw, 1.2rem);
     font-weight: 500;
 }
 
 #search-events-input-icon{
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
 }
 
 #search-events{
@@ -1991,30 +2001,32 @@
     flex-direction: row;
     align-items: center;
     background-color: rgba(231, 231, 231, 0.95);
-    gap: 1.3rem;
-    padding: 0.7rem 1rem;
-    border-radius: 30px;
-    font-size: 1.1rem;
-    width: 100%;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(0.8rem, 2vw, 1.3rem);
+    border-radius: clamp(20px, 6vw, 35px);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    flex: 1;
+    min-width: 0;
 }
 
 #filter-event-options-split{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: clamp(0.8rem, 2vw, 1.3rem);
     width: 100%;
+    flex-wrap: wrap;
 }
 
 #filter-event-own-clickable{
-    width: 16px;
-    height: 16px;
+    width: clamp(14px, 3vw, 18px);
+    height: clamp(14px, 3vw, 18px);
     border-radius: 4px;
     background-color: transparent;
     cursor: pointer;
     transition: all 0.2s ease;
-    padding: 1em;
+    padding: clamp(0.8em, 2vw, 1.2em);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2034,8 +2046,21 @@
 #filter-events-options-close {
     background-color: rgba(231, 231, 231, 0.95);
     color: red;
-    border-radius: 30px;
-    padding: 1.1rem 3rem;
+    border-radius: clamp(20px, 6vw, 35px);
+    padding: clamp(0.9rem, 2vw, 1.2rem) clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#filter-events-options-close:hover{
+    transform: translateY(-2px);
 }
 
 #filter-events-options-direction{

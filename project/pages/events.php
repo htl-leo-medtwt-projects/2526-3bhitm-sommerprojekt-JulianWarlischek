@@ -152,7 +152,7 @@ if (!isset($_SESSION['user'])) {
         <hr class="seperator-long">
 
         <div id="event-flex">
-
+            <h2 id="event-flex-placeholder" class="data-placeholder">Loading ...</h2>
         </div>
 
 
@@ -721,7 +721,24 @@ if (!isset($_SESSION['user'])) {
     <div id="footer">
         <p>&copy; 2026 AfterMemory. All rights reserved.</p>
         <p id="website-created-by">Created by Julian Warlischek</p>
-    </div>  
+    </div>
+    <div id="ingredients-container">
+        <div id="ingredient-header">
+            <div id="close-ingredient-icon" onclick="slideOutIngredients()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Ingredients</h2>
+            <div></div>
+        </div>
+        <div id="ingredient-drink">
+            <h2 id="ingredient-drink-name"></h2>
+            <p id="ingredient-drink-description"></p>
+        </div>
+
+        <div id="ingredient-list"></div>
+    
+    </div> 
 </body>
 
 </html>

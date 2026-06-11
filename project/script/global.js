@@ -347,3 +347,55 @@ function loadLastEvent() {
 }
 
 loadLastEvent();
+
+function slideOutIngredients() {
+    const ingredientsContainer = document.getElementById('ingredients-container');
+    ingredientsContainer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = 'auto';
+}
+
+function slideIntIngredients() {
+    const ingredientsContainer = document.getElementById('ingredients-container');
+    ingredientsContainer.style.transform = 'translateX(0)';
+    document.body.style.overflow = 'hidden';
+}
+
+function showIngredients(drinkId) {
+    slideIntIngredients();
+    fetch(apiUrl(`drink-api.php?drinkId=${drinkId}`))
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("ingredient-drink-name").innerText = data.data.name;
+            document.getElementById("ingredient-drink-description").innerText = data.data.describtion;
+
+            console.log(data);
+            fetch(apiUrl("drink-api.php?ingredients=" + drinkId))
+                .then(response => response.json())
+                .then(ingredientsData => {
+                    const ingredientsList = document.getElementById("ingredient-list");
+
+                    let temp_string = "";
+
+                    ingredientsData.data.forEach(ingredient => {
+                        temp_string += `
+                    <div class="ingredient-item">
+                        <div class="ingredient-name-description">
+                            <h3>${ingredient.name}</h3>
+                            <p>${ingredient.description}</p>
+                        </div>
+                        <p>${ingredient.alcoholic}</p>
+                    </div>
+                    `
+                    })
+
+                    ingredientsList.innerHTML = temp_string;
+                })
+                .catch(error => {
+                    console.error('Error fetching drink ingredients:', error);
+                }
+                );
+        }).catch(error => {
+            console.error('Error fetching drink details:', error);
+        });
+
+}

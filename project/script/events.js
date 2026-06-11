@@ -14,7 +14,6 @@ let filterState = {
 }
 
 async function loadAllEvents() {
-    console.log("Loading events with filter:" + filterOptions[activeFilter]);
     fetch('../../api/event-api.php?filter=' + filterOptions[activeFilter].toLowerCase())
         .then(response => response.json())
         .then(async data => {
@@ -23,6 +22,18 @@ async function loadAllEvents() {
             let userId = sessionStorage.getItem("user");
 
             events = filterEvents(events);
+
+            console.log("Events after filtering:", events);
+
+            if (events.length <= 0) {
+                const placeholder = document.getElementById("event-flex-placeholder");
+
+                if (placeholder) {
+                    placeholder.innerText = "No events found.";
+                    return;
+                }
+
+            }
 
 
             for (const event of events) {
@@ -54,7 +65,6 @@ async function loadAllEvents() {
 loadAllEvents();
 
 function filterEvents(events) {
-    console.log("Filtering events with state:", filterState);
     if (!filterState.own) {
         events = events.filter(event => event.master_userid != sessionStorage.getItem("user"));
     }
@@ -216,7 +226,7 @@ async function showDrinks(event_id) {
         count++;
 
         temp_string += `
-                <div class="drink">
+                <div class="drink" onclick="showIngredients(${singleDrink.drink_id})">
                     <div class='drink-name-description'>
                         <h3>${singleDrink.name}</h3>
                         <p>${singleDrink.describtion}</p>
@@ -493,6 +503,7 @@ function openLocationSelect() {
 
     locationSelectSlider.style.transform = "translateX(0)";
     document.body.style.overflow = "hidden";
+    searchLocation();
 }
 
 function closeLocationSelect() {
@@ -713,7 +724,6 @@ function searchDrinks() {
         .then(response => response.json())
         .then(data => {
             let drinks = data.data;
-
             let temp_string = "";
 
             drinks.forEach(drink => {
@@ -729,7 +739,7 @@ function searchDrinks() {
 
                 temp_string +=
                     `
-                <div class="drink-found" id="drink-${drink.drink_id}">
+                <div class="drink-found" id="drink-${drink.drink_id}" onclick="showIngredients(${drink.drink_id})">
                     <div class="drinks-found-name-description">
                         <h3>${drink.name}</h3>
                         <p>${drink.describtion}</p>
@@ -1154,7 +1164,6 @@ async function setEventDataInForm() {
         document.getElementById("event-location-id").value = locationData.data.location_id;
         document.getElementById("event-id-input").value = activeEventId;
 
-        console.log(activeEventId);
 
     } catch (error) {
         console.error('Error fetching event data:', error);
@@ -1165,7 +1174,6 @@ function removeEvent() {
     fetch(`../../api/event-api.php?deleteEvent=${activeEventId}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             window.location.href = "events.php";
         })
         .catch(error => console.error('Error deleting event:', error));
@@ -1234,8 +1242,13 @@ function resetEventFilter() {
     };
 
 
+    if (document.getElementById("filter-events-options-reset").style.transform === "rotate(360deg)") {
+        document.getElementById("filter-events-options-reset").style.transform = "rotate(0deg)";
+    } else {
+        document.getElementById("filter-events-options-reset").style.transform = "rotate(360deg)";
+    }
     activeFilter = filterOptions.length - 1;
-    changeSmartDateFilter();    
+    changeSmartDateFilter();
     document.getElementById("search-events").value = "";
     document.getElementById("filter-events-options-direction").style.transform = "rotate(0deg)";
     setOwnFilter();
