@@ -739,8 +739,8 @@ function searchDrinks() {
 
                 temp_string +=
                     `
-                <div class="drink-found" id="drink-${drink.drink_id}" onclick="showIngredients(${drink.drink_id})">
-                    <div class="drinks-found-name-description">
+                <div class="drink-found" id="drink-${drink.drink_id}">
+                    <div class="drinks-found-name-description" onclick="showIngredients(${drink.drink_id})">
                         <h3>${drink.name}</h3>
                         <p>${drink.describtion}</p>
                     </div>
