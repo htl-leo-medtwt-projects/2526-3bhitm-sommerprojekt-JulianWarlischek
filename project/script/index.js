@@ -5,6 +5,12 @@
 
 let previousNode = 0;
 
+const homeLandingSection = document.getElementById("home-landing-section");
+
+if (homeLandingSection && (navigator.maxTouchPoints > 0 || "ontouchstart" in window)) {
+    document.body.classList.add("home-touch-scroll-lock");
+}
+
 
 function slideTo(anchorPosition) {
     const targetElement = document.getElementById(anchorPosition);

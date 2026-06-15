@@ -1,4 +1,6 @@
 <?php
+require '../global-functions.php';
+
 session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -22,6 +24,9 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
+    <div id="error-flex">
+        <?php printErrors() ?>
+    </div>
     <!-- Navigation start -->
     <div id="top-level-blur">
 
@@ -88,7 +93,7 @@ if (!isset($_SESSION['user'])) {
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -109,7 +114,7 @@ if (!isset($_SESSION['user'])) {
         <h1>Events</h1>
 
         <div id="filter-section">
-            <div id="filter-advanced-selection" class="liquidGlass-wrapper">
+            <div id="filter-advanced-selection" class="liquidGlass-wrapper" onclick="slideInFilterOptions()">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
@@ -121,7 +126,7 @@ if (!isset($_SESSION['user'])) {
             </div>
             <div id="filter-more-info">
                 <div id="smart-filter-date-add">
-                    <div id="smart-filter-date" class="liquidGlass-wrapper">
+                    <div id="smart-filter-date" class="liquidGlass-wrapper" onclick="changeSmartDateFilter()">
                         <div class="liquidGlass-effect"></div>
                         <div class="liquidGlass-tint"></div>
                         <div class="liquidGlass-shine"></div>
@@ -129,7 +134,7 @@ if (!isset($_SESSION['user'])) {
                         <div id="smart-filter-date-icon">
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
-                        <p>Week</p>
+                        <p id="smart-filter-date-text">All</p>
                     </div>
                     <div id="add-event-button" class="liquidGlass-wrapper" onclick="openAddEventSlider()">
                         <div class="liquidGlass-effect"></div>
@@ -147,7 +152,7 @@ if (!isset($_SESSION['user'])) {
         <hr class="seperator-long">
 
         <div id="event-flex">
-
+            <h2 id="event-flex-placeholder" class="data-placeholder">Loading ...</h2>
         </div>
 
 
@@ -162,7 +167,7 @@ if (!isset($_SESSION['user'])) {
                 <p id="event-title-header">Event Title</p>
             </div>
             <div id="event-details-header-right">
-                <div id="add-user-to-event-icon">
+                <div id="add-user-to-event-icon" onclick="slideInInviteTo()">
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </div>
             </div>
@@ -310,6 +315,29 @@ if (!isset($_SESSION['user'])) {
                 <div id="drinks-snacks-games-images-shared-with-content">
                 </div>
             </div>
+
+            <div id="edit-and-delete-buttons">
+                <div id="edit-event-button" class="liquidGlass-wrapper edit-delete-button" onclick="openEditEvent()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div id="edit-event-button-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                    <p>Edit Event</p>
+                </div>
+                <div id="remove-event-button" class="liquidGlass-wrapper edit-delete-button" onclick="removeEvent()">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+
+                    <div id="remove-event-button-icon">
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                    <p>Remove Event</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -328,7 +356,9 @@ if (!isset($_SESSION['user'])) {
             <div></div>
         </div>
 
-        <form id="add-event-form" action="../../api/add-event-api.php" method="POST" enctype="">
+        <form id="add-event-form" action="../../api/event-api.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="event-id" id="event-id-input" value="">
+
             <div class="add-event-form-section liquidGlass-wrapper">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -418,10 +448,10 @@ if (!isset($_SESSION['user'])) {
                 <div class="form-group">
                     <label for="event-location">Location *</label>
                     <div id="event-location-select-add">
-                        <div id="event-location" class="event-location-select" role="button" tabindex="0" aria-label="Select location">
+                        <div id="event-location" class="event-location-select" onclick="openLocationSelect()">
                             Select location
                         </div>
-                        <div id="add-location-button" class="liquidGlass-wrapper" role="button" tabindex="0" aria-label="Add location" onclick="openAddLocation()">
+                        <div id="add-location-button" class="liquidGlass-wrapper" onclick="openAddLocation()">
                             <div class="liquidGlass-effect"></div>
                             <div class="liquidGlass-tint"></div>
                             <div class="liquidGlass-shine"></div>
@@ -431,8 +461,142 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="event-location-id" name="locationId" value="">
                 </div>
             </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-share-with-header">
+                    <div class="add-event-section-header-left">
+                        <div class="add-event-section-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <p>Share Event With</p>
+                    </div>
+                    <div id="add-event-shared-with-counter">
+                        0
+                    </div>
+                </div>
+                <div id="add-event-share-with-content">
+                    <input type="text" id="add-event-share-with-search" placeholder="Search friends to share with ..."
+                        oninput="searchFriendsToShareWith()">
+                    <input type="hidden" id="event-shared-with-hidden" name="sharedWith" value="[]">
+
+                    <div id="add-event-share-with-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-snacks-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <p>Snacks</p>
+                </div>
+                <div id="add-event-snacks-content">
+                    <input type="text" id="add-event-snacks-search" placeholder="Search snacks to add ..."
+                        oninput="searchSnacks()">
+                    <input type="hidden" id="event-snacks-hidden" name="snacks" value="[]">
+
+                    <div id="add-event-snacks-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-drinks-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-glass-water"></i>
+                    </div>
+                    <p>Drinks</p>
+                </div>
+                <div id="add-event-drinks-content">
+                    <input type="text" id="add-event-drinks-search" placeholder="Search drinks to add ..."
+                        oninput="searchDrinks()">
+                    <input type="hidden" id="event-drinks-hidden" name="drinks" value="[]">
+
+                    <div id="add-event-drinks-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header" id="add-event-games-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                    <p>Games</p>
+                </div>
+                <div id="add-event-games-content">
+                    <input type="text" id="add-event-games-search" placeholder="Search games to add ..."
+                        oninput="searchGames()">
+                    <input type="hidden" id="event-games-hidden" name="games" value="[]">
+
+                    <div id="add-event-games-search-results">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <p>Images</p>
+                </div>
+                <div class="form-group">
+                    <label for="event-images">Upload Images</label>
+                    <input type="file" id="event-images" name="event-images[]" accept="image/*" multiple>
+                    <div id="event-images-preview" class="images-preview">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="add-event-form-section liquidGlass-wrapper">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+
+                <div class="add-event-section-header">
+                    <div class="add-event-section-icon">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <p>Cover Image</p>
+                </div>
+                <div class="form-group">
+                    <label for="event-cover-images">Upload an image which will be displayed as the event cover</label>
+                    <input type="file" id="event-cover-image" name="event-cover-image" accept="image/*">
+                </div>
+
+            </div>
+
 
             <div class="form-actions">
                 <div class="btn-cancel liquidGlass-wrapper" onclick="closeAddEventSlider()">
@@ -443,7 +607,7 @@ if (!isset($_SESSION['user'])) {
                     <span>Cancel</span>
                 </div>
 
-                <input type="submit" class="btn-submit" value="Create Event">
+                <input id="create-update-event" type="submit" class="btn-submit" value="Create Event" name="add-event">
             </div>
         </form>
     </div>
@@ -458,13 +622,13 @@ if (!isset($_SESSION['user'])) {
 
                     <i class="fa-solid fa-angle-left"></i>
                 </div>
-    
 
-                <div><h2>Add Location</h2>
+                <div>
+                    <h2>Add Location</h2>
 
-                <p>Note: Everyone can view the location information.</p>
-            </div> 
+                    <p>Note: Everyone can view the location information.</p>
                 </div>
+            </div>
             <form action="../../api/location-api.php" method="POST" id="add-location-form">
                 <div class="form-group">
                     <label for="location-name">Location Name *</label>
@@ -473,13 +637,108 @@ if (!isset($_SESSION['user'])) {
 
                 <div class="form-group">
                     <label for="location-description">Description</label>
-                    <textarea id="location-description" name="description" placeholder="Enter location description" rows="4"></textarea>
+                    <textarea id="location-description" name="description" placeholder="Enter location description"
+                        rows="4"></textarea>
                 </div>
 
                 <input name="add-location" type="submit" id="add-location-submit" value="Add Location">
             </form>
         </div>
     </div>
+
+    <div id="select-location-slider">
+        <div id="select-location-header">
+            <div id="close-select-location-icon" onclick="closeLocationSelect()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Select Location</h2>
+        </div>
+        <div id="select-location-inner">
+
+            <input type="text" id="search-location" placeholder="Search ..." oninput="searchLocation()">
+
+            <hr class="location-search-seperator">
+
+            <div id="search-location-results">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="invite-to-slider">
+        <div id="invite-to-header">
+            <div id="close-invite-to-icon" onclick="closeInviteTo()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Add Participants</h2>
+            <div></div>
+        </div>
+
+        <div id="invite-to-content">
+            <input type="text" id="invite-to-search" placeholder="Search friends to invite ..."
+                oninput="searchFriendsToInvite()">
+            <hr class="invite-to-search-seperator">
+            <div id="invite-to-search-results">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="filter-events-options" class="liquidGlass-wrapper">
+        <div class="liquidGlass-effect"></div>
+        <div class="liquidGlass-tint"></div>
+        <div class="liquidGlass-shine"></div>
+
+        <div id="search-events-input">
+            <div id="search-events-input-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="text" id="search-events" placeholder="Search events ..." oninput="searchEvents()"
+                name="event-search">
+        </div>
+        <div id="filter-event-options-split">
+            <div id="filter-event-own">
+                <div id="filter-event-own-clickable" onclick="setOwnFilter()">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <div id="filter-event-own-clickable-description">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+            </div>
+            <div id="filter-events-options-close" onclick="slideOutFilterOptions()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div id="filter-events-options-reset" onclick="resetEventFilter()">
+                <i class="fa-solid fa-rotate"></i>
+            </div>
+            <div id="filter-events-options-direction" onclick="filterDirection()">
+                <i class="fa-solid fa-sort-down"></i>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>&copy; 2026 AfterMemory. All rights reserved.</p>
+        <p id="website-created-by">Created by Julian Warlischek</p>
+    </div>
+    <div id="ingredients-container">
+        <div id="ingredient-header">
+            <div id="close-ingredient-icon" onclick="slideOutIngredients()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Ingredients</h2>
+            <div></div>
+        </div>
+        <div id="ingredient-drink">
+            <h2 id="ingredient-drink-name"></h2>
+            <p id="ingredient-drink-description"></p>
+        </div>
+
+        <div id="ingredient-list"></div>
+    
+    </div> 
 </body>
 
 </html>

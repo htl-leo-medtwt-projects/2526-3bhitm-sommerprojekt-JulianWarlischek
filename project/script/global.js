@@ -176,6 +176,8 @@ function calculateEventDuration(startDate, endDate) {
     const durationInMs = end - start;
     const durationInHours = durationInMs / (1000 * 60 * 60);
 
+    console.log(`Event duration in hours: ${durationInHours}`);
+
     return durationInHours;
 }
 
@@ -197,12 +199,12 @@ function checkUserStatus() {
         .then(data => {
 
             if (data.data !== null) {
-                
+
                 let user = data.data;
 
                 sessionStorage["user"] = user.userid;
 
-                
+
 
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-profile-view" class="liquidGlass-wrapper">
@@ -228,9 +230,9 @@ function checkUserStatus() {
                         const navProfileImg = document.querySelector("#navigation-profile-view-img img");
 
                         console.log(user);
-                        
+
                         console.log(imageData);
-                        
+
                         if (navProfileImg) {
                             navProfileImg.src = resolveImageUrl(imageData.data);
                         }
@@ -241,7 +243,7 @@ function checkUserStatus() {
             } else {
 
                 sessionStorage.removeItem("user");
-                
+
                 document.getElementById('navigation').innerHTML += `
                 <div id="navigation-login-register">
                     <div id="navigation-login-register-login" onclick="navigationTo('pages/login.php')">
@@ -278,3 +280,122 @@ function fadeOutErrorMessages() {
     });
 }
 fadeOutErrorMessages();
+
+function loadRandomMemory() {
+    fetch(apiUrl(`user-api.php?gallery=true`))
+        .then(response => response.json())
+        .then(data => {
+            const imgElement = document.getElementById('img-memories');
+            const imgMemoriesHeadline = imgElement.querySelector('h2');
+
+            if (!data.data || data.data.length === 0) {
+                imgMemoriesHeadline.textContent = 'No Memories Yet';
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * data.data.length);
+            const randomImage = data.data[randomIndex];
+
+
+            imgElement.style.backgroundImage = `url('${resolveImageUrl(randomImage.path)}')`;
+            imgElement.style.backgroundPosition = 'center';
+            imgElement.style.backgroundSize = 'cover';
+            imgElement.style.backgroundRepeat = 'no-repeat';
+        })
+        .catch(error => {
+            console.error('Error fetching gallery images:', error);
+        });
+}
+loadRandomMemory();
+
+function loadLastEvent() {
+    fetch(apiUrl('event-api.php'))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const lastEventElement = document.getElementById('last-event');
+
+
+            if (data == null || !data.data || data.data.length === 0) {
+                document.getElementById("prev-event-name").innerText = "No Events Yet";
+                document.getElementById("prev-event-date").innerText = "";
+                return;
+            }
+
+            const lastEvent = data.data[data.data.length - 1];
+
+            document.getElementById("prev-event-edit").addEventListener("click", function () {
+                window.location.href = new URL(`pages/events.php?updateEvent=${lastEvent.event_id}`, projectRootUrl).href;
+            });
+
+            document.getElementById("prev-event-name").innerText = lastEvent.name;
+            document.getElementById("prev-event-date").innerText = `${getDayOfMonth(parseDate(lastEvent.startDate))}. ${getMonth(parseDate(lastEvent.startDate))} ${getYear(parseDate(lastEvent.startDate))}`;
+            fetch(apiUrl(`image-api.php?id=${lastEvent.cover_image}`))
+                .then(response => response.json())
+                .then(imageData => {
+                    console.log(imageData);
+                    document.getElementById("prev-event").style.backgroundImage = `url('${resolveImageUrl(imageData.data)}')`;
+                    document.getElementById("prev-event").style.backgroundPosition = 'center';
+                    document.getElementById("prev-event").style.backgroundSize = 'cover';
+                    document.getElementById("prev-event").style.backgroundRepeat = 'no-repeat';
+
+                })
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+        });
+
+}
+
+loadLastEvent();
+
+function slideOutIngredients() {
+    const ingredientsContainer = document.getElementById('ingredients-container');
+    ingredientsContainer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = 'auto';
+}
+
+function slideIntIngredients() {
+    const ingredientsContainer = document.getElementById('ingredients-container');
+    ingredientsContainer.style.transform = 'translateX(0)';
+    document.body.style.overflow = 'hidden';
+}
+
+function showIngredients(drinkId) {
+    slideIntIngredients();
+    fetch(apiUrl(`drink-api.php?drinkId=${drinkId}`))
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("ingredient-drink-name").innerText = data.data.name;
+            document.getElementById("ingredient-drink-description").innerText = data.data.describtion;
+
+            console.log(data);
+            fetch(apiUrl("drink-api.php?ingredients=" + drinkId))
+                .then(response => response.json())
+                .then(ingredientsData => {
+                    const ingredientsList = document.getElementById("ingredient-list");
+
+                    let temp_string = "";
+
+                    ingredientsData.data.forEach(ingredient => {
+                        temp_string += `
+                    <div class="ingredient-item">
+                        <div class="ingredient-name-description">
+                            <h3>${ingredient.name}</h3>
+                            <p>${ingredient.description}</p>
+                        </div>
+                        <p>${ingredient.alcoholic}</p>
+                    </div>
+                    `
+                    })
+
+                    ingredientsList.innerHTML = temp_string;
+                })
+                .catch(error => {
+                    console.error('Error fetching drink ingredients:', error);
+                }
+                );
+        }).catch(error => {
+            console.error('Error fetching drink details:', error);
+        });
+
+}

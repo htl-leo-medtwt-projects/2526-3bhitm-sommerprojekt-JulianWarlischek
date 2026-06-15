@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -123,20 +123,137 @@
 
     <!-- Tour path system start -->
     <div id="path-system">
-        <div id="tour-header">
-            <p id="tour-eyebrow">Interactive App Tour</p>
-            <h2>Explore AfterMemory</h2>
-            <p>
-                Follow the interactive tour to discover the features of AfterMemory. Click on the highlighted areas to learn more about each section and how to make the most of your experience.
-            </p>
+
+        <div id="step-home" class="tour-step">
+            <div class="tour-step-content">
+                <img src="./assets/images/badges/one-badge.png" alt="Step 1 Badge" class="tour-badge">
+
+                <h2>Welcome to AfterMemory</h2>
+
+                <p>
+                    This is your home screen and main navigation starting point.
+                </p>
+
+                <p class="tour-background-info">
+                    From here, users quickly access events, friends, and profile settings.
+                </p>
+
+                <div class="tour-controls">
+                    <a href="#step-events">Next</a>
+                </div>
+            </div>
         </div>
 
-        <div id="tour-progress"></div>
 
-        <div id="tour-stage"></div>
+        <div id="step-events" class="tour-step">
+            <div class="tour-step-content">
+                <img src="./assets/images/badges/two-badge.png" alt="Step 2 Badge" class="tour-badge">
+
+                <h2>Discover Events</h2>
+
+                <p>
+                    Browse upcoming events and apply quick filters by time range.
+                </p>
+
+                <p class="tour-background-info">
+                    Events are where users plan moments and create future memories.
+                </p>
+
+                <div class="tour-controls">
+                    <a href="#step-home">Back</a>
+                    <a href="#step-friends">Next</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="step-friends" class="tour-step">
+            <div class="tour-step-content">
+                <img src="./assets/images/badges/three-badge.png" alt="Step 3 Badge" class="tour-badge">
+
+
+                <h2>Manage Friends</h2>
+
+                <p>
+                    See friend lists, requests, and social groups in one place.
+                </p>
+
+                <p class="tour-background-info">
+                    The social area helps users connect and share activity across the app.
+                </p>
+
+                <div class="tour-controls">
+                    <a href="#step-events">Back</a>
+                    <a href="#step-profile">Next</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="step-profile" class="tour-step">
+            <div class="tour-step-content">
+                <img src="./assets/images/badges/four-badge.png" alt="Step 4 Badge" class="tour-badge">
+
+                <h2>Personalize Your Profile</h2>
+
+                <p>
+                    Edit personal settings, manage gallery content, and tune privacy options.
+                </p>
+
+                <p class="tour-background-info">
+                    The profile is the personal control center for identity and customization.
+                </p>
+
+                <div class="tour-controls">
+                    <a href="#step-friends">Back</a>
+                    <a href="#step-finish">Next</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="step-finish" class="tour-step">
+            <div class="tour-step-content">
+                <img src="./assets/images/badges/five-badge.png" alt="Step 5 Badge" class="tour-badge">
+
+
+                <h2>Tour Complete</h2>
+
+                <p>
+                    You now know the core areas. Start creating your first memory.
+                </p>
+
+                <p class="tour-background-info">
+                    This final step wraps up onboarding and encourages immediate action.
+                </p>
+
+                <div class="tour-controls">
+                    <a href="#step-profile">Back</a>
+                    <a href="#home-landing-section">Finish</a>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- Tour path system end -->
 
+    <div id="ingredients-container">
+        <div id="ingredient-header">
+            <div id="close-ingredient-icon" onclick="slideOutIngredients()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+
+            <h2>Ingredients</h2>
+            <div></div>
+        </div>
+        <div id="ingredient-drink">
+            <h2 id="ingredient-drink-name"></h2>
+            <p id="ingredient-drink-description"></p>
+        </div>
+
+        <div id="ingredient-list"></div>
+    
+    </div>
 </body>
 
 </html>

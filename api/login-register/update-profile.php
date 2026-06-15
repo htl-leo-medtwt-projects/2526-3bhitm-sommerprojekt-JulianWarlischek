@@ -48,7 +48,7 @@ if (!empty($_POST['submit'])) {
             } 
         } else {
 
-            $checkSum = checkFile($target_file);
+            $checkSum = checkFile($target_file, "profile-image");
 
             if ($checkSum == 1 && move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
                 try {

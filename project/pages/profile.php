@@ -106,7 +106,7 @@ $user = $_SESSION['user'] ?? null;
                     <p>Friends</p>
                 </div>
             </div>
-            <div id="img-memories" class="liquidGlass-wrapper">
+            <div id="img-memories" class="liquidGlass-wrapper" onclick="navigationTo('pages/profile.php?gallery=true')">
                 <h2>Memories</h2>
                 <div class="liquidGlass-effect-less-blur"></div>
                 <div class="liquidGlass-tint-less-blur"></div>
@@ -155,7 +155,7 @@ $user = $_SESSION['user'] ?? null;
                         </div>
                     </div>
                     <hr class="seperator-long">
-                    <div class="profile-point">
+                    <div class="profile-point" onclick="slideInGallery()">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
                                 <i class="fa-regular fa-image"></i>
@@ -175,18 +175,6 @@ $user = $_SESSION['user'] ?? null;
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
 
-                    <div class="profile-point">
-                        <div class="profile-point-icon-text">
-                            <div class="profile-point-icon">
-                                <i class="fa-solid fa-palette"></i>
-                            </div>
-                            <p>Design</p>
-                        </div>
-                        <div class="profile-point-arrow">
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <hr class="seperator-long">
                     <div class="profile-point" onclick="navigationTo('pages/events.php')">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
@@ -199,7 +187,7 @@ $user = $_SESSION['user'] ?? null;
                         </div>
                     </div>
                     <hr class="seperator-long">
-                    <div class="profile-point">
+                    <div class="profile-point" onclick="openPrivacySlider()">
                         <div class="profile-point-icon-text">
                             <div class="profile-point-icon">
                                 <i class="fa-solid fa-fingerprint"></i>
@@ -383,6 +371,72 @@ $user = $_SESSION['user'] ?? null;
                 <input type="submit" id="badges-add" value="Add" name="submit-badges">
             </div>
         </form>
+    </div>
+
+    <div id="gallery-slider">
+        <div id="gallery-slider-header">
+            <div id="close-gallery-slider" onclick="closeGallerySlider()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <h2>Gallery</h2>
+            <div></div>
+        </div>
+
+        <div id="gallery-content">
+
+        </div>
+    </div>
+
+    <div id="privacy-slider">
+        <div id="privacy-slider-header">
+            <div id="close-privacy-slider" onclick="closePrivacySlider()">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <h2>Privacy Settings</h2>
+            <div></div>
+        </div>
+
+        <div id="privacy-content">
+            <h2>Privacy Settings</h2>
+            <p>We respect your privacy. We only process the data needed to run and secure the site; analytics,
+                personalization, and marketing tools are activated only with your consent.</p>
+
+            <h3>What we collect</h3>
+            <ul>
+                <li><strong>Essential:</strong> session identifiers, basic device and browser information, and any
+                    form inputs you submit that are required for functionality and security.</li>
+                <li><strong>Analytics:</strong> anonymous or pseudonymized usage data (page views, interactions,
+                    performance metrics) to understand how the site is used and to improve reliability and features.
+                </li>
+                <li><strong>Personalization:</strong> preferences and behavior-based settings used to tailor content
+                    and remember choices (e.g., language, layout, recommendations).</li>
+                <li><strong>Marketing:</strong> with your explicit consent we may enable third-party cookies and
+                    trackers to deliver relevant offers and measure campaign effectiveness.</li>
+            </ul>
+
+            <h3>Data sharing & retention</h3>
+            <p>We do not sell your personal data. Limited information may be shared with trusted service providers
+                (analytics, CDN, hosting, image delivery) to allow them to perform their tasks. Data required for
+                site operation is retained only as long as necessary; aggregated analytics are retained for a
+                limited period. Exact retention times and processor details are available in the full Privacy
+                Policy.</p>
+
+            <h3>Your choices & rights</h3>
+            <p>Your consent is voluntary and can be changed at any time via the privacy settings. You have the right
+                to access, correct, export, or request deletion of your personal data. To exercise these rights,
+                contact us at privacy@example.com.</p>
+
+            <h3>Security & legal basis</h3>
+            <p>We implement appropriate technical and organizational measures to protect your information.
+                Processing is performed on the basis of your consent when applicable, or on legitimate interests for
+                necessary functionality, security, and fraud prevention.</p>
+
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>&copy; 2026 AfterMemory. All rights reserved.</p>
+        <p id="website-created-by">Created by Julian Warlischek</p>
     </div>
 </body>
 

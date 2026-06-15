@@ -53,7 +53,7 @@ if (!empty($_POST['submit'])) {
         if(empty($_FILES["profile-image"]["name"])) {
             $_SESSION['errors'][] = "Sorry, your file was not uploaded.";
         } else {
-            $checkSum = checkFile($target_file);
+            $checkSum = checkFile($target_file, "profile-image");
             if ($checkSum == 1 && move_uploaded_file($_FILES["profile-image"]["tmp_name"], $target_file)) {
                 try{
                     $stmt = $conn->prepare("INSERT INTO `Image` (path) VALUES (?)");
